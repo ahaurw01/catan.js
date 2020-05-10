@@ -18,7 +18,7 @@ export default function Home() {
 
           <Tile type="desert" q={-1} r={-1} dieNumber={6} />
           <Tile type="desert" q={0} r={-1} dieNumber={8} />
-          <Tile type="desert" q={1} r={-1} dieNumber={8} />
+          <Tile type="desert" q={1} r={-1} dieNumber={12} />
           <Tile type="desert" q={2} r={-1} dieNumber={8} />
 
           <Tile type="desert" q={-2} r={0} dieNumber={8} />

@@ -1,4 +1,4 @@
-export const radius = 60
+export const radius = 100
 
 export const axialToCartesian = ({ q, r }) => ({
   x: radius * Math.sqrt(3) * (q + r / 2),
