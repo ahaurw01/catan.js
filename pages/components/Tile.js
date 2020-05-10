@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import styles from './Tile.module.css'
 import { axialToCartesian, makeHexagonPoints } from '../utils'
 import DieNumber from './DieNumber'
 

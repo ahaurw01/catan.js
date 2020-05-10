@@ -1,9 +1,26 @@
+import PropTypes from 'prop-types'
+
 export const radius = 100
 
 export const axialToCartesian = ({ q, r }) => ({
   x: radius * Math.sqrt(3) * (q + r / 2),
   y: radius * (3 / 2) * r,
 })
+
+/**
+ * Take three axial points and convert to cartesian coordinates.
+ */
+export const axialVertexToCartesian = (vertex) => {
+  const cartesianVertex = vertex.map(axialToCartesian)
+  return {
+    x:
+      cartesianVertex.reduce((sum, { x }) => sum + x, 0) /
+      cartesianVertex.length,
+    y:
+      cartesianVertex.reduce((sum, { y }) => sum + y, 0) /
+      cartesianVertex.length,
+  }
+}
 
 const hexPointUnitVectors = [
   // Top
@@ -64,5 +81,33 @@ export const isPointInSelection = ({ point, selectionStart, selectionEnd }) => {
     point.x <= boxMaxX &&
     point.y >= boxMinY &&
     point.y <= boxMaxY
+  )
+}
+
+export const axial = (q, r) => ({ q, r })
+
+export const axialCoordinatePropType = PropTypes.shape({
+  q: PropTypes.number,
+  r: PropTypes.number,
+})
+export const vertexPropType = function (props, propName, componentName) {
+  const prop = props[propName]
+  if (!Array.isArray(prop) || prop.length !== 3) {
+    return new Error(
+      'Invalid prop `' +
+        propName +
+        '` supplied to' +
+        ' `' +
+        componentName +
+        '`. Validation failed.'
+    )
+  }
+  return prop.every((axialCoordinate) =>
+    PropTypes.checkPropTypes(
+      { axialCoordinate: axialCoordinatePropType },
+      { axialCoordinate },
+      'axialCoordinate',
+      componentName
+    )
   )
 }
