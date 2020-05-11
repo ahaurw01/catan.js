@@ -18,12 +18,12 @@ export default function Home() {
         <Board>
           <Tile type="desert" q={0} r={-2} dieNumber={1} />
           <Tile type="desert" q={1} r={-2} dieNumber={2} />
-          <Tile type="desert" q={2} r={-2} dieNumber={3} />
+          <Tile type="mountains" q={2} r={-2} dieNumber={3} />
 
-          <Tile type="desert" q={-1} r={-1} dieNumber={6} />
-          <Tile type="desert" q={0} r={-1} dieNumber={8} />
-          <Tile type="desert" q={1} r={-1} dieNumber={12} />
-          <Tile type="desert" q={2} r={-1} dieNumber={8} />
+          <Tile type="hills" q={-1} r={-1} dieNumber={6} />
+          <Tile type="pasture" q={0} r={-1} dieNumber={8} />
+          <Tile type="fields" q={1} r={-1} dieNumber={12} />
+          <Tile type="forest" q={2} r={-1} dieNumber={8} />
 
           <Tile type="desert" q={-2} r={0} dieNumber={8} />
           <Tile type="desert" q={-1} r={0} dieNumber={8} />
