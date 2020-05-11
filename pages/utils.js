@@ -90,24 +90,30 @@ export const axialCoordinatePropType = PropTypes.shape({
   q: PropTypes.number,
   r: PropTypes.number,
 })
-export const vertexPropType = function (props, propName, componentName) {
-  const prop = props[propName]
-  if (!Array.isArray(prop) || prop.length !== 3) {
-    return new Error(
-      'Invalid prop `' +
-        propName +
-        '` supplied to' +
-        ' `' +
-        componentName +
-        '`. Validation failed.'
+
+function makeAxialPointsPropType(numPoints) {
+  return function (props, propName, componentName) {
+    const prop = props[propName]
+    if (!Array.isArray(prop) || prop.length !== numPoints) {
+      return new Error(
+        'Invalid prop `' +
+          propName +
+          '` supplied to' +
+          ' `' +
+          componentName +
+          '`. Validation failed.'
+      )
+    }
+    return prop.every((axialCoordinate) =>
+      PropTypes.checkPropTypes(
+        { axialCoordinate: axialCoordinatePropType },
+        { axialCoordinate },
+        'axialCoordinate',
+        componentName
+      )
     )
   }
-  return prop.every((axialCoordinate) =>
-    PropTypes.checkPropTypes(
-      { axialCoordinate: axialCoordinatePropType },
-      { axialCoordinate },
-      'axialCoordinate',
-      componentName
-    )
-  )
 }
+
+export const vertexPropType = makeAxialPointsPropType(3)
+export const sidePropType = makeAxialPointsPropType(2)
