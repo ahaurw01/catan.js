@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
-import { axialToCartesian, makeHexagonPoints } from '../utils'
+import { radius, axialToCartesian, makeHexagonPoints } from '../utils'
 import DieNumber from './DieNumber'
+import Ore from './icons/Ore'
 
 const colors = {
   forest: '#5AA260',
@@ -11,11 +12,21 @@ const colors = {
   desert: '#E1AB4E',
 }
 
+const icons = {
+  mountains: Ore,
+}
+
 const Tile = ({ q, r, type, dieNumber }) => {
   const { x, y } = axialToCartesian({ q, r })
   const points = makeHexagonPoints({ x, y })
     .map((p) => `${p.x},${p.y}`)
     .join(' ')
+  const Icon =
+    icons[type] ||
+    function () {
+      return null
+    }
+  const iconWidth = radius / 1.5
 
   return (
     <g>
@@ -25,11 +36,12 @@ const Tile = ({ q, r, type, dieNumber }) => {
         strokeWidth="5"
         stroke="#333"
       />
-      {dieNumber != null && (
-        <g transform={`translate(${x}, ${y})`}>
-          <DieNumber value={dieNumber} />
+      <g transform={`translate(${x}, ${y})`}>
+        {dieNumber != null && <DieNumber value={dieNumber} />}
+        <g transform={`translate(${-iconWidth / 2}, ${-radius / 1.25})`}>
+          <Icon width={iconWidth} height={iconWidth} />
         </g>
-      )}
+      </g>
     </g>
   )
 }
