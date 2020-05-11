@@ -4,6 +4,7 @@ import Tile from './components/Tile'
 import Building from './components/Building'
 import { axial } from './utils'
 import Road from './components/Road'
+import Port from './components/Port'
 
 export default function Home() {
   return (
@@ -47,6 +48,13 @@ export default function Home() {
 
           <Road color="orange" side={[axial(-1, -1), axial(-1, 0)]} />
           <Road color="red" side={[axial(0, 0), axial(0, -1)]} />
+
+          <Port
+            side={[axial(-1, -1), axial(-2, -1)]}
+            goods="lumber"
+            ratio={2}
+          />
+          <Port side={[axial(-1, 3), axial(-1, 2)]} goods="any" ratio={3} />
         </Board>
       </main>
     </div>

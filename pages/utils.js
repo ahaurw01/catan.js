@@ -25,7 +25,7 @@ export const axialVertexToCartesian = (vertex) => {
 /**
  * Get the angle of the side between two hexagons.
  *
- * @param {Side} side  Two axial points.
+ * @param {Side} side Two axial points.
  */
 export const angleOfSide = (side) => {
   const cartesianPoints = side.map(axialToCartesian)
@@ -34,6 +34,21 @@ export const angleOfSide = (side) => {
   const radiansOfVector = Math.atan(dy / dx)
   const perpendicularRadians = radiansOfVector + Math.PI / 2
   return (perpendicularRadians * 180) / Math.PI
+}
+
+/**
+ * Get the cartesian coordinates for port placement.
+ * It goes on the outer edge of the side.
+ *
+ * @param {Side} side Two axial points.
+ */
+export const axialSideToPortCartesian = (side) => {
+  const vectorLength = ({ q, r }) => Math.sqrt(Math.pow(q, 2) + Math.pow(r, 2))
+  const [furthest, closest] = side
+    .slice()
+    .sort((a, b) => vectorLength(b) - vectorLength(a))
+
+  return axialVertexToCartesian([furthest, furthest, closest])
 }
 
 const hexPointUnitVectors = [
