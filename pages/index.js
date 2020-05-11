@@ -45,6 +45,11 @@ export default function Home() {
             color="orange"
             type="settlement"
           />
+          <Building
+            vertex={[axial(1, 1), axial(0, 1), axial(0, 2)]}
+            color="orange"
+            type="city"
+          />
 
           <Road color="orange" side={[axial(-1, -1), axial(-1, 0)]} />
           <Road color="red" side={[axial(0, 0), axial(0, -1)]} />
