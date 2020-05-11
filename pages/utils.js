@@ -22,6 +22,20 @@ export const axialVertexToCartesian = (vertex) => {
   }
 }
 
+/**
+ * Get the angle of the side between two hexagons.
+ *
+ * @param {Side} side  Two axial points.
+ */
+export const angleOfSide = (side) => {
+  const cartesianPoints = side.map(axialToCartesian)
+  const dx = cartesianPoints[1].x - cartesianPoints[0].x
+  const dy = cartesianPoints[1].y - cartesianPoints[0].y
+  const radiansOfVector = Math.atan(dy / dx)
+  const perpendicularRadians = radiansOfVector + Math.PI / 2
+  return (perpendicularRadians * 180) / Math.PI
+}
+
 const hexPointUnitVectors = [
   // Top
   {
@@ -60,29 +74,6 @@ export const makeHexagonPoints = ({ x, y }) =>
     x: u.x * radius + x,
     y: u.y * radius + y,
   }))
-
-export const randomPointWithin = ({ x, y }) => {
-  const r = (Math.random() * radius * 2) / 3
-  const θ = Math.random() * 2 * Math.PI
-  const xModifier = r * Math.cos(θ)
-  const yModifier = r * Math.sin(θ)
-
-  return { x: x + xModifier, y: y + yModifier }
-}
-
-export const isPointInSelection = ({ point, selectionStart, selectionEnd }) => {
-  const boxMinX = Math.min(selectionStart.x, selectionEnd.x)
-  const boxMaxX = Math.max(selectionStart.x, selectionEnd.x)
-  const boxMinY = Math.min(selectionStart.y, selectionEnd.y)
-  const boxMaxY = Math.max(selectionStart.y, selectionEnd.y)
-
-  return (
-    point.x >= boxMinX &&
-    point.x <= boxMaxX &&
-    point.y >= boxMinY &&
-    point.y <= boxMaxY
-  )
-}
 
 export const axial = (q, r) => ({ q, r })
 
