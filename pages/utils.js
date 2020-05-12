@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export const radius = 100
+export const radius = 110
 
 export const axialToCartesian = ({ q, r }) => ({
   x: radius * Math.sqrt(3) * (q + r / 2),
