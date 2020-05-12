@@ -4,7 +4,7 @@ import styles from './Building.module.css'
 
 const Building = ({ vertex, color, type }) => {
   const { x, y } = axialVertexToCartesian(vertex)
-  const width = type === 'settlement' ? radius / 4 : radius / 3
+  const width = type === 'settlement' ? radius / 3 : radius / 2
   const icon = type === 'settlement' ? 'S' : 'C'
   return (
     <g transform={`translate(${x}, ${y})`}>
