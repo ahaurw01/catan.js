@@ -7,6 +7,7 @@ import Road from './components/Road'
 import Port from './components/Port'
 import Robber from './components/Robber'
 import Layout from './components/Layout'
+import GameActions from './components/GameActions'
 
 export default function Home() {
   return (
@@ -68,7 +69,7 @@ export default function Home() {
               <Robber q={0} r={0} />
             </Board>
           }
-          actionSlot={<div />}
+          actionSlot={<GameActions />}
           itemSlot={<div />}
         />
       </main>
