@@ -5,6 +5,7 @@ import Building from './components/Building'
 import { axial } from './utils'
 import Road from './components/Road'
 import Port from './components/Port'
+import Robber from './components/Robber'
 
 export default function Home() {
   return (
@@ -60,6 +61,8 @@ export default function Home() {
             ratio={2}
           />
           <Port side={[axial(-1, 3), axial(-1, 2)]} goods="any" ratio={3} />
+
+          <Robber q={0} r={0} />
         </Board>
       </main>
     </div>
