@@ -2,6 +2,10 @@ import PropTypes from 'prop-types'
 import { radius, axialToCartesian, makeHexagonPoints } from '../utils'
 import DieNumber from './DieNumber'
 import Ore from './icons/Ore'
+import Grain from './icons/Grain'
+import Lumber from './icons/Lumber'
+import Brick from './icons/Brick'
+import Wool from './icons/Wool'
 
 const colors = {
   forest: '#5AA260',
@@ -13,7 +17,11 @@ const colors = {
 }
 
 const icons = {
+  forest: Lumber,
+  pasture: Wool,
   mountains: Ore,
+  hills: Brick,
+  fields: Grain,
 }
 
 const Tile = ({ q, r, type, dieNumber }) => {
@@ -26,7 +34,7 @@ const Tile = ({ q, r, type, dieNumber }) => {
     function () {
       return null
     }
-  const iconWidth = radius / 1.5
+  const iconWidth = radius / 2
 
   return (
     <g>
