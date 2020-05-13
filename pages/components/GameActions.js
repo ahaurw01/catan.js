@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styles from './GameActions.module.css'
 import { Fieldset, Select, TextField, Window, WindowContent } from 'react95'
+import { get } from 'lodash'
 
-const GameActions = () => {
+const GameActions = ({ onSetName, players }) => {
   const [player, setPlayer] = useState('spectator')
   const [screenName, setScreenName] = useState('')
 
@@ -32,7 +34,10 @@ const GameActions = () => {
               { label: 'Orange', value: 'orange' },
               { label: 'Green', value: 'green' },
             ].map((i) => ({ label: playerTemplate(i), value: i.value }))}
-            onChange={(value) => setPlayer(value)}
+            onChange={(value) => {
+              setPlayer(value)
+              setScreenName('')
+            }}
             width={140}
           />
         </Fieldset>
@@ -40,8 +45,12 @@ const GameActions = () => {
         {player !== 'spectator' && (
           <Fieldset label="Screen Name">
             <TextField
-              value={screenName}
-              onChange={(e) => setScreenName(e.target.value)}
+              value={screenName || players[player] || ''}
+              onChange={(e) => {
+                const { value } = e.target
+                setScreenName(e.target.value)
+                onSetName({ color: player, name: value })
+              }}
               width={140}
             />
           </Fieldset>
@@ -49,6 +58,11 @@ const GameActions = () => {
       </WindowContent>
     </Window>
   )
+}
+
+GameActions.propTypes = {
+  onSetName: PropTypes.func.isRequired,
+  players: PropTypes.shape().isRequired,
 }
 
 export default GameActions

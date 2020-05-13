@@ -7,6 +7,8 @@ const dev = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler()
 
+const { wireItUp } = require('./game')
+
 nextApp.prepare().then(() => {
   const http = createServer((req, res) => {
     // Be sure to pass `true` as the second argument to `url.parse`.
@@ -26,9 +28,5 @@ nextApp.prepare().then(() => {
     console.log('> Ready on http://localhost:3000')
   })
 
-  const io = SocketIO(http)
-  io.on('connection', (socket) => {
-    console.log('a user connected')
-    socket.emit('log', 'yo dawg')
-  })
+  wireItUp(SocketIO(http))
 })
