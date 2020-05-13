@@ -11,6 +11,11 @@
 }
 
 .board {
+  display: flex;
+  flex: 1;
+}
+
+.board > * {
   flex: 1;
 }
 
