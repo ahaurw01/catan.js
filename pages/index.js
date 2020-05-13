@@ -8,7 +8,7 @@ import Port from './components/Port'
 import Robber from './components/Robber'
 import Layout from './components/Layout'
 import GameActions from './components/GameActions'
-import { useState, Component } from 'react'
+import { Component } from 'react'
 import GameStateManager from './components/GameStateManager'
 
 export default class Home extends Component {
@@ -20,6 +20,7 @@ export default class Home extends Component {
   componentDidMount() {
     const gameStateManager = new GameStateManager()
     gameStateManager.onUpdateGame((game) => {
+      console.log(game)
       this.setState({ game })
     })
     this.setState({
@@ -41,29 +42,18 @@ export default class Home extends Component {
             <Layout
               boardSlot={
                 <Board>
-                  <Tile type="desert" q={0} r={-2} dieNumber={1} />
-                  <Tile type="desert" q={1} r={-2} dieNumber={2} />
-                  <Tile type="mountains" q={2} r={-2} dieNumber={3} />
-
-                  <Tile type="hills" q={-1} r={-1} dieNumber={6} />
-                  <Tile type="pasture" q={0} r={-1} dieNumber={8} />
-                  <Tile type="fields" q={1} r={-1} dieNumber={12} />
-                  <Tile type="forest" q={2} r={-1} dieNumber={8} />
-
-                  <Tile type="desert" q={-2} r={0} dieNumber={8} />
-                  <Tile type="desert" q={-1} r={0} dieNumber={8} />
-                  <Tile type="desert" q={0} r={0} dieNumber={8} />
-                  <Tile type="desert" q={1} r={0} dieNumber={8} />
-                  <Tile type="desert" q={2} r={0} dieNumber={8} />
-
-                  <Tile type="desert" q={-2} r={1} dieNumber={8} />
-                  <Tile type="desert" q={-1} r={1} dieNumber={8} />
-                  <Tile type="desert" q={0} r={1} dieNumber={8} />
-                  <Tile type="desert" q={1} r={1} dieNumber={8} />
-
-                  <Tile type="desert" q={-2} r={2} dieNumber={8} />
-                  <Tile type="desert" q={-1} r={2} dieNumber={8} />
-                  <Tile type="desert" q={0} r={2} dieNumber={8} />
+                  {game.tilePoints.map(({ type, q, r, dieNumber }) => (
+                    <Tile
+                      key={`${q},${r}`}
+                      type={type}
+                      q={q}
+                      r={r}
+                      dieNumber={dieNumber}
+                    />
+                  ))}
+                  <Robber
+                    {...game.tilePoints.filter(({ robber }) => robber)[0]}
+                  />
 
                   <Building
                     vertex={[axial(0, 0), axial(1, 0), axial(0, 1)]}
@@ -89,8 +79,6 @@ export default class Home extends Component {
                     goods="any"
                     ratio={3}
                   />
-
-                  <Robber q={0} r={0} />
                 </Board>
               }
               actionSlot={
