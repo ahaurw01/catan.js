@@ -1,16 +1,3 @@
-.panel {
-  padding: 5px;
-}
-
-.selectedPlayer {
-  display: flex;
-  align-items: center;
-}
-
-.dropdown {
-  flex: 1;
-}
-
 .playerOption {
   display: flex;
   justify-content: flex-start;

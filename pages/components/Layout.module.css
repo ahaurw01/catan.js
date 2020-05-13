@@ -14,10 +14,6 @@
   flex: 1;
 }
 
-.action {
-  min-width: 200px;
-}
-
 .item {
   flex: 0 0 200px;
 }

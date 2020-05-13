@@ -1,8 +1,16 @@
-import 'primereact/resources/themes/nova-light/theme.css'
-import 'primereact/resources/primereact.min.css'
-import 'primeicons/primeicons.css'
-import './App.css'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { reset, themes } from 'react95'
+
+const ResetStyles = createGlobalStyle`
+  ${reset}
+`
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <ThemeProvider theme={themes.default}>
+      <ResetStyles />
+
+      <Component {...pageProps} />
+    </ThemeProvider>
+  )
 }
