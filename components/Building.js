@@ -16,7 +16,7 @@ const Building = ({ vertex, color, type, isBuildable, onBuild, onRemove }) => {
         width={width}
         height={width}
         stroke="black"
-        fill={isBuildable ? 'purple' : color}
+        fill={isBuildable ? 'yellow' : color}
         onClick={onBuild}
         onContextMenu={(e) => {
           e.preventDefault()

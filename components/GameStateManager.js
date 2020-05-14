@@ -2,7 +2,7 @@ import io from 'socket.io-client'
 
 class GameStateManager {
   constructor() {
-    this.socket = io('http://localhost:3000')
+    this.socket = io()
     this.socket.on('log', console.log)
     this.socket.on('game', this.updateGame)
   }
