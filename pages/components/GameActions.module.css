@@ -15,3 +15,11 @@
 .spaceRight {
   margin-right: 5px;
 }
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+.buttons > :nth-of-type(n + 2) {
+  margin-top: 10px;
+}

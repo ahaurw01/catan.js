@@ -27,8 +27,21 @@ function wireItUp(io) {
       updateWithGame(io)
     })
 
-    socket.on('remove road', ({ color, sideHash }) => {
+    socket.on('remove road', ({ sideHash }) => {
       _.find(gameState.sides, { hash: sideHash }).road = null
+      updateWithGame(io)
+    })
+
+    socket.on('build settlement', ({ color, sideHash }) => {
+      _.find(gameState.vertices, { hash: sideHash }).building = {
+        color,
+        type: 'settlement',
+      }
+      updateWithGame(io)
+    })
+
+    socket.on('remove building', ({ sideHash }) => {
+      _.find(gameState.vertices, { hash: sideHash }).building = null
       updateWithGame(io)
     })
   })

@@ -1,3 +1,15 @@
 .icon {
   font-size: 25px;
+  pointer-events: none;
+}
+
+.isBuildable {
+  cursor: pointer;
+  animation: pulse linear 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.1);
+  }
 }

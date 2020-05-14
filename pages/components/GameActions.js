@@ -17,6 +17,8 @@ const GameActions = ({
   players,
   isBuildingRoad,
   onBuildRoad,
+  isBuildingSettlement,
+  onBuildSettlement,
 }) => {
   const [player, setPlayer] = useState('spectator')
   const [screenName, setScreenName] = useState('')
@@ -73,9 +75,23 @@ const GameActions = ({
 
         {player !== 'spectator' && (
           <Fieldset label="Build">
-            <Button active={isBuildingRoad} onClick={onBuildRoad}>
-              Build Road
-            </Button>
+            <div className={styles.buttons}>
+              <Button
+                active={isBuildingRoad}
+                onClick={onBuildRoad}
+                disabled={isBuildingSettlement}
+              >
+                Build Road
+              </Button>
+
+              <Button
+                active={isBuildingSettlement}
+                onClick={onBuildSettlement}
+                disabled={isBuildingRoad}
+              >
+                Build Settlement
+              </Button>
+            </div>
           </Fieldset>
         )}
       </WindowContent>
@@ -89,6 +105,8 @@ GameActions.propTypes = {
   players: PropTypes.shape().isRequired,
   isBuildingRoad: PropTypes.bool.isRequired,
   onBuildRoad: PropTypes.func.isRequired,
+  isBuildingSettlement: PropTypes.bool.isRequired,
+  onBuildSettlement: PropTypes.func.isRequired,
 }
 
 export default GameActions

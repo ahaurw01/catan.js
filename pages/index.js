@@ -16,6 +16,7 @@ export default class Home extends Component {
     gameStateManager: null,
     game: null,
     isBuildingRoad: false,
+    isBuildingSettlement: false,
   }
 
   componentDidMount() {
@@ -30,7 +31,12 @@ export default class Home extends Component {
   }
 
   render() {
-    const { gameStateManager, game, isBuildingRoad } = this.state
+    const {
+      gameStateManager,
+      game,
+      isBuildingRoad,
+      isBuildingSettlement,
+    } = this.state
     return (
       <div className="container">
         <Head>
@@ -56,14 +62,32 @@ export default class Home extends Component {
                     {...game.tilePoints.filter(({ robber }) => robber)[0]}
                   />
 
-                  {game.vertices.map(({ vertex, hash }) => (
-                    <Building
-                      key={hash}
-                      vertex={vertex}
-                      color="red"
-                      type="settlement"
-                    />
-                  ))}
+                  {game.vertices.map(({ vertex, hash, building }) => {
+                    if (!building && !isBuildingSettlement) return null
+                    if (building) {
+                      return (
+                        <Building
+                          type={building.type}
+                          vertex={vertex}
+                          key={hash}
+                          color={building.color}
+                          onRemove={() => gameStateManager.removeBuilding(hash)}
+                        />
+                      )
+                    }
+                    return (
+                      <Building
+                        isBuildable
+                        onBuild={() => {
+                          gameStateManager.buildSettlement(hash)
+                          this.setState({ isBuildingSettlement: false })
+                        }}
+                        vertex={vertex}
+                        key={hash}
+                        type="settlement"
+                      />
+                    )
+                  })}
 
                   {game.sides.map(({ side, hash, road }) => {
                     if (!road && !isBuildingRoad) return null
@@ -86,7 +110,6 @@ export default class Home extends Component {
                         }}
                         side={side}
                         key={hash}
-                        color={road ? road.color : undefined}
                       />
                     )
                   })}
@@ -107,6 +130,12 @@ export default class Home extends Component {
                     }))
                   }}
                   isBuildingRoad={isBuildingRoad}
+                  onBuildSettlement={() => {
+                    this.setState(({ isBuildingSettlement }) => ({
+                      isBuildingSettlement: !isBuildingSettlement,
+                    }))
+                  }}
+                  isBuildingSettlement={isBuildingSettlement}
                 />
               }
               itemSlot={<div />}
