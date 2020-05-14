@@ -21,6 +21,11 @@ function wireItUp(io) {
       gameState.players[color] = name
       updateWithGame(io)
     })
+
+    socket.on('build road', ({ color, sideHash }) => {
+      _.find(gameState.sides, { hash: sideHash }).road = { color }
+      updateWithGame(io)
+    })
   })
 }
 

@@ -13,11 +13,20 @@ class GameStateManager {
     this.socket.emit('set name', { color, name })
   }
 
+  setPlayer = (player) => {
+    this.player = player
+  }
+
   onUpdateGame = (handler) => this.handlers.add(handler)
   offUpdateGame = (handler) => this.handlers.delete(handler)
 
   updateGame = (game) =>
     Array.from(this.handlers).forEach((handler) => handler(game))
+
+  buildRoad = (hash) => {
+    if (!this.player) return
+    this.socket.emit('build road', { color: this.player, sideHash: hash })
+  }
 }
 
 export default GameStateManager

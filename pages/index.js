@@ -15,7 +15,7 @@ export default class Home extends Component {
   state = {
     gameStateManager: null,
     game: null,
-    isPlacingRoad: false,
+    isBuildingRoad: false,
   }
 
   componentDidMount() {
@@ -30,7 +30,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { gameStateManager, game } = this.state
+    const { gameStateManager, game, isBuildingRoad } = this.state
     return (
       <div className="container">
         <Head>
@@ -65,14 +65,24 @@ export default class Home extends Component {
                     />
                   ))}
 
-                  {game.sides.map(({ side, hash }) => (
-                    <Road
-                      isBuildable
-                      onBuild={() => console.log(hash)}
-                      side={side}
-                      key={hash}
-                    />
-                  ))}
+                  {game.sides.map(({ side, hash, road }) => {
+                    if (!road && !isBuildingRoad) return null
+                    if (road) {
+                      return <Road side={side} key={hash} color={road.color} />
+                    }
+                    return (
+                      <Road
+                        isBuildable
+                        onBuild={() => {
+                          gameStateManager.buildRoad(hash)
+                          this.setState({ isBuildingRoad: false })
+                        }}
+                        side={side}
+                        key={hash}
+                        color={road ? road.color : undefined}
+                      />
+                    )
+                  })}
 
                   {game.ports.map(({ side, hash, goods, ratio }) => (
                     <Port side={side} goods={goods} ratio={ratio} key={hash} />
@@ -82,7 +92,14 @@ export default class Home extends Component {
               actionSlot={
                 <GameActions
                   onSetName={gameStateManager.setName}
+                  onSetPlayer={gameStateManager.setPlayer}
                   players={game.players}
+                  onBuildRoad={() => {
+                    this.setState(({ isBuildingRoad }) => ({
+                      isBuildingRoad: !isBuildingRoad,
+                    }))
+                  }}
+                  isBuildingRoad={isBuildingRoad}
                 />
               }
               itemSlot={<div />}

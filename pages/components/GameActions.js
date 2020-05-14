@@ -2,10 +2,22 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styles from './GameActions.module.css'
-import { Fieldset, Select, TextField, Window, WindowContent } from 'react95'
-import { get } from 'lodash'
+import {
+  Button,
+  Fieldset,
+  Select,
+  TextField,
+  Window,
+  WindowContent,
+} from 'react95'
 
-const GameActions = ({ onSetName, players }) => {
+const GameActions = ({
+  onSetName,
+  onSetPlayer,
+  players,
+  isBuildingRoad,
+  onBuildRoad,
+}) => {
   const [player, setPlayer] = useState('spectator')
   const [screenName, setScreenName] = useState('')
 
@@ -36,6 +48,7 @@ const GameActions = ({ onSetName, players }) => {
             ].map((i) => ({ label: playerTemplate(i), value: i.value }))}
             onChange={(value) => {
               setPlayer(value)
+              onSetPlayer(value)
               setScreenName('')
             }}
             width={140}
@@ -55,6 +68,14 @@ const GameActions = ({ onSetName, players }) => {
             />
           </Fieldset>
         )}
+
+        {player !== 'spectator' && (
+          <Fieldset label="Build">
+            <Button active={isBuildingRoad} onClick={onBuildRoad}>
+              Build Road
+            </Button>
+          </Fieldset>
+        )}
       </WindowContent>
     </Window>
   )
@@ -62,7 +83,10 @@ const GameActions = ({ onSetName, players }) => {
 
 GameActions.propTypes = {
   onSetName: PropTypes.func.isRequired,
+  onSetPlayer: PropTypes.func.isRequired,
   players: PropTypes.shape().isRequired,
+  isBuildingRoad: PropTypes.bool.isRequired,
+  onBuildRoad: PropTypes.func.isRequired,
 }
 
 export default GameActions
