@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { axialVertexToCartesian, radius, vertexPropType } from '../utils'
+import { axialVertexToCartesian, radius, vertexPropType } from './utils'
 import styles from './Building.module.css'
 
 const Building = ({ vertex, color, type, isBuildable, onBuild, onRemove }) => {

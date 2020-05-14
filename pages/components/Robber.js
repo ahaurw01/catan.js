@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { radius, axialToCartesian, makeHexagonPoints } from '../utils'
+import { radius, axialToCartesian, makeHexagonPoints } from './utils'
 import RobberIcon from './icons/Robber'
 
 const Robber = ({ q, r }) => {

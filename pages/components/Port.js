@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { radius, sidePropType, axialSideToPortCartesian } from '../utils'
+import { radius, sidePropType, axialSideToPortCartesian } from './utils'
 import styles from './Port.module.css'
 
 const Port = ({ side, ratio, goods }) => {

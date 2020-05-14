@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { radius } from '../utils'
+import { radius } from './utils'
 import styles from './DieNumber.module.css'
 
 const DieNumber = ({ value }) => {

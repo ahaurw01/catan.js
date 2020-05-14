@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { radius, axialToCartesian, makeHexagonPoints } from '../utils'
+import { radius, axialToCartesian, makeHexagonPoints } from './utils'
 import DieNumber from './DieNumber'
 import Ore from './icons/Ore'
 import Grain from './icons/Grain'

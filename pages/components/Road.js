@@ -5,7 +5,7 @@ import {
   radius,
   sidePropType,
   angleOfSide,
-} from '../utils'
+} from './utils'
 import styles from './Road.module.css'
 
 const Road = ({ side, color, isBuildable, onBuild, onRemove }) => {
