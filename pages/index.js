@@ -55,17 +55,18 @@ export default class Home extends Component {
                     {...game.tilePoints.filter(({ robber }) => robber)[0]}
                   />
 
-                  {game.vertices.map((vertex) => (
+                  {game.vertices.map(({ vertex, hash }) => (
                     <Building
-                      key={JSON.stringify(vertex)}
+                      key={hash}
                       vertex={vertex}
                       color="red"
                       type="settlement"
                     />
                   ))}
 
-                  <Road color="orange" side={[axial(-1, -1), axial(-1, 0)]} />
-                  <Road color="red" side={[axial(0, 0), axial(0, -1)]} />
+                  {game.sides.map(({ side, hash }) => (
+                    <Road color="red" side={side} key={hash} />
+                  ))}
 
                   <Port
                     side={[axial(-1, -1), axial(-2, -1)]}
