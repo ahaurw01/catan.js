@@ -23,7 +23,9 @@ const GameActions = ({
 
   const playerTemplate = ({ label, value }) => (
     <span className={styles.playerOption}>
-      {value !== 'spectator' && (
+      {value === 'spectator' ? (
+        <span className={styles.spaceRight}>👀</span>
+      ) : (
         <span
           className={cx(styles.color, styles.spaceRight)}
           style={{ background: value }}
@@ -51,7 +53,7 @@ const GameActions = ({
               onSetPlayer(value)
               setScreenName('')
             }}
-            width={140}
+            width={150}
           />
         </Fieldset>
 
