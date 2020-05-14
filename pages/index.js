@@ -68,16 +68,9 @@ export default class Home extends Component {
                     <Road color="red" side={side} key={hash} />
                   ))}
 
-                  <Port
-                    side={[axial(-1, -1), axial(-2, -1)]}
-                    goods="lumber"
-                    ratio={2}
-                  />
-                  <Port
-                    side={[axial(-1, 3), axial(-1, 2)]}
-                    goods="any"
-                    ratio={3}
-                  />
+                  {game.ports.map(({ side, hash, goods, ratio }) => (
+                    <Port side={side} goods={goods} ratio={ratio} key={hash} />
+                  ))}
                 </Board>
               }
               actionSlot={

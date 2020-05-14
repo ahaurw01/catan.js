@@ -65,6 +65,7 @@ function makeGameState() {
 
   gameState.vertices = makeAllVertices(tilePoints)
   gameState.sides = makeAllSides(tilePoints)
+  gameState.ports = makePorts()
 
   return gameState
 }
@@ -100,7 +101,7 @@ function makeAllVertices(points) {
       { vertex: [axial(q, r), axial(q - 1, r), axial(q, r - 1)] },
     ].map((o) => ({
       ...o,
-      hash: `${avg(..._.map(o.vertex, 'q'))},${avg(..._.map(o.vertex, 'r'))}`,
+      hash: hash(o.vertex),
       building: null,
     }))
   }
@@ -130,7 +131,7 @@ function makeAllSides(points) {
       { side: [axial(q, r), axial(q - 1, r)] },
     ].map((o) => ({
       ...o,
-      hash: `${avg(..._.map(o.side, 'q'))},${avg(..._.map(o.side, 'r'))}`,
+      hash: hash(o.side),
       road: null,
     }))
   }
@@ -141,6 +142,17 @@ function makeAllSides(points) {
     .sortBy('hash')
     .sortedUniqBy('hash')
     .value()
+}
+
+function makePorts() {
+  return [
+    { side: [axial(-1, -1), axial(-2, -1)], goods: 'lumber', ratio: 2 },
+    { side: [axial(-1, 3), axial(-1, 2)], goods: 'any', ratio: 3 },
+  ].map((o) => ({ ...o, hash: hash(o.side) }))
+}
+
+function hash(points) {
+  return `${avg(..._.map(points, 'q'))},${avg(..._.map(points, 'r'))}`
 }
 
 function avg(...nums) {
