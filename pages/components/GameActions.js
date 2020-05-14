@@ -66,7 +66,7 @@ const GameActions = ({
                 setScreenName(e.target.value)
                 onSetName({ color: player, name: value })
               }}
-              width={140}
+              width={150}
             />
           </Fieldset>
         )}

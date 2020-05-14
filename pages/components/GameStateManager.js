@@ -27,6 +27,11 @@ class GameStateManager {
     if (!this.player) return
     this.socket.emit('build road', { color: this.player, sideHash: hash })
   }
+
+  removeRoad = (hash) => {
+    if (!this.player) return
+    this.socket.emit('remove road', { sideHash: hash })
+  }
 }
 
 export default GameStateManager

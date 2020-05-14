@@ -8,7 +8,7 @@ import {
 } from '../utils'
 import styles from './Road.module.css'
 
-const Road = ({ side, color, isBuildable, onBuild }) => {
+const Road = ({ side, color, isBuildable, onBuild, onRemove }) => {
   const { x, y } = axialVertexToCartesian(side)
   const angle = angleOfSide(side)
   const length = radius / 1.5
@@ -24,6 +24,10 @@ const Road = ({ side, color, isBuildable, onBuild }) => {
         stroke="black"
         fill={isBuildable ? 'purple' : color}
         onClick={onBuild}
+        onContextMenu={(e) => {
+          e.preventDefault()
+          onRemove()
+        }}
       />
     </g>
   )
@@ -34,12 +38,14 @@ Road.propTypes = {
   color: PropTypes.string,
   isBuildable: PropTypes.bool,
   onBuild: PropTypes.func,
+  onRemove: PropTypes.func,
 }
 
 Road.defaultProps = {
   color: null,
   isBuildable: false,
   onBuild: () => {},
+  onRemove: () => {},
 }
 
 export default Road

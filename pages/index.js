@@ -68,7 +68,14 @@ export default class Home extends Component {
                   {game.sides.map(({ side, hash, road }) => {
                     if (!road && !isBuildingRoad) return null
                     if (road) {
-                      return <Road side={side} key={hash} color={road.color} />
+                      return (
+                        <Road
+                          side={side}
+                          key={hash}
+                          color={road.color}
+                          onRemove={() => gameStateManager.removeRoad(hash)}
+                        />
+                      )
                     }
                     return (
                       <Road
