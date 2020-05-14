@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import {
   axialVertexToCartesian,
   radius,
   sidePropType,
   angleOfSide,
 } from '../utils'
+import styles from './Road.module.css'
 
-const Road = ({ side, color }) => {
+const Road = ({ side, color, isBuildable, onBuild }) => {
   const { x, y } = axialVertexToCartesian(side)
   const angle = angleOfSide(side)
   const length = radius / 1.5
@@ -14,12 +16,14 @@ const Road = ({ side, color }) => {
   return (
     <g transform={`translate(${x}, ${y}) rotate(${angle})`}>
       <rect
+        className={cx({ [styles.isBuildable]: isBuildable })}
         x={-length / 2}
         y={-height / 2}
         width={length}
         height={height}
         stroke="black"
-        fill={color}
+        fill={isBuildable ? 'purple' : color}
+        onClick={onBuild}
       />
     </g>
   )
@@ -27,7 +31,15 @@ const Road = ({ side, color }) => {
 
 Road.propTypes = {
   side: sidePropType,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
+  isBuildable: PropTypes.bool,
+  onBuild: PropTypes.func,
+}
+
+Road.defaultProps = {
+  color: null,
+  isBuildable: false,
+  onBuild: () => {},
 }
 
 export default Road

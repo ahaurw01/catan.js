@@ -15,6 +15,7 @@ export default class Home extends Component {
   state = {
     gameStateManager: null,
     game: null,
+    isPlacingRoad: false,
   }
 
   componentDidMount() {
@@ -65,7 +66,12 @@ export default class Home extends Component {
                   ))}
 
                   {game.sides.map(({ side, hash }) => (
-                    <Road color="red" side={side} key={hash} />
+                    <Road
+                      isBuildable
+                      onBuild={() => console.log(hash)}
+                      side={side}
+                      key={hash}
+                    />
                   ))}
 
                   {game.ports.map(({ side, hash, goods, ratio }) => (
