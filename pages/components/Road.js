@@ -22,7 +22,7 @@ const Road = ({ side, color, isBuildable, onBuild, onRemove }) => {
         width={length}
         height={height}
         stroke="black"
-        fill={isBuildable ? 'purple' : color}
+        fill={isBuildable ? 'yellow' : color}
         onClick={onBuild}
         onContextMenu={(e) => {
           e.preventDefault()
