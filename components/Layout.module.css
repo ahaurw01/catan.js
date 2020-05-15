@@ -20,5 +20,14 @@
 }
 
 .item {
+  display: flex;
   flex: 0 0 200px;
+}
+
+.item > * {
+  flex: 1;
+}
+
+.action {
+  display: flex;
 }

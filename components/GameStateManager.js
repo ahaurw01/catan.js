@@ -28,6 +28,7 @@ class GameStateManager {
         game: this.game,
         player: this.player,
         hasSettlement: this.hasSettlement,
+        myResources: this.myResources,
       })
     )
   }
@@ -57,6 +58,11 @@ class GameStateManager {
     this.socket.emit('upgrade to city', { hash })
   }
 
+  changeGood = ({ diff, good }) => {
+    if (!this.player) return
+    this.socket.emit('update good', { color: this.player, good, diff })
+  }
+
   get hasSettlement() {
     return (
       this.game.vertices.filter(
@@ -66,6 +72,12 @@ class GameStateManager {
           building.type === 'settlement'
       ).length > 0
     )
+  }
+
+  get myResources() {
+    if (!this.player) return null
+
+    return this.game.resources[this.player]
   }
 }
 

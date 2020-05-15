@@ -51,6 +51,11 @@ function wireItUp(io) {
       building.type = 'city'
       updateWithGame(io)
     })
+
+    socket.on('update good', ({ color, good, diff }) => {
+      gameState.resources[color][good] += diff
+      updateWithGame(io)
+    })
   })
 }
 
@@ -96,6 +101,7 @@ function makeGameState() {
   gameState.vertices = makeAllVertices(tilePoints)
   gameState.sides = makeAllSides(tilePoints)
   gameState.ports = makePorts()
+  gameState.resources = makeResources()
 
   return gameState
 }
@@ -179,6 +185,22 @@ function makePorts() {
     { side: [axial(-1, -1), axial(-2, -1)], goods: 'lumber', ratio: 2 },
     { side: [axial(-1, 3), axial(-1, 2)], goods: 'any', ratio: 3 },
   ].map((o) => ({ ...o, hash: hash(o.side) }))
+}
+
+function makeResources() {
+  return ['red', 'blue', 'white', 'orage', 'green'].reduce(
+    (resources, color) => {
+      resources[color] = {
+        brick: 0,
+        grain: 0,
+        lumber: 0,
+        ore: 0,
+        wool: 0,
+      }
+      return resources
+    },
+    {}
+  )
 }
 
 function hash(points) {

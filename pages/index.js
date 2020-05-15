@@ -7,6 +7,7 @@ import Port from '../components/Port'
 import Robber from '../components/Robber'
 import Layout from '../components/Layout'
 import GameActions from '../components/GameActions'
+import GameResources from '../components/GameResources'
 import { Component } from 'react'
 import GameStateManager from '../components/GameStateManager'
 
@@ -23,10 +24,12 @@ export default class Home extends Component {
 
   componentDidMount() {
     const gameStateManager = new GameStateManager()
-    gameStateManager.onUpdateGame(({ game, player, hasSettlement }) => {
-      console.log(game)
-      this.setState({ game, player, hasSettlement })
-    })
+    gameStateManager.onUpdateGame(
+      ({ game, player, hasSettlement, myResources }) => {
+        console.log(game)
+        this.setState({ game, player, hasSettlement, myResources })
+      }
+    )
     this.setState({
       gameStateManager,
     })
@@ -41,6 +44,7 @@ export default class Home extends Component {
       isUpgradingToCity,
       player,
       hasSettlement,
+      myResources,
     } = this.state
     return (
       <div className="container">
@@ -157,7 +161,13 @@ export default class Home extends Component {
                   }}
                 />
               }
-              itemSlot={<div />}
+              itemSlot={
+                <GameResources
+                  player={player}
+                  goods={myResources}
+                  onChangeGood={gameStateManager.changeGood}
+                />
+              }
             />
           )}
         </main>

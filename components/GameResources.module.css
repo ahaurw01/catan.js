@@ -1,0 +1,18 @@
+.goods {
+  display: flex;
+}
+
+.goodSection {
+  display: flex;
+  align-items: center;
+}
+.goodSection:first-of-type {
+  margin-left: -10px;
+}
+.goodSection:last-of-type {
+  margin-right: -10px;
+}
+
+.divider {
+  height: 75% !important;
+}
