@@ -34,26 +34,30 @@ class GameStateManager {
 
   buildRoad = (hash) => {
     if (!this.player) return
-    this.socket.emit('build road', { color: this.player, sideHash: hash })
+    this.socket.emit('build road', { color: this.player, hash })
   }
 
   removeRoad = (hash) => {
     if (!this.player) return
-    this.socket.emit('remove road', { sideHash: hash })
+    this.socket.emit('remove road', { hash })
   }
 
   buildSettlement = (hash) => {
     if (!this.player) return
-    this.socket.emit('build settlement', { color: this.player, sideHash: hash })
+    this.socket.emit('build settlement', { color: this.player, hash })
   }
 
   removeBuilding = (hash) => {
     if (!this.player) return
-    this.socket.emit('remove building', { sideHash: hash })
+    this.socket.emit('remove building', { hash })
+  }
+
+  upgradeToCity = (hash) => {
+    if (!this.player) return
+    this.socket.emit('upgrade to city', { hash })
   }
 
   get hasSettlement() {
-    console.log('check for', this.player)
     return (
       this.game.vertices.filter(
         ({ building }) =>

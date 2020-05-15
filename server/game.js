@@ -22,26 +22,33 @@ function wireItUp(io) {
       updateWithGame(io)
     })
 
-    socket.on('build road', ({ color, sideHash }) => {
-      _.find(gameState.sides, { hash: sideHash }).road = { color }
+    socket.on('build road', ({ color, hash }) => {
+      _.find(gameState.sides, { hash }).road = { color }
       updateWithGame(io)
     })
 
-    socket.on('remove road', ({ sideHash }) => {
-      _.find(gameState.sides, { hash: sideHash }).road = null
+    socket.on('remove road', ({ hash }) => {
+      _.find(gameState.sides, { hash }).road = null
       updateWithGame(io)
     })
 
-    socket.on('build settlement', ({ color, sideHash }) => {
-      _.find(gameState.vertices, { hash: sideHash }).building = {
+    socket.on('build settlement', ({ color, hash }) => {
+      _.find(gameState.vertices, { hash }).building = {
         color,
         type: 'settlement',
       }
       updateWithGame(io)
     })
 
-    socket.on('remove building', ({ sideHash }) => {
-      _.find(gameState.vertices, { hash: sideHash }).building = null
+    socket.on('remove building', ({ hash }) => {
+      _.find(gameState.vertices, { hash }).building = null
+      updateWithGame(io)
+    })
+
+    socket.on('upgrade to city', ({ hash }) => {
+      const { building } = _.find(gameState.vertices, { hash })
+      if (!building) return
+      building.type = 'city'
       updateWithGame(io)
     })
   })

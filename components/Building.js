@@ -11,6 +11,7 @@ const Building = ({
   isUpgradeable,
   onBuild,
   onRemove,
+  onUpgrade,
 }) => {
   const { x, y } = axialVertexToCartesian(vertex)
   const width = type === 'settlement' ? radius / 3 : radius / 2
@@ -25,7 +26,7 @@ const Building = ({
         height={width}
         stroke="black"
         fill={isBuildable ? 'yellow' : color}
-        onClick={onBuild}
+        onClick={isBuildable ? onBuild : isUpgradeable ? onUpgrade : undefined}
         onContextMenu={(e) => {
           e.preventDefault()
           onRemove()

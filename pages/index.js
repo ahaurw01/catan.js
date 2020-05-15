@@ -80,6 +80,10 @@ export default class Home extends Component {
                           isUpgradeable={
                             player === building.color && isUpgradingToCity
                           }
+                          onUpgrade={() => {
+                            gameStateManager.upgradeToCity(hash)
+                            this.setState({ isUpgradingToCity: false })
+                          }}
                         />
                       )
                     }
