@@ -15,13 +15,22 @@ class GameStateManager {
 
   setPlayer = (player) => {
     this.player = player
+    this.updateGame()
   }
 
   onUpdateGame = (handler) => this.handlers.add(handler)
   offUpdateGame = (handler) => this.handlers.delete(handler)
 
-  updateGame = (game) =>
-    Array.from(this.handlers).forEach((handler) => handler(game))
+  updateGame = (game) => {
+    if (game) this.game = game
+    Array.from(this.handlers).forEach((handler) =>
+      handler({
+        game: this.game,
+        player: this.player,
+        hasSettlement: this.hasSettlement,
+      })
+    )
+  }
 
   buildRoad = (hash) => {
     if (!this.player) return
@@ -41,6 +50,18 @@ class GameStateManager {
   removeBuilding = (hash) => {
     if (!this.player) return
     this.socket.emit('remove building', { sideHash: hash })
+  }
+
+  get hasSettlement() {
+    console.log('check for', this.player)
+    return (
+      this.game.vertices.filter(
+        ({ building }) =>
+          building &&
+          building.color === this.player &&
+          building.type === 'settlement'
+      ).length > 0
+    )
   }
 }
 

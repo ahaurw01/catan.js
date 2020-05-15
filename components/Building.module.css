@@ -3,7 +3,7 @@
   pointer-events: none;
 }
 
-.isBuildable {
+.hark {
   cursor: pointer;
   animation: pulse linear 1s infinite;
 }

@@ -14,15 +14,18 @@ export default class Home extends Component {
   state = {
     gameStateManager: null,
     game: null,
+    player: null,
+    hasSettlement: false,
     isBuildingRoad: false,
     isBuildingSettlement: false,
+    isUpgradingToCity: false,
   }
 
   componentDidMount() {
     const gameStateManager = new GameStateManager()
-    gameStateManager.onUpdateGame((game) => {
+    gameStateManager.onUpdateGame(({ game, player, hasSettlement }) => {
       console.log(game)
-      this.setState({ game })
+      this.setState({ game, player, hasSettlement })
     })
     this.setState({
       gameStateManager,
@@ -35,6 +38,9 @@ export default class Home extends Component {
       game,
       isBuildingRoad,
       isBuildingSettlement,
+      isUpgradingToCity,
+      player,
+      hasSettlement,
     } = this.state
     return (
       <div className="container">
@@ -71,6 +77,9 @@ export default class Home extends Component {
                           key={hash}
                           color={building.color}
                           onRemove={() => gameStateManager.removeBuilding(hash)}
+                          isUpgradeable={
+                            player === building.color && isUpgradingToCity
+                          }
                         />
                       )
                     }
@@ -135,6 +144,13 @@ export default class Home extends Component {
                     }))
                   }}
                   isBuildingSettlement={isBuildingSettlement}
+                  canUpgradeToCity={hasSettlement}
+                  isUpgradingToCity={isUpgradingToCity}
+                  onUpgradeToCity={() => {
+                    this.setState(({ isUpgradingToCity }) => ({
+                      isUpgradingToCity: !isUpgradingToCity,
+                    }))
+                  }}
                 />
               }
               itemSlot={<div />}

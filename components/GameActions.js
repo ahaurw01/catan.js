@@ -19,6 +19,9 @@ const GameActions = ({
   onBuildRoad,
   isBuildingSettlement,
   onBuildSettlement,
+  canUpgradeToCity,
+  isUpgradingToCity,
+  onUpgradeToCity,
 }) => {
   const [player, setPlayer] = useState('spectator')
   const [screenName, setScreenName] = useState('')
@@ -79,7 +82,7 @@ const GameActions = ({
               <Button
                 active={isBuildingRoad}
                 onClick={onBuildRoad}
-                disabled={isBuildingSettlement}
+                disabled={isBuildingSettlement || isUpgradingToCity}
               >
                 Build Road
               </Button>
@@ -87,10 +90,20 @@ const GameActions = ({
               <Button
                 active={isBuildingSettlement}
                 onClick={onBuildSettlement}
-                disabled={isBuildingRoad}
+                disabled={isBuildingRoad || isUpgradingToCity}
               >
                 Build Settlement
               </Button>
+
+              {canUpgradeToCity && (
+                <Button
+                  active={isUpgradingToCity}
+                  onClick={onUpgradeToCity}
+                  disabled={isBuildingRoad || isBuildingSettlement}
+                >
+                  Upgrade to City
+                </Button>
+              )}
             </div>
           </Fieldset>
         )}
@@ -107,6 +120,9 @@ GameActions.propTypes = {
   onBuildRoad: PropTypes.func.isRequired,
   isBuildingSettlement: PropTypes.bool.isRequired,
   onBuildSettlement: PropTypes.func.isRequired,
+  canUpgradeToCity: PropTypes.bool.isRequired,
+  isUpgradingToCity: PropTypes.bool.isRequired,
+  onUpgradeToCity: PropTypes.func.isRequired,
 }
 
 export default GameActions
