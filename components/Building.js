@@ -19,13 +19,17 @@ const Building = ({
   return (
     <g transform={`translate(${x}, ${y})`}>
       <rect
-        className={cx({ [styles.hark]: isBuildable || isUpgradeable })}
+        className={cx({
+          [styles.pointer]: isBuildable || isUpgradeable,
+          [styles.pulse]: isUpgradeable,
+        })}
         x={-width / 2}
         y={-width / 2}
         width={width}
         height={width}
         stroke="black"
-        fill={isBuildable ? 'yellow' : color}
+        strokeWidth={radius / 40}
+        fill={isBuildable ? 'rgba(255,255,255,0.5)' : color}
         onClick={isBuildable ? onBuild : isUpgradeable ? onUpgrade : undefined}
         onContextMenu={(e) => {
           e.preventDefault()

@@ -3,8 +3,11 @@
   pointer-events: none;
 }
 
-.hark {
+.pointer {
   cursor: pointer;
+}
+
+.pulse {
   animation: pulse linear 1s infinite;
 }
 
