@@ -10,6 +10,7 @@ import {
   Window,
   WindowContent,
 } from 'react95'
+import { omit } from 'lodash'
 
 const GameActions = ({
   onSetName,
@@ -22,9 +23,25 @@ const GameActions = ({
   canUpgradeToCity,
   isUpgradingToCity,
   onUpgradeToCity,
+  isMovingRobber,
+  onMoveRobber,
 }) => {
   const [player, setPlayer] = useState('spectator')
   const [screenName, setScreenName] = useState('')
+
+  const allBoolsBut = (ignore) => {
+    return Object.values(
+      omit(
+        {
+          isBuildingRoad,
+          isBuildingSettlement,
+          isUpgradingToCity,
+          isMovingRobber,
+        },
+        ignore
+      )
+    ).reduce((result, bool) => result || bool, false)
+  }
 
   const playerTemplate = ({ label, value }) => (
     <span className={styles.playerOption}>
@@ -82,7 +99,7 @@ const GameActions = ({
               <Button
                 active={isBuildingRoad}
                 onClick={onBuildRoad}
-                disabled={isBuildingSettlement || isUpgradingToCity}
+                disabled={allBoolsBut('isBuildingRoad')}
               >
                 Build Road
               </Button>
@@ -90,7 +107,7 @@ const GameActions = ({
               <Button
                 active={isBuildingSettlement}
                 onClick={onBuildSettlement}
-                disabled={isBuildingRoad || isUpgradingToCity}
+                disabled={allBoolsBut('isBuildingSettlement')}
               >
                 Build Settlement
               </Button>
@@ -99,11 +116,19 @@ const GameActions = ({
                 <Button
                   active={isUpgradingToCity}
                   onClick={onUpgradeToCity}
-                  disabled={isBuildingRoad || isBuildingSettlement}
+                  disabled={allBoolsBut('isUpgradingToCity')}
                 >
                   Upgrade to City
                 </Button>
               )}
+
+              <Button
+                active={isMovingRobber}
+                onClick={onMoveRobber}
+                disabled={allBoolsBut('isMovingRobber')}
+              >
+                Move Robber
+              </Button>
             </div>
           </Fieldset>
         )}
@@ -123,6 +148,8 @@ GameActions.propTypes = {
   canUpgradeToCity: PropTypes.bool.isRequired,
   isUpgradingToCity: PropTypes.bool.isRequired,
   onUpgradeToCity: PropTypes.func.isRequired,
+  isMovingRobber: PropTypes.bool.isRequired,
+  onMoveRobber: PropTypes.func.isRequired,
 }
 
 export default GameActions

@@ -56,6 +56,13 @@ function wireItUp(io) {
       gameState.resources[color][good] += diff
       updateWithGame(io)
     })
+
+    socket.on('move robber', ({ hash }) => {
+      gameState.tilePoints.forEach((point) => {
+        point.robber = point.hash === hash
+      })
+      updateWithGame(io)
+    })
   })
 }
 
@@ -96,6 +103,7 @@ function makeGameState() {
     dieNumber:
       tileTypes[index] === 'desert' ? null : dieNumbers[dieNumberIndex++],
     robber: tileTypes[index] === 'desert',
+    hash: hash([point]),
   }))
 
   gameState.vertices = makeAllVertices(tilePoints)

@@ -20,6 +20,7 @@ export default class Home extends Component {
     isBuildingRoad: false,
     isBuildingSettlement: false,
     isUpgradingToCity: false,
+    isMovingRobber: false,
   }
 
   componentDidMount() {
@@ -42,6 +43,7 @@ export default class Home extends Component {
       isBuildingRoad,
       isBuildingSettlement,
       isUpgradingToCity,
+      isMovingRobber,
       player,
       hasSettlement,
       myResources,
@@ -67,9 +69,23 @@ export default class Home extends Component {
                       dieNumber={dieNumber}
                     />
                   ))}
-                  <Robber
-                    {...game.tilePoints.filter(({ robber }) => robber)[0]}
-                  />
+
+                  {game.tilePoints.map(({ q, r, robber, hash }) =>
+                    isMovingRobber ? (
+                      <Robber
+                        key={hash}
+                        q={q}
+                        r={r}
+                        isMoveable={!robber}
+                        onMove={() => {
+                          gameStateManager.moveRobber(hash)
+                          this.setState({ isMovingRobber: false })
+                        }}
+                      />
+                    ) : robber ? (
+                      <Robber q={q} r={r} key={hash} />
+                    ) : null
+                  )}
 
                   {game.vertices.map(({ vertex, hash, building }) => {
                     if (!building && !isBuildingSettlement) return null
@@ -159,6 +175,12 @@ export default class Home extends Component {
                       isUpgradingToCity: !isUpgradingToCity,
                     }))
                   }}
+                  isMovingRobber={isMovingRobber}
+                  onMoveRobber={() =>
+                    this.setState(({ isMovingRobber }) => ({
+                      isMovingRobber: !isMovingRobber,
+                    }))
+                  }
                 />
               }
               itemSlot={

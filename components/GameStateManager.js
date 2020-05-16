@@ -63,6 +63,11 @@ class GameStateManager {
     this.socket.emit('update good', { color: this.player, good, diff })
   }
 
+  moveRobber = (hash) => {
+    if (!this.player) return
+    this.socket.emit('move robber', { hash })
+  }
+
   get hasSettlement() {
     return (
       this.game.vertices.filter(
