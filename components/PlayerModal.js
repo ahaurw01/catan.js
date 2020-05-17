@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
+import Draggable from 'react-draggable'
 import {
   Window,
   WindowContent,
@@ -52,66 +53,68 @@ const PlayerModal = ({
         content: { border: 'none', background: 'none' },
       }}
     >
-      <Window>
-        <WindowHeader className={styles.windowHeader}>
-          <span>Choose Player</span>
-          <Button
-            className={styles.close}
-            size="sm"
-            square
-            onClick={onRequestClose}
-          >
-            <span className={styles.x}>x</span>
-          </Button>
-        </WindowHeader>
-        <WindowContent>
-          <form
-            className={styles.fieldsets}
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (newColor && screenName.trim()) {
-                onSetPlayer({
-                  color: newColor,
-                  name: screenName.trim(),
-                })
-              }
-            }}
-          >
-            <Fieldset label="Color">
-              <div className={styles.radios}>
-                {['red', 'blue', 'white', 'orange', 'green'].map((color) => (
-                  <Radio
-                    key={color}
-                    name="colors"
-                    checked={newColor === color}
-                    value={color}
-                    label={playerTemplate({ label: color, value: color })}
-                    onChange={() => setNewColor(color)}
-                  />
-                ))}
-              </div>
-            </Fieldset>
-            <div className={styles.rightFields}>
-              <Fieldset label="Screen Name" disabled={!newColor}>
-                <TextField
-                  value={screenName}
-                  onChange={({ target: { value } }) => setScreenName(value)}
-                  disabled={!newColor}
-                />
+      <Draggable handle={`.${styles.windowHeader}`}>
+        <Window>
+          <WindowHeader className={styles.windowHeader}>
+            <span>Choose Player</span>
+            <Button
+              className={styles.close}
+              size="sm"
+              square
+              onClick={onRequestClose}
+            >
+              <span className={styles.x}>x</span>
+            </Button>
+          </WindowHeader>
+          <WindowContent>
+            <form
+              className={styles.fieldsets}
+              onSubmit={(e) => {
+                e.preventDefault()
+                if (newColor && screenName.trim()) {
+                  onSetPlayer({
+                    color: newColor,
+                    name: screenName.trim(),
+                  })
+                }
+              }}
+            >
+              <Fieldset label="Color">
+                <div className={styles.radios}>
+                  {['red', 'blue', 'white', 'orange', 'green'].map((color) => (
+                    <Radio
+                      key={color}
+                      name="colors"
+                      checked={newColor === color}
+                      value={color}
+                      label={playerTemplate({ label: color, value: color })}
+                      onChange={() => setNewColor(color)}
+                    />
+                  ))}
+                </div>
               </Fieldset>
-              <div className={styles.buttons}>
-                <Button
-                  type="submit"
-                  disabled={!newColor || !screenName.trim()}
-                >
-                  OK
-                </Button>
-                <Button onClick={onRequestClose}>Cancel</Button>
+              <div className={styles.rightFields}>
+                <Fieldset label="Screen Name" disabled={!newColor}>
+                  <TextField
+                    value={screenName}
+                    onChange={({ target: { value } }) => setScreenName(value)}
+                    disabled={!newColor}
+                  />
+                </Fieldset>
+                <div className={styles.buttons}>
+                  <Button
+                    type="submit"
+                    disabled={!newColor || !screenName.trim()}
+                  >
+                    OK
+                  </Button>
+                  <Button onClick={onRequestClose}>Cancel</Button>
+                </div>
               </div>
-            </div>
-          </form>
-        </WindowContent>
-      </Window>
+            </form>
+          </WindowContent>
+        </Window>
+      </Draggable>
     </ReactModal>
   )
 }
