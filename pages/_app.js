@@ -4,6 +4,13 @@ import Modal from 'react-modal'
 
 const ResetStyles = createGlobalStyle`
   ${reset}
+  @font-face {
+    font-family: 'MSSansSerif';
+    src: url('/MS-Sans-Serif.ttf');
+  }
+  * {
+    font-family: MSSansSerif;
+  }
 `
 
 Modal.setAppElement('#__next')
