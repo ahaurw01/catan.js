@@ -22,13 +22,8 @@ function wireItUp(io) {
       updateWithGame(io)
     })
 
-    socket.on('remove player', ({ color }) => {
+    socket.on('kick player', ({ color }) => {
       delete gameState.players[color]
-      updateWithGame(io)
-    })
-
-    socket.on('set name', ({ color, name }) => {
-      gameState.players[color] = name
       updateWithGame(io)
     })
 

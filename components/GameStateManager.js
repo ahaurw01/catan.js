@@ -15,9 +15,11 @@ class GameStateManager {
 
   setPlayer = ({ color, name }) => {
     localStorage.setItem('player', color)
-    this.socket.emit('set player', { color, name })
+    if (this.player && this.player !== color) {
+      this.socket.emit('kick player', { color: this.player })
+    }
     this.player = color
-    this.updateGame()
+    this.socket.emit('set player', { color, name })
   }
 
   onUpdateGame = (handler) => this.handlers.add(handler)

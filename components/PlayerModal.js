@@ -23,11 +23,15 @@ const PlayerModal = ({
 }) => {
   const [newColor, setNewColor] = useState(chosenColor)
   const [screenName, setScreenName] = useState(
-    chosenColor ? players[chosenColor] : ''
+    chosenColor && players[chosenColor] ? players[chosenColor] : ''
   )
   useEffect(() => {
     setNewColor(chosenColor)
   }, [isOpen])
+
+  useEffect(() => {
+    setScreenName(players[newColor] || '')
+  }, [players, newColor])
 
   const playerTemplate = ({ label, value }) => (
     <span className={styles.playerOption}>
