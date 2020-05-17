@@ -12,6 +12,12 @@
   height: 20px;
 }
 
+.chosenColor {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
 .spaceRight {
   margin-right: 5px;
 }

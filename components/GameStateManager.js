@@ -7,14 +7,16 @@ class GameStateManager {
     this.socket.on('game', this.updateGame)
   }
 
-  handlers = new Set()
-
-  setName = ({ color, name }) => {
-    this.socket.emit('set name', { color, name })
+  close = () => {
+    this.socket.close()
   }
 
-  setPlayer = (player) => {
-    this.player = player
+  handlers = new Set()
+
+  setPlayer = ({ color, name }) => {
+    localStorage.setItem('player', color)
+    this.socket.emit('set player', { color, name })
+    this.player = color
     this.updateGame()
   }
 
@@ -23,6 +25,9 @@ class GameStateManager {
 
   updateGame = (game) => {
     if (game) this.game = game
+    if (!this.player) {
+      this.player = localStorage.getItem('player')
+    }
     Array.from(this.handlers).forEach((handler) =>
       handler({
         game: this.game,

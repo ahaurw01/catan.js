@@ -36,6 +36,10 @@ export default class Home extends Component {
     })
   }
 
+  componentWillUnmount() {
+    this.state.gameStateManager.close()
+  }
+
   render() {
     const {
       gameStateManager,
@@ -153,8 +157,11 @@ export default class Home extends Component {
               }
               actionSlot={
                 <GameActions
-                  onSetName={gameStateManager.setName}
-                  onSetPlayer={gameStateManager.setPlayer}
+                  chosenColor={player}
+                  onSetPlayer={({ color, name }) => {
+                    gameStateManager.setPlayer({ color, name })
+                    this.setState({ player: color })
+                  }}
                   players={game.players}
                   onBuildRoad={() => {
                     this.setState(({ isBuildingRoad }) => ({

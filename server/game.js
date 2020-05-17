@@ -17,6 +17,16 @@ function wireItUp(io) {
     socket.emit('log', 'yo dawg')
     updateWithGame(socket)
 
+    socket.on('set player', ({ color, name }) => {
+      gameState.players[color] = name
+      updateWithGame(io)
+    })
+
+    socket.on('remove player', ({ color }) => {
+      delete gameState.players[color]
+      updateWithGame(io)
+    })
+
     socket.on('set name', ({ color, name }) => {
       gameState.players[color] = name
       updateWithGame(io)
@@ -67,7 +77,13 @@ function wireItUp(io) {
 }
 
 function makeGameState() {
-  const gameState = { players: {} }
+  const gameState = {
+    players: {
+      // red: 'settlerboi',
+      // orange: 'crush-it',
+      // if color is not used, it is not present here.
+    },
+  }
 
   // prettier-ignore
   const tileTypes = _.shuffle([

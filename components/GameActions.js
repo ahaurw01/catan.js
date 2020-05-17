@@ -11,9 +11,10 @@ import {
   WindowContent,
 } from 'react95'
 import { omit } from 'lodash'
+import PlayerModal from './PlayerModal'
 
 const GameActions = ({
-  onSetName,
+  chosenColor,
   onSetPlayer,
   players,
   isBuildingRoad,
@@ -26,8 +27,7 @@ const GameActions = ({
   isMovingRobber,
   onMoveRobber,
 }) => {
-  const [player, setPlayer] = useState('spectator')
-  const [screenName, setScreenName] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const allBoolsBut = (ignore) => {
     return Object.values(
@@ -43,43 +43,33 @@ const GameActions = ({
     ).reduce((result, bool) => result || bool, false)
   }
 
-  const playerTemplate = ({ label, value }) => (
-    <span className={styles.playerOption}>
-      {value === 'spectator' ? (
-        <span className={styles.spaceRight}>👀</span>
-      ) : (
-        <span
-          className={cx(styles.color, styles.spaceRight)}
-          style={{ background: value }}
-        />
-      )}
-      <span>{label}</span>
-    </span>
-  )
-
   return (
     <Window shadow={false}>
       <WindowContent>
         <Fieldset label="Player Select">
-          <Select
-            items={[
-              { label: 'Spectator', value: 'spectator' },
-              { label: 'Red', value: 'red' },
-              { label: 'Blue', value: 'blue' },
-              { label: 'White', value: 'white' },
-              { label: 'Orange', value: 'orange' },
-              { label: 'Green', value: 'green' },
-            ].map((i) => ({ label: playerTemplate(i), value: i.value }))}
-            onChange={(value) => {
-              setPlayer(value)
-              onSetPlayer(value)
-              setScreenName('')
+          <PlayerModal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            players={players}
+            chosenColor={chosenColor}
+            onSetPlayer={(details) => {
+              onSetPlayer(details)
+              setIsModalOpen(false)
             }}
-            width={150}
           />
+          {chosenColor && (
+            <div className={styles.chosenColor}>
+              <span
+                className={cx(styles.color, styles.spaceRight)}
+                style={{ background: chosenColor }}
+              />{' '}
+              {players[chosenColor]}
+            </div>
+          )}
+          <Button onClick={() => setIsModalOpen(true)}>Choose Player</Button>
         </Fieldset>
 
-        {player !== 'spectator' && (
+        {/* {player !== 'spectator' && (
           <Fieldset label="Screen Name">
             <TextField
               value={screenName || players[player] || ''}
@@ -91,9 +81,9 @@ const GameActions = ({
               width={150}
             />
           </Fieldset>
-        )}
+        )} */}
 
-        {player !== 'spectator' && (
+        {chosenColor && (
           <Fieldset label="Build">
             <div className={styles.buttons}>
               <Button
@@ -138,7 +128,7 @@ const GameActions = ({
 }
 
 GameActions.propTypes = {
-  onSetName: PropTypes.func.isRequired,
+  chosenColor: PropTypes.string,
   onSetPlayer: PropTypes.func.isRequired,
   players: PropTypes.shape().isRequired,
   isBuildingRoad: PropTypes.bool.isRequired,
@@ -150,6 +140,10 @@ GameActions.propTypes = {
   onUpgradeToCity: PropTypes.func.isRequired,
   isMovingRobber: PropTypes.bool.isRequired,
   onMoveRobber: PropTypes.func.isRequired,
+}
+
+GameActions.defaultProps = {
+  chosenColor: null,
 }
 
 export default GameActions
