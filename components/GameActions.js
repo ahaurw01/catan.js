@@ -66,7 +66,9 @@ const GameActions = ({
               {players[chosenColor]}
             </div>
           )}
-          <Button onClick={() => setIsModalOpen(true)}>Choose Player</Button>
+          <Button onClick={() => setIsModalOpen(true)}>
+            {chosenColor ? 'Change Player' : 'Choose Player'}
+          </Button>
         </Fieldset>
 
         {/* {player !== 'spectator' && (
