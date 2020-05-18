@@ -68,15 +68,33 @@ function wireItUp(io) {
       })
       updateWithGame(io)
     })
+
+    socket.on('roll', ({ color }) => {
+      gameState.roll = {
+        one: _.random(1, 6),
+        two: _.random(1, 6),
+        id: gameState.roll.id + 1,
+      }
+      gameState.logs.push(
+        `${color} rolled ${gameState.roll.one}, ${gameState.roll.two}`
+      )
+      updateWithGame(io)
+    })
   })
 }
 
 function makeGameState() {
   const gameState = {
+    logs: [],
     players: {
       // red: 'settlerboi',
       // orange: 'crush-it',
       // if color is not used, it is not present here.
+    },
+    roll: {
+      one: 6,
+      two: 6,
+      id: 0,
     },
   }
 

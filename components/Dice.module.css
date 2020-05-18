@@ -1,0 +1,17 @@
+.wrapper {
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 30px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.expanded {
+  cursor: default;
+  right: 50%;
+  bottom: 50%;
+  transform: translate(50%, 50%) scale(2);
+}
