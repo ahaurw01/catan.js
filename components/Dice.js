@@ -25,7 +25,7 @@ const Dice = ({ roll1, roll2, id, onRoll }) => {
       }}
     >
       <Die number={roll1} />
-      <Die number={roll2} />
+      <Die number={roll2} inverted />
     </div>
   )
 }
