@@ -50,7 +50,7 @@
 .face {
   margin: 5px;
   padding: 2px;
-  background-color: red;
+  background-color: #de0000;
   width: 45px;
   height: 45px;
   object-fit: contain;
@@ -64,13 +64,13 @@
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background-color: yellow;
+  background-color: #ffff18;
 }
 
 .invert.face {
-  background-color: yellow;
+  background-color: #ffff18;
 }
 
 .invert .pip {
-  background-color: red;
+  background-color: #de0000;
 }

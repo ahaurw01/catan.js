@@ -56,7 +56,7 @@ export default class Home extends Component {
     return (
       <div className="container">
         <Head>
-          <title>Catan</title>
+          <title>Settlers.exe</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
