@@ -1,13 +1,30 @@
+.mainWindow {
+  width: 100%;
+}
+
+.windowHeader {
+  margin: 0 !important;
+}
+
+.windowContent {
+  padding: 12px !important;
+}
+
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 65px);
   overflow: hidden;
 }
 
 .actionBoardWrapper {
   display: flex;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 265px);
+}
+
+.cutout {
+  width: 100%;
+  height: calc(100vh - 305px);
 }
 
 .board {

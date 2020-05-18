@@ -1,26 +1,30 @@
 import PropTypes from 'prop-types'
 import styles from './Layout.module.css'
-import { Cutout, Window, WindowContent } from 'react95'
+import { Cutout, Window, WindowContent, WindowHeader } from 'react95'
 
 const Layout = ({ boardSlot, actionSlot, itemSlot }) => (
-  <div className={styles.layout}>
-    <div className={styles.actionBoardWrapper}>
-      <div className={styles.action}>{actionSlot}</div>
-      <div className={styles.board}>
-        <Window>
-          <WindowContent>
-            <Cutout
-              shadow={false}
-              style={{ width: '100%', height: 'calc(100vh - 240px)' }}
-            >
-              {boardSlot}
-            </Cutout>
-          </WindowContent>
-        </Window>
+  <Window className={styles.mainWindow}>
+    <WindowHeader className={styles.windowHeader}>
+      <span>C:\Games\Settlers.exe</span>
+    </WindowHeader>
+    <WindowContent className={styles.windowContent}>
+      <div className={styles.layout}>
+        <div className={styles.actionBoardWrapper}>
+          <div className={styles.action}>{actionSlot}</div>
+          <div className={styles.board}>
+            <Window>
+              <WindowContent>
+                <Cutout shadow={false} className={styles.cutout}>
+                  {boardSlot}
+                </Cutout>
+              </WindowContent>
+            </Window>
+          </div>
+        </div>
+        <div className={styles.item}>{itemSlot}</div>
       </div>
-    </div>
-    <div className={styles.item}>{itemSlot}</div>
-  </div>
+    </WindowContent>
+  </Window>
 )
 
 Layout.propTypes = {
