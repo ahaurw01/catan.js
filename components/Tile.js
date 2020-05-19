@@ -24,6 +24,15 @@ const icons = {
   fields: Grain,
 }
 
+const fillForType = {
+  hills: 'url(#brick)',
+  mountains: 'url(#ore)',
+  forest: 'url(#forest)',
+  desert: 'url(#minsweeper)',
+  pasture: 'url(#pasture)',
+  fields: 'url(#desert)',
+}
+
 const Tile = ({ q, r, type, dieNumber }) => {
   const { x, y } = axialToCartesian({ q, r })
   const points = makeHexagonPoints({ x, y })
@@ -40,7 +49,7 @@ const Tile = ({ q, r, type, dieNumber }) => {
     <g>
       <polygon
         points={points}
-        fill={colors[type]}
+        fill={fillForType[type] || colors[type]}
         strokeWidth="5"
         stroke="#333"
       />
