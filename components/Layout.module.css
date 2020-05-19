@@ -14,12 +14,11 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 65px);
-  overflow: hidden;
 }
 
 .actionBoardWrapper {
   display: flex;
-  height: calc(100vh - 265px);
+  height: calc(100vh - 226px);
 }
 
 .cutout {
@@ -29,16 +28,18 @@
 
 .board {
   display: flex;
+  flex-direction: column;
   flex: 1;
+  margin-left: 10px;
 }
 
-.board > * {
-  flex: 1;
+.board > :last-child {
+  height: calc(100% - 33px);
 }
 
 .item {
   display: flex;
-  flex: 0 0 200px;
+  flex: 0 0 160px;
 }
 
 .item > * {

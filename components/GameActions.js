@@ -2,14 +2,7 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styles from './GameActions.module.css'
-import {
-  Button,
-  Fieldset,
-  Select,
-  TextField,
-  Window,
-  WindowContent,
-} from 'react95'
+import { Button, Fieldset } from 'react95'
 import { omit } from 'lodash'
 import PlayerModal from './PlayerModal'
 
@@ -44,20 +37,29 @@ const GameActions = ({
   }
 
   return (
-    <Window shadow={false}>
-      <WindowContent>
-        <Fieldset label="Player Select">
-          <PlayerModal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-            players={players}
-            chosenColor={chosenColor}
-            onSetPlayer={(details) => {
-              onSetPlayer(details)
-              setIsModalOpen(false)
-            }}
-          />
-          {chosenColor && (
+    <div className={styles.wrapper}>
+      <Fieldset label="Players">
+        <PlayerModal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+          players={players}
+          chosenColor={chosenColor}
+          onSetPlayer={(details) => {
+            onSetPlayer(details)
+            setIsModalOpen(false)
+          }}
+        />
+        {/* Players */}
+        {Object.entries(players).map(([color, name]) => (
+          <div key={color} className={styles.chosenColor}>
+            <span
+              className={cx(styles.color, styles.spaceRight)}
+              style={{ background: color }}
+            />{' '}
+            {name}
+          </div>
+        ))}
+        {/* {chosenColor && (
             <div className={styles.chosenColor}>
               <span
                 className={cx(styles.color, styles.spaceRight)}
@@ -65,67 +67,52 @@ const GameActions = ({
               />{' '}
               {players[chosenColor]}
             </div>
-          )}
-          <Button onClick={() => setIsModalOpen(true)}>
-            {chosenColor ? 'Change Player' : 'Choose Player'}
-          </Button>
+          )} */}
+        <Button onClick={() => setIsModalOpen(true)}>
+          {chosenColor ? 'Change Player' : 'Choose Player'}
+        </Button>
+      </Fieldset>
+
+      {chosenColor && (
+        <Fieldset label="Build">
+          <div className={styles.buttons}>
+            <Button
+              active={isBuildingRoad}
+              onClick={onBuildRoad}
+              disabled={allBoolsBut('isBuildingRoad')}
+            >
+              Build Road
+            </Button>
+
+            <Button
+              active={isBuildingSettlement}
+              onClick={onBuildSettlement}
+              disabled={allBoolsBut('isBuildingSettlement')}
+            >
+              Build Settlement
+            </Button>
+
+            {canUpgradeToCity && (
+              <Button
+                active={isUpgradingToCity}
+                onClick={onUpgradeToCity}
+                disabled={allBoolsBut('isUpgradingToCity')}
+              >
+                Upgrade to City
+              </Button>
+            )}
+
+            <Button
+              active={isMovingRobber}
+              onClick={onMoveRobber}
+              disabled={allBoolsBut('isMovingRobber')}
+            >
+              Move Robber
+            </Button>
+          </div>
         </Fieldset>
-
-        {/* {player !== 'spectator' && (
-          <Fieldset label="Screen Name">
-            <TextField
-              value={screenName || players[player] || ''}
-              onChange={(e) => {
-                const { value } = e.target
-                setScreenName(e.target.value)
-                onSetName({ color: player, name: value })
-              }}
-              width={150}
-            />
-          </Fieldset>
-        )} */}
-
-        {chosenColor && (
-          <Fieldset label="Build">
-            <div className={styles.buttons}>
-              <Button
-                active={isBuildingRoad}
-                onClick={onBuildRoad}
-                disabled={allBoolsBut('isBuildingRoad')}
-              >
-                Build Road
-              </Button>
-
-              <Button
-                active={isBuildingSettlement}
-                onClick={onBuildSettlement}
-                disabled={allBoolsBut('isBuildingSettlement')}
-              >
-                Build Settlement
-              </Button>
-
-              {canUpgradeToCity && (
-                <Button
-                  active={isUpgradingToCity}
-                  onClick={onUpgradeToCity}
-                  disabled={allBoolsBut('isUpgradingToCity')}
-                >
-                  Upgrade to City
-                </Button>
-              )}
-
-              <Button
-                active={isMovingRobber}
-                onClick={onMoveRobber}
-                disabled={allBoolsBut('isMovingRobber')}
-              >
-                Move Robber
-              </Button>
-            </div>
-          </Fieldset>
-        )}
-      </WindowContent>
-    </Window>
+      )}
+    </div>
   )
 }
 

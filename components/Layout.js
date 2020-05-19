@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import styles from './Layout.module.css'
-import { Cutout, Window, WindowContent, WindowHeader } from 'react95'
+import { Window, WindowContent, WindowHeader } from 'react95'
 
 const Layout = ({ boardSlot, actionSlot, itemSlot }) => (
   <Window className={styles.mainWindow}>
@@ -11,15 +11,7 @@ const Layout = ({ boardSlot, actionSlot, itemSlot }) => (
       <div className={styles.layout}>
         <div className={styles.actionBoardWrapper}>
           <div className={styles.action}>{actionSlot}</div>
-          <div className={styles.board}>
-            <Window>
-              <WindowContent>
-                <Cutout shadow={false} className={styles.cutout}>
-                  {boardSlot}
-                </Cutout>
-              </WindowContent>
-            </Window>
-          </div>
+          <div className={styles.board}>{boardSlot}</div>
         </div>
         <div className={styles.item}>{itemSlot}</div>
       </div>

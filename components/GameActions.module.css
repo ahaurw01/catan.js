@@ -1,3 +1,8 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .playerOption {
   display: flex;
   justify-content: flex-start;

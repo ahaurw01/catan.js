@@ -24,3 +24,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - Show played dev cards
 - Cheat sheet card
 - Show all players and turn order
+- Finish ports
