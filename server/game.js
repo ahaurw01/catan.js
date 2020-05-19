@@ -13,27 +13,29 @@ function updateWithGame(io) {
 
 function wireItUp(io) {
   io.on('connection', (socket) => {
-    console.log('a user connected')
-    socket.emit('log', 'yo dawg')
     updateWithGame(socket)
 
     socket.on('set player', ({ color, name }) => {
       gameState.players[color] = name
+      gameState.logs.push(`${color} set to ${name}`)
       updateWithGame(io)
     })
 
     socket.on('kick player', ({ color }) => {
       delete gameState.players[color]
+      gameState.logs.push(`${color} removed from game`)
       updateWithGame(io)
     })
 
     socket.on('build road', ({ color, hash }) => {
       _.find(gameState.sides, { hash }).road = { color }
+      gameState.logs.push(`${color} built road at ${hash}`)
       updateWithGame(io)
     })
 
     socket.on('remove road', ({ hash }) => {
       _.find(gameState.sides, { hash }).road = null
+      gameState.logs.push(`road removed from ${hash}`)
       updateWithGame(io)
     })
 
@@ -42,11 +44,13 @@ function wireItUp(io) {
         color,
         type: 'settlement',
       }
+      gameState.logs.push(`${color} built settlement at ${hash}`)
       updateWithGame(io)
     })
 
     socket.on('remove building', ({ hash }) => {
       _.find(gameState.vertices, { hash }).building = null
+      gameState.logs.push(`building removed from ${hash}`)
       updateWithGame(io)
     })
 
@@ -54,11 +58,13 @@ function wireItUp(io) {
       const { building } = _.find(gameState.vertices, { hash })
       if (!building) return
       building.type = 'city'
+      gameState.logs.push(`settlement upgraded to city at ${hash}`)
       updateWithGame(io)
     })
 
     socket.on('update good', ({ color, good, diff }) => {
       gameState.resources[color][good] += diff
+      gameState.logs.push(`${color} ${diff > 0 ? 'took' : 'spent'} ${good}`)
       updateWithGame(io)
     })
 
@@ -66,6 +72,7 @@ function wireItUp(io) {
       gameState.tilePoints.forEach((point) => {
         point.robber = point.hash === hash
       })
+      gameState.logs.push(`robber moved to ${hash}`)
       updateWithGame(io)
     })
 

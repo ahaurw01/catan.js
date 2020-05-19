@@ -1,3 +1,4 @@
+import { last } from 'lodash'
 import io from 'socket.io-client'
 
 class GameStateManager {
@@ -30,6 +31,10 @@ class GameStateManager {
     if (!this.player) {
       this.player = localStorage.getItem('player')
     }
+    if (game.logs && game.logs.length) {
+      console.log('>>>', last(game.logs))
+    }
+
     Array.from(this.handlers).forEach((handler) =>
       handler({
         game: this.game,
