@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styles from './GameActions.module.css'
@@ -25,6 +25,18 @@ const GameActions = ({
   onClaimLargestArmy,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [justClickedLongestRoad, setJustClickedLongestRoad] = useState(false)
+  const [justClickedLargestArmy, setJustClickedLargestArmy] = useState(false)
+
+  useEffect(() => {
+    if (justClickedLongestRoad)
+      setTimeout(() => setJustClickedLongestRoad(false), 1000)
+  }, [justClickedLongestRoad])
+
+  useEffect(() => {
+    if (justClickedLargestArmy)
+      setTimeout(() => setJustClickedLargestArmy(false), 1000)
+  }, [justClickedLargestArmy])
 
   const allBoolsBut = (ignore) => {
     return Object.values(
@@ -111,10 +123,22 @@ const GameActions = ({
 
           <Fieldset label="Accomplishments">
             <div className={styles.buttons}>
-              <Button active={hasLongestRoad} onClick={onClaimLongestRoad}>
+              <Button
+                active={hasLongestRoad || justClickedLongestRoad}
+                onClick={() => {
+                  if (!hasLongestRoad) setJustClickedLongestRoad(true)
+                  onClaimLongestRoad()
+                }}
+              >
                 Claim Longest Road
               </Button>
-              <Button active={hasLargestArmy} onClick={onClaimLargestArmy}>
+              <Button
+                active={hasLargestArmy || justClickedLargestArmy}
+                onClick={() => {
+                  if (!hasLargestArmy) setJustClickedLargestArmy(true)
+                  onClaimLargestArmy()
+                }}
+              >
                 Claim Largest Army
               </Button>
             </div>
