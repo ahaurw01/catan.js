@@ -13,8 +13,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - Take dev card
   - Give random resource to other player
   - Play dev card (reveal to others)
-  - Claim/release longest road
-  - Claim/release largest army
 - Show other players' stuff
   - Total resources
   - Total dev cards

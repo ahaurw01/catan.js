@@ -92,112 +92,121 @@ export default class Home extends Component {
                   </Tabs>
                   {activeTab === 0 && (
                     <TabBody>
-                      <Board>
-                        {game.tilePoints.map(({ type, q, r, dieNumber }) => (
-                          <Tile
-                            key={`${q},${r}`}
-                            type={type}
-                            q={q}
-                            r={r}
-                            dieNumber={dieNumber}
-                          />
-                        ))}
-
-                        {game.tilePoints.map(({ q, r, robber, hash }) =>
-                          isMovingRobber ? (
-                            <Robber
-                              key={hash}
+                      <div
+                        style={{
+                          position: 'relative',
+                          width: '100%',
+                          height: '100%',
+                        }}
+                      >
+                        <Board>
+                          {game.tilePoints.map(({ type, q, r, dieNumber }) => (
+                            <Tile
+                              key={`${q},${r}`}
+                              type={type}
                               q={q}
                               r={r}
-                              isMoveable={!robber}
-                              onMove={() => {
-                                gameStateManager.moveRobber(hash)
-                                this.setState({ isMovingRobber: false })
-                              }}
+                              dieNumber={dieNumber}
                             />
-                          ) : robber ? (
-                            <Robber q={q} r={r} key={hash} />
-                          ) : null
-                        )}
+                          ))}
 
-                        {game.vertices.map(({ vertex, hash, building }) => {
-                          if (!building && !isBuildingSettlement) return null
-                          if (building) {
-                            return (
-                              <Building
-                                type={building.type}
-                                vertex={vertex}
+                          {game.tilePoints.map(({ q, r, robber, hash }) =>
+                            isMovingRobber ? (
+                              <Robber
                                 key={hash}
-                                color={building.color}
-                                onRemove={() =>
-                                  gameStateManager.removeBuilding(hash)
-                                }
-                                isUpgradeable={
-                                  player === building.color && isUpgradingToCity
-                                }
-                                onUpgrade={() => {
-                                  gameStateManager.upgradeToCity(hash)
-                                  this.setState({ isUpgradingToCity: false })
+                                q={q}
+                                r={r}
+                                isMoveable={!robber}
+                                onMove={() => {
+                                  gameStateManager.moveRobber(hash)
+                                  this.setState({ isMovingRobber: false })
                                 }}
                               />
-                            )
-                          }
-                          return (
-                            <Building
-                              isBuildable
-                              onBuild={() => {
-                                gameStateManager.buildSettlement(hash)
-                                this.setState({ isBuildingSettlement: false })
-                              }}
-                              vertex={vertex}
-                              key={hash}
-                              type="settlement"
-                            />
-                          )
-                        })}
+                            ) : robber ? (
+                              <Robber q={q} r={r} key={hash} />
+                            ) : null
+                          )}
 
-                        {game.sides.map(({ side, hash, road }) => {
-                          if (!road && !isBuildingRoad) return null
-                          if (road) {
+                          {game.vertices.map(({ vertex, hash, building }) => {
+                            if (!building && !isBuildingSettlement) return null
+                            if (building) {
+                              return (
+                                <Building
+                                  type={building.type}
+                                  vertex={vertex}
+                                  key={hash}
+                                  color={building.color}
+                                  onRemove={() =>
+                                    gameStateManager.removeBuilding(hash)
+                                  }
+                                  isUpgradeable={
+                                    player === building.color &&
+                                    isUpgradingToCity
+                                  }
+                                  onUpgrade={() => {
+                                    gameStateManager.upgradeToCity(hash)
+                                    this.setState({ isUpgradingToCity: false })
+                                  }}
+                                />
+                              )
+                            }
                             return (
-                              <Road
-                                side={side}
+                              <Building
+                                isBuildable
+                                onBuild={() => {
+                                  gameStateManager.buildSettlement(hash)
+                                  this.setState({ isBuildingSettlement: false })
+                                }}
+                                vertex={vertex}
                                 key={hash}
-                                color={road.color}
-                                onRemove={() =>
-                                  gameStateManager.removeRoad(hash)
-                                }
+                                type="settlement"
                               />
                             )
-                          }
-                          return (
-                            <Road
-                              isBuildable
-                              onBuild={() => {
-                                gameStateManager.buildRoad(hash)
-                                this.setState({ isBuildingRoad: false })
-                              }}
+                          })}
+
+                          {game.sides.map(({ side, hash, road }) => {
+                            if (!road && !isBuildingRoad) return null
+                            if (road) {
+                              return (
+                                <Road
+                                  side={side}
+                                  key={hash}
+                                  color={road.color}
+                                  onRemove={() =>
+                                    gameStateManager.removeRoad(hash)
+                                  }
+                                />
+                              )
+                            }
+                            return (
+                              <Road
+                                isBuildable
+                                onBuild={() => {
+                                  gameStateManager.buildRoad(hash)
+                                  this.setState({ isBuildingRoad: false })
+                                }}
+                                side={side}
+                                key={hash}
+                              />
+                            )
+                          })}
+
+                          {game.ports.map(({ side, hash, goods, ratio }) => (
+                            <Port
                               side={side}
+                              goods={goods}
+                              ratio={ratio}
                               key={hash}
                             />
-                          )
-                        })}
-
-                        {game.ports.map(({ side, hash, goods, ratio }) => (
-                          <Port
-                            side={side}
-                            goods={goods}
-                            ratio={ratio}
-                            key={hash}
-                          />
-                        ))}
-                      </Board>
-                      <Dice
-                        roll1={game.roll.one}
-                        roll2={game.roll.two}
-                        id={game.roll.id}
-                        onRoll={() => gameStateManager.roll()}
-                      />
+                          ))}
+                        </Board>
+                        <Dice
+                          roll1={game.roll.one}
+                          roll2={game.roll.two}
+                          id={game.roll.id}
+                          onRoll={() => gameStateManager.roll()}
+                        />
+                      </div>
                     </TabBody>
                   )}
                   {activeTab === 1 && <TabBody>Opponents</TabBody>}
