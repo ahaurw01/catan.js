@@ -36,6 +36,8 @@ class GameStateManager {
         player: this.player,
         hasSettlement: this.hasSettlement,
         myResources: this.myResources,
+        hasLongestRoad: this.hasLongestRoad,
+        hasLargestArmy: this.hasLargestArmy,
       })
     )
   }
@@ -80,6 +82,18 @@ class GameStateManager {
     this.socket.emit('roll', { color: this.player })
   }
 
+  setLongestRoad = () => {
+    if (!this.player) return
+    const color = this.hasLongestRoad ? null : this.player
+    this.socket.emit('set longest road', { color })
+  }
+
+  setLargestArmy = () => {
+    if (!this.player) return
+    const color = this.hasLargestArmy ? null : this.player
+    this.socket.emit('set largest army', { color })
+  }
+
   get hasSettlement() {
     return (
       this.game.vertices.filter(
@@ -89,6 +103,14 @@ class GameStateManager {
           building.type === 'settlement'
       ).length > 0
     )
+  }
+
+  get hasLongestRoad() {
+    return this.player && this.game.longestRoad === this.player
+  }
+
+  get hasLargestArmy() {
+    return this.player && this.game.largestArmy === this.player
   }
 
   get myResources() {

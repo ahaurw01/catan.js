@@ -80,6 +80,28 @@ function wireItUp(io) {
       )
       updateWithGame(io)
     })
+
+    socket.on('set longest road', ({ color }) => {
+      const prevOwner = gameState.longestRoad
+      gameState.longestRoad = color
+      gameState.logs.push(
+        color
+          ? `${color} claimed longest road`
+          : `longest road given up by ${prevOwner}`
+      )
+      updateWithGame(io)
+    })
+
+    socket.on('set largest army', ({ color }) => {
+      const prevOwner = gameState.largestArmy
+      gameState.largestArmy = color
+      gameState.logs.push(
+        color
+          ? `${color} claimed largest army`
+          : `largest army given up by ${prevOwner}`
+      )
+      updateWithGame(io)
+    })
   })
 }
 
@@ -96,6 +118,8 @@ function makeGameState() {
       two: 6,
       id: 0,
     },
+    longestRoad: null,
+    largestArmy: null,
   }
 
   // prettier-ignore

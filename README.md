@@ -10,7 +10,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## TODO
 
 - Actions:
-  - Buy dev card
+  - Take dev card
   - Give random resource to other player
   - Play dev card (reveal to others)
   - Claim/release longest road
@@ -25,3 +25,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Cheat sheet card
 - Show all players and turn order
 - Finish ports
+- Log the latest log
+- Backdoor for getting and setting the game object

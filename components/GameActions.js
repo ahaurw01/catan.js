@@ -19,6 +19,10 @@ const GameActions = ({
   onUpgradeToCity,
   isMovingRobber,
   onMoveRobber,
+  hasLongestRoad,
+  onClaimLongestRoad,
+  hasLargestArmy,
+  onClaimLargestArmy,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -59,58 +63,63 @@ const GameActions = ({
             {name}
           </div>
         ))}
-        {/* {chosenColor && (
-            <div className={styles.chosenColor}>
-              <span
-                className={cx(styles.color, styles.spaceRight)}
-                style={{ background: chosenColor }}
-              />{' '}
-              {players[chosenColor]}
-            </div>
-          )} */}
+
         <Button onClick={() => setIsModalOpen(true)}>
           {chosenColor ? 'Change Player' : 'Choose Player'}
         </Button>
       </Fieldset>
 
       {chosenColor && (
-        <Fieldset label="Build">
-          <div className={styles.buttons}>
-            <Button
-              active={isBuildingRoad}
-              onClick={onBuildRoad}
-              disabled={allBoolsBut('isBuildingRoad')}
-            >
-              Build Road
-            </Button>
-
-            <Button
-              active={isBuildingSettlement}
-              onClick={onBuildSettlement}
-              disabled={allBoolsBut('isBuildingSettlement')}
-            >
-              Build Settlement
-            </Button>
-
-            {canUpgradeToCity && (
+        <>
+          <Fieldset label="Build">
+            <div className={styles.buttons}>
               <Button
-                active={isUpgradingToCity}
-                onClick={onUpgradeToCity}
-                disabled={allBoolsBut('isUpgradingToCity')}
+                active={isBuildingRoad}
+                onClick={onBuildRoad}
+                disabled={allBoolsBut('isBuildingRoad')}
               >
-                Upgrade to City
+                Build Road
               </Button>
-            )}
 
-            <Button
-              active={isMovingRobber}
-              onClick={onMoveRobber}
-              disabled={allBoolsBut('isMovingRobber')}
-            >
-              Move Robber
-            </Button>
-          </div>
-        </Fieldset>
+              <Button
+                active={isBuildingSettlement}
+                onClick={onBuildSettlement}
+                disabled={allBoolsBut('isBuildingSettlement')}
+              >
+                Build Settlement
+              </Button>
+
+              {canUpgradeToCity && (
+                <Button
+                  active={isUpgradingToCity}
+                  onClick={onUpgradeToCity}
+                  disabled={allBoolsBut('isUpgradingToCity')}
+                >
+                  Upgrade to City
+                </Button>
+              )}
+
+              <Button
+                active={isMovingRobber}
+                onClick={onMoveRobber}
+                disabled={allBoolsBut('isMovingRobber')}
+              >
+                Move Robber
+              </Button>
+            </div>
+          </Fieldset>
+
+          <Fieldset label="Accomplishments">
+            <div className={styles.buttons}>
+              <Button active={hasLongestRoad} onClick={onClaimLongestRoad}>
+                Claim Longest Road
+              </Button>
+              <Button active={hasLargestArmy} onClick={onClaimLargestArmy}>
+                Claim Largest Army
+              </Button>
+            </div>
+          </Fieldset>
+        </>
       )}
     </div>
   )
@@ -129,6 +138,10 @@ GameActions.propTypes = {
   onUpgradeToCity: PropTypes.func.isRequired,
   isMovingRobber: PropTypes.bool.isRequired,
   onMoveRobber: PropTypes.func.isRequired,
+  hasLongestRoad: PropTypes.bool.isRequired,
+  onClaimLongestRoad: PropTypes.func.isRequired,
+  hasLargestArmy: PropTypes.bool.isRequired,
+  onClaimLargestArmy: PropTypes.func.isRequired,
 }
 
 GameActions.defaultProps = {

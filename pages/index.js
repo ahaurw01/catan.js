@@ -29,9 +29,22 @@ export default class Home extends Component {
   componentDidMount() {
     const gameStateManager = new GameStateManager()
     gameStateManager.onUpdateGame(
-      ({ game, player, hasSettlement, myResources }) => {
-        console.log(game)
-        this.setState({ game, player, hasSettlement, myResources })
+      ({
+        game,
+        player,
+        hasSettlement,
+        myResources,
+        hasLongestRoad,
+        hasLargestArmy,
+      }) => {
+        this.setState({
+          game,
+          player,
+          hasSettlement,
+          myResources,
+          hasLongestRoad,
+          hasLargestArmy,
+        })
       }
     )
     this.setState({
@@ -55,6 +68,8 @@ export default class Home extends Component {
       hasSettlement,
       myResources,
       activeTab,
+      hasLongestRoad,
+      hasLargestArmy,
     } = this.state
     return (
       <div className="container">
@@ -221,6 +236,10 @@ export default class Home extends Component {
                       isMovingRobber: !isMovingRobber,
                     }))
                   }
+                  hasLongestRoad={hasLongestRoad}
+                  hasLargestArmy={hasLargestArmy}
+                  onClaimLongestRoad={() => gameStateManager.setLongestRoad()}
+                  onClaimLargestArmy={() => gameStateManager.setLargestArmy()}
                 />
               }
               itemSlot={
