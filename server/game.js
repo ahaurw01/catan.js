@@ -83,7 +83,10 @@ function wireItUp(io) {
     })
 
     socket.on('update good', ({ color, good, diff }) => {
+      if (diff > 0 && gameState.bank.resources[good] <= 0) return
+
       gameState.resources[color][good] += diff
+      gameState.bank.resources[good] -= diff
       updateCount(gameState, 'resources', color, diff)
       gameState.logs.push(`${color} ${diff > 0 ? 'took' : 'spent'} ${good}`)
       updateWithGame(io)
@@ -155,6 +158,16 @@ function makeGameState() {
       devCardsHidden: {},
       devCardsPlayed: {},
       resources: {},
+    },
+    bank: {
+      resources: {
+        brick: 19,
+        grain: 19,
+        lumber: 19,
+        ore: 19,
+        wool: 19,
+      },
+      devCards: [],
     },
   }
 

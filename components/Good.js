@@ -15,11 +15,16 @@ const icons = {
   wool: Wool,
 }
 
-const Good = ({ type, count, onChange }) => {
+const Good = ({ type, count, moreInBank, onChange }) => {
   const Icon = icons[type]
   return (
     <div className={styles.good}>
-      <Button className={styles.button} square onClick={() => onChange(1)}>
+      <Button
+        className={styles.button}
+        square
+        disabled={!moreInBank}
+        onClick={() => onChange(1)}
+      >
         +
       </Button>
       <div className={styles.icon}>
@@ -43,11 +48,13 @@ const Good = ({ type, count, onChange }) => {
 Good.propTypes = {
   type: PropTypes.oneOf(['lumber', 'grain', 'brick', 'ore', 'wool']).isRequired,
   count: PropTypes.number,
+  moreInBank: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 }
 
 Good.defaultProps = {
   count: 0,
+  moreInBank: false,
 }
 
 export default Good

@@ -3,7 +3,7 @@ import styles from './GameResources.module.css'
 import { Divider, Fieldset } from 'react95'
 import Good from './Good'
 
-const GameResources = ({ player, goods, onChangeGood }) => {
+const GameResources = ({ player, goods, bankGoods, onChangeGood }) => {
   return (
     <>
       {player && goods && (
@@ -16,6 +16,7 @@ const GameResources = ({ player, goods, onChangeGood }) => {
                     key={good}
                     type={good}
                     count={goods[good]}
+                    moreInBank={bankGoods[good] > 0}
                     onChange={(diff) => onChangeGood({ good, diff })}
                   />
                   {index !== all.length - 1 && (
@@ -40,12 +41,20 @@ GameResources.propTypes = {
     ore: PropTypes.number,
     wool: PropTypes.number,
   }),
+  bankGoods: PropTypes.shape({
+    lumber: PropTypes.number,
+    grain: PropTypes.number,
+    brick: PropTypes.number,
+    ore: PropTypes.number,
+    wool: PropTypes.number,
+  }),
   onChangeGood: PropTypes.func.isRequired,
 }
 
 GameResources.defaultProps = {
   player: null,
   goods: null,
+  bankGoods: null,
 }
 
 export default GameResources

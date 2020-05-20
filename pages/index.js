@@ -270,6 +270,7 @@ export default class Home extends Component {
                 <GameResources
                   player={player}
                   goods={myResources}
+                  bankGoods={game.bank.resources}
                   onChangeGood={gameStateManager.changeGood}
                 />
               }
