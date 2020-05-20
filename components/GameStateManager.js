@@ -44,6 +44,9 @@ class GameStateManager {
         myResources: this.myResources,
         hasLongestRoad: this.hasLongestRoad,
         hasLargestArmy: this.hasLargestArmy,
+        canBuildMoreRoads: this.canBuildMoreRoads,
+        canBuildMoreSettlements: this.canBuildMoreSettlements,
+        canUpgradeMoreCities: this.canUpgradeMoreCities,
       })
     )
   }
@@ -123,6 +126,24 @@ class GameStateManager {
     if (!this.player) return null
 
     return this.game.resources[this.player]
+  }
+
+  get canBuildMoreRoads() {
+    if (!this.player) return false
+
+    return (this.game.counts.roads[this.player] || 0) < 15
+  }
+
+  get canBuildMoreSettlements() {
+    if (!this.player) return false
+
+    return (this.game.counts.settlements[this.player] || 0) < 5
+  }
+
+  get canUpgradeMoreCities() {
+    if (!this.player) return false
+
+    return (this.game.counts.cities[this.player] || 0) < 4
   }
 }
 

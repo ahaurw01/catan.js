@@ -23,6 +23,9 @@ const GameActions = ({
   onClaimLongestRoad,
   hasLargestArmy,
   onClaimLargestArmy,
+  canBuildMoreRoads,
+  canBuildMoreSettlements,
+  canUpgradeMoreCities,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [justClickedLongestRoad, setJustClickedLongestRoad] = useState(false)
@@ -88,7 +91,7 @@ const GameActions = ({
               <Button
                 active={isBuildingRoad}
                 onClick={onBuildRoad}
-                disabled={allBoolsBut('isBuildingRoad')}
+                disabled={allBoolsBut('isBuildingRoad') || !canBuildMoreRoads}
               >
                 Build Road
               </Button>
@@ -96,7 +99,10 @@ const GameActions = ({
               <Button
                 active={isBuildingSettlement}
                 onClick={onBuildSettlement}
-                disabled={allBoolsBut('isBuildingSettlement')}
+                disabled={
+                  allBoolsBut('isBuildingSettlement') ||
+                  !canBuildMoreSettlements
+                }
               >
                 Build Settlement
               </Button>
@@ -105,7 +111,9 @@ const GameActions = ({
                 <Button
                   active={isUpgradingToCity}
                   onClick={onUpgradeToCity}
-                  disabled={allBoolsBut('isUpgradingToCity')}
+                  disabled={
+                    allBoolsBut('isUpgradingToCity') || !canUpgradeMoreCities
+                  }
                 >
                   Upgrade to City
                 </Button>
@@ -166,6 +174,9 @@ GameActions.propTypes = {
   onClaimLongestRoad: PropTypes.func.isRequired,
   hasLargestArmy: PropTypes.bool.isRequired,
   onClaimLargestArmy: PropTypes.func.isRequired,
+  canBuildMoreRoads: PropTypes.bool.isRequired,
+  canBuildMoreSettlements: PropTypes.bool.isRequired,
+  canUpgradeMoreCities: PropTypes.bool.isRequired,
 }
 
 GameActions.defaultProps = {

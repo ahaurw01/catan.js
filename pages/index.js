@@ -24,6 +24,9 @@ export default class Home extends Component {
     isUpgradingToCity: false,
     isMovingRobber: false,
     activeTab: 0,
+    canBuildMoreRoads: false,
+    canBuildMoreSettlements: false,
+    canUpgradeMoreCities: false,
   }
 
   componentDidMount() {
@@ -36,6 +39,9 @@ export default class Home extends Component {
         myResources,
         hasLongestRoad,
         hasLargestArmy,
+        canBuildMoreRoads,
+        canBuildMoreSettlements,
+        canUpgradeMoreCities,
       }) => {
         this.setState({
           game,
@@ -44,6 +50,9 @@ export default class Home extends Component {
           myResources,
           hasLongestRoad,
           hasLargestArmy,
+          canBuildMoreRoads,
+          canBuildMoreSettlements,
+          canUpgradeMoreCities,
         })
       }
     )
@@ -70,6 +79,9 @@ export default class Home extends Component {
       activeTab,
       hasLongestRoad,
       hasLargestArmy,
+      canBuildMoreRoads,
+      canBuildMoreSettlements,
+      canUpgradeMoreCities,
     } = this.state
     return (
       <div className="container">
@@ -249,6 +261,9 @@ export default class Home extends Component {
                   hasLargestArmy={hasLargestArmy}
                   onClaimLongestRoad={() => gameStateManager.setLongestRoad()}
                   onClaimLargestArmy={() => gameStateManager.setLargestArmy()}
+                  canBuildMoreRoads={canBuildMoreRoads}
+                  canBuildMoreSettlements={canBuildMoreSettlements}
+                  canUpgradeMoreCities={canUpgradeMoreCities}
                 />
               }
               itemSlot={
