@@ -61,6 +61,7 @@ function wireItUp(io) {
       const type = _.get(vertex, 'building.type')
       if (!color || !type) return
 
+      vertex.building = null
       if (type === 'settlement') {
         updateCount(gameState, 'settlements', color, -1)
       } else {
