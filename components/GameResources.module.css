@@ -7,10 +7,10 @@
   align-items: center;
 }
 .goodSection:first-of-type {
-  margin-left: -10px;
+  margin-left: -15px;
 }
 .goodSection:last-of-type {
-  margin-right: -10px;
+  margin-right: -15px;
 }
 
 .divider {

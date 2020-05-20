@@ -30,9 +30,7 @@ const Good = ({ type, count, moreInBank, onChange }) => {
       <div className={styles.icon}>
         <Icon width={35} height={35} />
       </div>
-      <span className={styles.name}>
-        {count} {type}
-      </span>
+      <span className={styles.name}>{count}</span>
       <Button
         className={styles.button}
         square
