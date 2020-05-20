@@ -29,13 +29,19 @@ function wireItUp(io) {
 
     socket.on('build road', ({ color, hash }) => {
       _.find(gameState.sides, { hash }).road = { color }
+      updateCount(gameState, 'roads', color, 1)
       gameState.logs.push(`${color} built road at ${hash}`)
       updateWithGame(io)
     })
 
     socket.on('remove road', ({ hash }) => {
-      _.find(gameState.sides, { hash }).road = null
-      gameState.logs.push(`road removed from ${hash}`)
+      const side = _.find(gameState.sides, { hash })
+      const color = _.get(side, 'road.color')
+      if (!color) return
+
+      side.road = null
+      updateCount(gameState, 'roads', color, -1)
+      gameState.logs.push(`${color} removed road from ${hash}`)
       updateWithGame(io)
     })
 
@@ -44,13 +50,23 @@ function wireItUp(io) {
         color,
         type: 'settlement',
       }
+      updateCount(gameState, 'settlements', color, 1)
       gameState.logs.push(`${color} built settlement at ${hash}`)
       updateWithGame(io)
     })
 
     socket.on('remove building', ({ hash }) => {
-      _.find(gameState.vertices, { hash }).building = null
-      gameState.logs.push(`building removed from ${hash}`)
+      const vertex = _.find(gameState.vertices, { hash })
+      const color = _.get(vertex, 'building.color')
+      const type = _.get(vertex, 'building.type')
+      if (!color || !type) return
+
+      if (type === 'settlement') {
+        updateCount(gameState, 'settlements', color, -1)
+      } else {
+        updateCount(gameState, 'cities', color, -1)
+      }
+      gameState.logs.push(`${color} removed ${type} from ${hash}`)
       updateWithGame(io)
     })
 
@@ -58,12 +74,16 @@ function wireItUp(io) {
       const { building } = _.find(gameState.vertices, { hash })
       if (!building) return
       building.type = 'city'
+      const color = building.color
+      updateCount(gameState, 'cities', color, 1)
+      updateCount(gameState, 'settlements', color, -1)
       gameState.logs.push(`settlement upgraded to city at ${hash}`)
       updateWithGame(io)
     })
 
     socket.on('update good', ({ color, good, diff }) => {
       gameState.resources[color][good] += diff
+      updateCount(gameState, 'resources', color, diff)
       gameState.logs.push(`${color} ${diff > 0 ? 'took' : 'spent'} ${good}`)
       updateWithGame(io)
     })
@@ -127,6 +147,14 @@ function makeGameState() {
     },
     longestRoad: null,
     largestArmy: null,
+    counts: {
+      roads: {},
+      settlements: {},
+      cities: {},
+      devCardsHidden: {},
+      devCardsPlayed: {},
+      resources: {},
+    },
   }
 
   // prettier-ignore
@@ -277,4 +305,9 @@ function hash(points) {
 
 function avg(...nums) {
   return nums.reduce((sum, num) => sum + num, 0) / nums.length
+}
+
+function updateCount(gameState, field, color, diff) {
+  gameState.counts[field][color] = gameState.counts[field][color] || 0
+  gameState.counts[field][color] += diff
 }

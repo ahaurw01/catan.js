@@ -27,6 +27,7 @@ class GameStateManager {
   offUpdateGame = (handler) => this.handlers.delete(handler)
 
   updateGame = (game) => {
+    console.log('game updated:', game)
     if (game) this.game = game
     if (!this.player) {
       this.player = localStorage.getItem('player')
