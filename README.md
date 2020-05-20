@@ -23,3 +23,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Cheat sheet card
 - Finish ports
 - Backdoor for getting and setting the game object
+- limit available resources. 
+- limit buildings and roads
