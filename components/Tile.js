@@ -8,12 +8,12 @@ import Brick from './icons/Brick'
 import Wool from './icons/Wool'
 
 const colors = {
-  forest: '#5AA260',
-  pasture: '#36F76C',
-  mountains: '#BDB6B2',
-  hills: '#C1591C',
-  fields: '#FADD3A',
-  desert: '#E1AB4E',
+  forest: '#009C40',
+  pasture: '#80CF5B',
+  mountains: '#818284',
+  hills: '#EA5A00',
+  fields: '#ECD847',
+  desert: '#E7DED6',
 }
 
 const icons = {
@@ -25,12 +25,12 @@ const icons = {
 }
 
 const fillForType = {
-  hills: 'url(#brick)',
-  mountains: 'url(#ore)',
-  forest: 'url(#forest)',
-  desert: 'url(#minsweeper)',
-  pasture: 'url(#pasture)',
-  fields: 'url(#desert)',
+  // hills: 'url(#brick)',
+  // mountains: 'url(#ore)',
+  // forest: 'url(#forest)',
+  // desert: 'url(#minsweeper)',
+  // pasture: 'url(#pasture)',
+  // fields: 'url(#desert)',
 }
 
 const Tile = ({ q, r, type, dieNumber }) => {
