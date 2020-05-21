@@ -31,3 +31,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - green with stripes
   - orange and white checkers
 - better building icons
+- just use js for svg sizing
