@@ -42,6 +42,8 @@ class GameStateManager {
         player: this.player,
         hasSettlement: this.hasSettlement,
         myResources: this.myResources,
+        myDevCardsInHand: this.myDevCardsInHand,
+        myDevCardsPlayed: this.myDevCardsPlayed,
         hasLongestRoad: this.hasLongestRoad,
         hasLargestArmy: this.hasLargestArmy,
         canBuildMoreRoads: this.canBuildMoreRoads,
@@ -103,6 +105,16 @@ class GameStateManager {
     this.socket.emit('set largest army', { color })
   }
 
+  takeDevCard = () => {
+    if (!this.player) return
+    this.socket.emit('take dev card', { color: this.player })
+  }
+
+  playDevCard = (index) => {
+    if (!this.player) return
+    this.socket.emit('play dev card', { color: this.player, index })
+  }
+
   get hasSettlement() {
     return (
       this.game.vertices.filter(
@@ -126,6 +138,18 @@ class GameStateManager {
     if (!this.player) return null
 
     return this.game.resources[this.player]
+  }
+
+  get myDevCardsInHand() {
+    if (!this.player) return null
+
+    return this.game.resources[this.player].devCardsInHand
+  }
+
+  get myDevCardsPlayed() {
+    if (!this.player) return null
+
+    return this.game.resources[this.player].devCardsPlayed
   }
 
   get canBuildMoreRoads() {

@@ -42,8 +42,13 @@
   flex: 0 0 160px;
 }
 
-.item > * {
-  flex: 1;
+.item > :first-of-type {
+  flex: 0 1 300px;
+}
+
+.item > :last-of-type {
+  flex: 1 1 auto;
+  overflow-x: hidden;
 }
 
 .action {

@@ -42,6 +42,8 @@ export default class Home extends Component {
         canBuildMoreRoads,
         canBuildMoreSettlements,
         canUpgradeMoreCities,
+        myDevCardsInHand,
+        myDevCardsPlayed,
       }) => {
         this.setState({
           game,
@@ -53,6 +55,8 @@ export default class Home extends Component {
           canBuildMoreRoads,
           canBuildMoreSettlements,
           canUpgradeMoreCities,
+          myDevCardsInHand,
+          myDevCardsPlayed,
         })
       }
     )
@@ -76,6 +80,8 @@ export default class Home extends Component {
       player,
       hasSettlement,
       myResources,
+      myDevCardsInHand,
+      myDevCardsPlayed,
       activeTab,
       hasLongestRoad,
       hasLargestArmy,
@@ -272,6 +278,11 @@ export default class Home extends Component {
                   goods={myResources}
                   bankGoods={game.bank.resources}
                   onChangeGood={gameStateManager.changeGood}
+                  devCardsInHand={myDevCardsInHand}
+                  devCardsPlayed={myDevCardsPlayed}
+                  onTakeDevCard={gameStateManager.takeDevCard}
+                  onPlayDevCard={gameStateManager.playDevCard}
+                  bankDevCards={game.bank.devCards}
                 />
               }
             />

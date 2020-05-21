@@ -361,7 +361,7 @@ function updateCount(gameState, field, color, diff) {
 function makeDevCards() {
   return [
     ..._.fill(Array(14), {
-      type: 'Knight',
+      type: 'knight',
     }),
     ..._.fill(Array(5), {
       type: 'victoryPoint',
