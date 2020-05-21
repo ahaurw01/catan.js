@@ -133,6 +133,36 @@ function wireItUp(io) {
       )
       updateWithGame(io)
     })
+
+    socket.on('take dev card', ({ color }) => {
+      const numDevCardsInBank = gameState.bank.devCards.length
+      if (numDevCardsInBank === 0) return
+      const index = _.random(0, numDevCardsInBank - 1)
+      const card = gameState.bank.devCards[index]
+      gameState.resources[color].devCardsInHand.push(card)
+      gameState.bank.devCards.splice(index, 1)
+      updateCount(gameState, 'devCardsInHand', color, 1)
+
+      gameState.logs.push(`${color} took a dev card`)
+      updateWithGame(io)
+    })
+
+    socket.on('play dev card', ({ color, index }) => {
+      const card = gameState.resources[color].devCardsInHand[index]
+      if (!card) return
+
+      gameState.resources[color].devCardsInHand.splice(index, 1)
+      gameState.resources[color].devCardsPlayed.push(card)
+      updateCount(gameState, 'devCardsInHand', color, -1)
+      updateCount(gameState, 'devCardsPlayed', color, 1)
+
+      gameState.logs.push(
+        `${color} played a dev card - ${card.type}${
+          card.subType ? ` ${card.subType}` : ''
+        }`
+      )
+      updateWithGame(io)
+    })
   })
 }
 
@@ -155,7 +185,7 @@ function makeGameState() {
       roads: {},
       settlements: {},
       cities: {},
-      devCardsHidden: {},
+      devCardsInHand: {},
       devCardsPlayed: {},
       resources: {},
     },
@@ -167,9 +197,10 @@ function makeGameState() {
         ore: 19,
         wool: 19,
       },
-      devCards: [],
+      devCards: makeDevCards(),
     },
   }
+  gameState.resources = makeResources()
 
   // prettier-ignore
   const tileTypes = _.shuffle([
@@ -211,7 +242,6 @@ function makeGameState() {
   gameState.vertices = makeAllVertices(tilePoints)
   gameState.sides = makeAllSides(tilePoints)
   gameState.ports = makePorts()
-  gameState.resources = makeResources()
 
   return gameState
 }
@@ -306,6 +336,8 @@ function makeResources() {
         lumber: 0,
         ore: 0,
         wool: 0,
+        devCardsInHand: [],
+        devCardsPlayed: [],
       }
       return resources
     },
@@ -324,4 +356,27 @@ function avg(...nums) {
 function updateCount(gameState, field, color, diff) {
   gameState.counts[field][color] = gameState.counts[field][color] || 0
   gameState.counts[field][color] += diff
+}
+
+function makeDevCards() {
+  return [
+    ..._.fill(Array(14), {
+      type: 'Knight',
+    }),
+    ..._.fill(Array(5), {
+      type: 'victoryPoint',
+    }),
+    ..._.fill(Array(2), {
+      type: 'progress',
+      subType: 'road building',
+    }),
+    ..._.fill(Array(2), {
+      type: 'progress',
+      subType: 'year of plenty',
+    }),
+    ..._.fill(Array(2), {
+      type: 'progress',
+      subType: 'monopoly',
+    }),
+  ]
 }
