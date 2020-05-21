@@ -328,7 +328,7 @@ function makePorts() {
 }
 
 function makeResources() {
-  return ['red', 'blue', 'white', 'orage', 'green'].reduce(
+  return ['red', 'blue', 'white', 'orange', 'green'].reduce(
     (resources, color) => {
       resources[color] = {
         brick: 0,
