@@ -48,7 +48,6 @@
 
 .item > :last-of-type {
   flex: 1 1 auto;
-  overflow-x: hidden;
 }
 
 .action {

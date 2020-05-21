@@ -20,7 +20,7 @@ const GameResources = ({
     <>
       {player && goods && (
         <>
-          <div>
+          <div className={styles.fieldsetWrapper}>
             <Fieldset label="Goods">
               <div className={styles.goods}>
                 {['lumber', 'grain', 'brick', 'ore', 'wool'].map(
@@ -42,7 +42,7 @@ const GameResources = ({
               </div>
             </Fieldset>
           </div>
-          <div>
+          <div className={styles.fieldsetWrapper}>
             <Fieldset label="Development Cards">
               <div className={styles.spacer} />
               <Button

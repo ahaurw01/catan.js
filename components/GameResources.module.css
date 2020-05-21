@@ -43,3 +43,7 @@
   top: 60px;
   left: -38px;
 }
+
+.fieldsetWrapper:last-of-type {
+  margin-left: 10px;
+}
