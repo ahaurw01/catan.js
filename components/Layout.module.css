@@ -53,3 +53,7 @@
 .action {
   display: flex;
 }
+
+.noPointerEvents {
+  pointer-events: none;
+}
