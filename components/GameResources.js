@@ -45,28 +45,43 @@ const GameResources = ({
           </div>
           <div className={styles.fieldsetWrapper}>
             <Fieldset label="Development Cards">
-              <div className={styles.spacer} />
-              <Button
-                disabled={bankDevCards.length === 0}
-                onClick={onTakeDevCard}
-                size="sm"
-                className={cx(styles.takeDevCard, {
-                  [styles.rotated]: devCardsInHand.length > 0,
-                })}
-              >
-                Take Dev Card
-              </Button>
+              <div className={styles.cardsWrapper}>
+                <div className={styles.cardsInHand}>
+                  <div className={styles.spacer} />
+                  <Button
+                    disabled={bankDevCards.length === 0}
+                    onClick={onTakeDevCard}
+                    size="sm"
+                    className={cx(styles.takeDevCard, {
+                      [styles.rotated]: devCardsInHand.length > 0,
+                    })}
+                  >
+                    Take Dev Card
+                  </Button>
 
-              <div className={styles.cards}>
-                {reverse(
-                  devCardsInHand.map((card, index) => [card, index])
-                ).map(([card, index]) => (
-                  <DevCard
-                    key={Math.random()}
-                    {...card}
-                    onPlay={() => onPlayDevCard(index)}
-                  />
-                ))}
+                  <div className={styles.cardsWithButton}>
+                    {reverse(
+                      devCardsInHand.map((card, index) => [card, index])
+                    ).map(([card, index]) => (
+                      <DevCard
+                        key={Math.random()}
+                        {...card}
+                        onPlay={() => onPlayDevCard(index)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className={styles.playedCards}>
+                  {devCardsPlayed.length > 0 && (
+                    <div className={styles.cardsWithDivider}>
+                      <Divider vertical size="lg" />
+                      {reverse(devCardsPlayed).map((card) => (
+                        <DevCard key={Math.random()} {...card} played />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </Fieldset>
           </div>

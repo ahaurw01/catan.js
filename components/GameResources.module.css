@@ -17,13 +17,37 @@
   height: 75% !important;
 }
 
-.cards {
+.cardsWrapper {
+  display: flex;
+}
+
+.cardsInHand,
+.playedCards {
+  flex: 1;
+  position: relative;
+}
+
+.cardsWithButton {
   display: flex;
   position: absolute;
-  left: 40px;
-  top: 12px;
+  left: 28px;
+  top: -4px;
   right: 4px;
   overflow: auto;
+}
+
+.cardsWithDivider {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0px;
+  top: -4px;
+  right: 4px;
+  overflow: auto;
+}
+
+.cardsWithDivider > :first-child {
+  margin: 0 10px;
 }
 
 .spacer {
@@ -40,10 +64,14 @@
 
 .takeDevCard.rotated {
   transform: rotate(-90deg);
-  top: 60px;
-  left: -38px;
+  top: 43px;
+  left: -54px;
 }
 
 .fieldsetWrapper:last-of-type {
   margin-left: 10px;
+}
+
+.playedCards {
+  display: flex;
 }

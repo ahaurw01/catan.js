@@ -37,24 +37,30 @@ const descriptions = {
   },
 }
 
-const DevCard = ({ type, subType, onPlay }) => (
+const DevCard = ({ type, subType, onPlay, played }) => (
   <div className={cx(styles.card, styles[type])}>
     <div className={styles.type}>{titles[type](subType)}</div>
     <div className={styles.description}>{descriptions[type](subType)}</div>
-    <Button className={styles.play} onClick={onPlay}>
-      Play
-    </Button>
+    {!played && onPlay && (
+      <Button className={styles.play} onClick={onPlay}>
+        Play
+      </Button>
+    )}
+    {played && <div className={styles.stamp}>Played</div>}
   </div>
 )
 
 DevCard.propTypes = {
   type: PropTypes.oneOf(['knight', 'progress', 'victoryPoint']).isRequired,
   subType: PropTypes.oneOf(['monopoly', 'year of plenty', 'road building']),
-  onPlay: PropTypes.func.isRequired,
+  onPlay: PropTypes.func,
+  played: PropTypes.bool,
 }
 
 DevCard.defaultProps = {
   subType: null,
+  onPlay: null,
+  played: false,
 }
 
 export default DevCard
