@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import styles from './DevCard.module.css'
 import cx from 'classnames'
+import { Button } from 'react95'
 
 const titles = {
   knight: () => 'Knight',
@@ -36,16 +37,20 @@ const descriptions = {
   },
 }
 
-const DevCard = ({ type, subType }) => (
+const DevCard = ({ type, subType, onPlay }) => (
   <div className={cx(styles.card, styles[type])}>
     <div className={styles.type}>{titles[type](subType)}</div>
     <div className={styles.description}>{descriptions[type](subType)}</div>
+    <Button className={styles.play} onClick={onPlay}>
+      Play
+    </Button>
   </div>
 )
 
 DevCard.propTypes = {
   type: PropTypes.oneOf(['knight', 'progress', 'victoryPoint']).isRequired,
   subType: PropTypes.oneOf(['monopoly', 'year of plenty', 'road building']),
+  onPlay: PropTypes.func.isRequired,
 }
 
 DevCard.defaultProps = {

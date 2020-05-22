@@ -15,6 +15,7 @@ const GameResources = ({
   devCardsPlayed,
   bankDevCards,
   onTakeDevCard,
+  onPlayDevCard,
 }) => {
   return (
     <>
@@ -57,8 +58,14 @@ const GameResources = ({
               </Button>
 
               <div className={styles.cards}>
-                {reverse(devCardsInHand).map((card) => (
-                  <DevCard {...card} />
+                {reverse(
+                  devCardsInHand.map((card, index) => [card, index])
+                ).map(([card, index]) => (
+                  <DevCard
+                    key={Math.random()}
+                    {...card}
+                    onPlay={() => onPlayDevCard(index)}
+                  />
                 ))}
               </div>
             </Fieldset>
