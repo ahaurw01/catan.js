@@ -4,7 +4,6 @@ import { Button, Divider, Fieldset } from 'react95'
 import Good from './Good'
 import DevCard from './DevCard'
 import cx from 'classnames'
-import { reverse } from 'lodash'
 
 const GameResources = ({
   player,
@@ -60,15 +59,17 @@ const GameResources = ({
                   </Button>
 
                   <div className={styles.cardsWithButton}>
-                    {reverse(
-                      devCardsInHand.map((card, index) => [card, index])
-                    ).map(([card, index]) => (
-                      <DevCard
-                        key={Math.random()}
-                        {...card}
-                        onPlay={() => onPlayDevCard(index)}
-                      />
-                    ))}
+                    {devCardsInHand
+                      .slice()
+                      .reverse()
+                      .map((card, index) => [card, index])
+                      .map(([card, index]) => (
+                        <DevCard
+                          key={Math.random()}
+                          {...card}
+                          onPlay={() => onPlayDevCard(index)}
+                        />
+                      ))}
                   </div>
                 </div>
 
@@ -76,9 +77,12 @@ const GameResources = ({
                   <div className={styles.playedCards}>
                     <div className={styles.cardsWithDivider}>
                       <Divider vertical size="lg" />
-                      {reverse(devCardsPlayed).map((card) => (
-                        <DevCard key={Math.random()} {...card} played />
-                      ))}
+                      {devCardsPlayed
+                        .slice()
+                        .reverse()
+                        .map((card) => (
+                          <DevCard key={Math.random()} {...card} played />
+                        ))}
                     </div>
                   </div>
                 )}
