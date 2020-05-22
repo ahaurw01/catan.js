@@ -23,8 +23,8 @@
 
 .cardsInHand,
 .playedCards {
-  flex: 1;
   position: relative;
+  flex: 1;
 }
 
 .cardsWithButton {
@@ -57,8 +57,8 @@
 
 .takeDevCard {
   position: absolute !important;
-  left: 10px;
-  top: 15px;
+  left: -1px;
+  top: 4px;
   transition: all 250ms;
 }
 
@@ -70,8 +70,4 @@
 
 .fieldsetWrapper:last-of-type {
   margin-left: 10px;
-}
-
-.playedCards {
-  display: flex;
 }

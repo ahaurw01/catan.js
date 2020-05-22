@@ -72,16 +72,16 @@ const GameResources = ({
                   </div>
                 </div>
 
-                <div className={styles.playedCards}>
-                  {devCardsPlayed.length > 0 && (
+                {devCardsPlayed.length > 0 && (
+                  <div className={styles.playedCards}>
                     <div className={styles.cardsWithDivider}>
                       <Divider vertical size="lg" />
                       {reverse(devCardsPlayed).map((card) => (
                         <DevCard key={Math.random()} {...card} played />
                       ))}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </Fieldset>
           </div>
