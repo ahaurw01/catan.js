@@ -10,7 +10,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## TODO
 
 - Actions:
-  - Take dev card
   - Give random resource to other player
   - Play dev card (reveal to others)
 - Show other players' stuff

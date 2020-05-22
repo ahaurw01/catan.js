@@ -112,9 +112,11 @@ export default class Home extends Component {
                     <TabBody>
                       <div
                         style={{
-                          position: 'relative',
-                          width: '100%',
-                          height: '100%',
+                          position: 'absolute',
+                          top: '12px',
+                          right: '12px',
+                          bottom: '12px',
+                          left: '12px',
                         }}
                       >
                         <Board>
