@@ -16,6 +16,8 @@ const PlayersStuff = ({ players, counts, resources }) => (
       <TableRow head>
         <TableHeadCell style={{ width: '120px' }}>Player</TableHeadCell>
         <TableHeadCell style={{ width: '60px' }}>Goods</TableHeadCell>
+        <TableHeadCell style={{ width: '80px' }}>Settlements</TableHeadCell>
+        <TableHeadCell style={{ width: '60px' }}>Cities</TableHeadCell>
         <TableHeadCell style={{ width: '80px' }}>Dev Cards</TableHeadCell>
         <TableHeadCell>Played Dev Cards</TableHeadCell>
       </TableRow>
@@ -30,6 +32,12 @@ const PlayersStuff = ({ players, counts, resources }) => (
           </TableDataCell>
           <TableDataCell style={{ textAlign: 'center' }}>
             {counts.resources[color] || 0}
+          </TableDataCell>
+          <TableDataCell style={{ textAlign: 'center' }}>
+            {counts.settlements[color] || 0}
+          </TableDataCell>
+          <TableDataCell style={{ textAlign: 'center' }}>
+            {counts.cities[color] || 0}
           </TableDataCell>
           <TableDataCell style={{ textAlign: 'center' }}>
             {counts.devCardsInHand[color] || 0}
