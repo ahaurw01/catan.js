@@ -10,28 +10,24 @@ import {
   TableDataCell,
 } from 'react95'
 
-const PlayersStuff = ({ players, counts, resources }) => (
+const PlayersStuff = ({
+  players,
+  counts,
+  resources,
+  longestRoad,
+  largestArmy,
+}) => (
   <Table className={styles.table}>
     <TableHead>
       <TableRow head>
-        <TableHeadCell style={{ textAlign: 'left', width: '120px' }}>
-          Player
-        </TableHeadCell>
-        <TableHeadCell style={{ textAlign: 'left', width: '60px' }}>
-          Goods
-        </TableHeadCell>
-        <TableHeadCell style={{ textAlign: 'left', width: '80px' }}>
-          Settlements
-        </TableHeadCell>
-        <TableHeadCell style={{ textAlign: 'left', width: '60px' }}>
-          Cities
-        </TableHeadCell>
-        <TableHeadCell style={{ textAlign: 'left', width: '80px' }}>
-          Dev Cards
-        </TableHeadCell>
-        <TableHeadCell style={{ textAlign: 'left' }}>
-          Played Dev Cards
-        </TableHeadCell>
+        <TableHeadCell style={{ width: '120px' }}>Player</TableHeadCell>
+        <TableHeadCell style={{ width: '45px' }}>Goods</TableHeadCell>
+        <TableHeadCell style={{ width: '80px' }}>Settlements</TableHeadCell>
+        <TableHeadCell style={{ width: '40px' }}>Cities</TableHeadCell>
+        <TableHeadCell style={{ width: '60px' }}>Longest Road?</TableHeadCell>
+        <TableHeadCell style={{ width: '60px' }}>Largest Army?</TableHeadCell>
+        <TableHeadCell style={{ width: '45px' }}>Dev Cards</TableHeadCell>
+        <TableHeadCell>Played Dev Cards</TableHeadCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -45,6 +41,8 @@ const PlayersStuff = ({ players, counts, resources }) => (
           <TableDataCell>{counts.resources[color] || 0}</TableDataCell>
           <TableDataCell>{counts.settlements[color] || 0}</TableDataCell>
           <TableDataCell>{counts.cities[color] || 0}</TableDataCell>
+          <TableDataCell>{color === longestRoad && '✔'}</TableDataCell>
+          <TableDataCell>{color === largestArmy && '✔'}</TableDataCell>
           <TableDataCell>{counts.devCardsInHand[color] || 0}</TableDataCell>
           <TableDataCell>
             <div className={styles.cards}>
@@ -89,6 +87,22 @@ PlayersStuff.propTypes = {
     green: PropTypes.shape({}),
     orange: PropTypes.shape({}),
   }),
+  longestRoad: PropTypes.oneOf([
+    'blue',
+    'red',
+    'white',
+    'green',
+    'orange',
+    null,
+  ]),
+  largestArmy: PropTypes.oneOf([
+    'blue',
+    'red',
+    'white',
+    'green',
+    'orange',
+    null,
+  ]),
 }
 
 export default PlayersStuff

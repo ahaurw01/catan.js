@@ -236,6 +236,8 @@ export default class Home extends Component {
                         players={game.players}
                         counts={game.counts}
                         resources={game.resources}
+                        longestRoad={game.longestRoad}
+                        largestArmy={game.largestArmy}
                       />
                     </TabBody>
                   )}
