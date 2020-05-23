@@ -11,10 +11,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 - Actions:
   - Give random resource to other player
-- Show other players' stuff
-  - Total resources
-  - Total dev cards
-  - Played dev cards
 - Cheat sheet card
 - Finish ports
 - Backdoor for getting and setting the game object
