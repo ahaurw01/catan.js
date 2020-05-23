@@ -5,7 +5,9 @@ import { Window, WindowContent, WindowHeader } from 'react95'
 const Layout = ({ boardSlot, actionSlot, itemSlot }) => (
   <Window className={styles.mainWindow}>
     <WindowHeader className={styles.windowHeader}>
-      <span className={styles.noPointerEvents}>🌄 C:\Games\Settlers.exe</span>
+      <span className={styles.noPointerEvents}>
+        🌄&nbsp;&nbsp;C:\Games\Settlers.exe
+      </span>
     </WindowHeader>
     <WindowContent className={styles.windowContent}>
       <div className={styles.layout}>

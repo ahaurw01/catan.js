@@ -14,12 +14,24 @@ const PlayersStuff = ({ players, counts, resources }) => (
   <Table className={styles.table}>
     <TableHead>
       <TableRow head>
-        <TableHeadCell style={{ width: '120px' }}>Player</TableHeadCell>
-        <TableHeadCell style={{ width: '60px' }}>Goods</TableHeadCell>
-        <TableHeadCell style={{ width: '80px' }}>Settlements</TableHeadCell>
-        <TableHeadCell style={{ width: '60px' }}>Cities</TableHeadCell>
-        <TableHeadCell style={{ width: '80px' }}>Dev Cards</TableHeadCell>
-        <TableHeadCell>Played Dev Cards</TableHeadCell>
+        <TableHeadCell style={{ textAlign: 'left', width: '120px' }}>
+          Player
+        </TableHeadCell>
+        <TableHeadCell style={{ textAlign: 'left', width: '60px' }}>
+          Goods
+        </TableHeadCell>
+        <TableHeadCell style={{ textAlign: 'left', width: '80px' }}>
+          Settlements
+        </TableHeadCell>
+        <TableHeadCell style={{ textAlign: 'left', width: '60px' }}>
+          Cities
+        </TableHeadCell>
+        <TableHeadCell style={{ textAlign: 'left', width: '80px' }}>
+          Dev Cards
+        </TableHeadCell>
+        <TableHeadCell style={{ textAlign: 'left' }}>
+          Played Dev Cards
+        </TableHeadCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -30,18 +42,10 @@ const PlayersStuff = ({ players, counts, resources }) => (
               {color} - {name}
             </div>
           </TableDataCell>
-          <TableDataCell style={{ textAlign: 'center' }}>
-            {counts.resources[color] || 0}
-          </TableDataCell>
-          <TableDataCell style={{ textAlign: 'center' }}>
-            {counts.settlements[color] || 0}
-          </TableDataCell>
-          <TableDataCell style={{ textAlign: 'center' }}>
-            {counts.cities[color] || 0}
-          </TableDataCell>
-          <TableDataCell style={{ textAlign: 'center' }}>
-            {counts.devCardsInHand[color] || 0}
-          </TableDataCell>
+          <TableDataCell>{counts.resources[color] || 0}</TableDataCell>
+          <TableDataCell>{counts.settlements[color] || 0}</TableDataCell>
+          <TableDataCell>{counts.cities[color] || 0}</TableDataCell>
+          <TableDataCell>{counts.devCardsInHand[color] || 0}</TableDataCell>
           <TableDataCell>
             <div className={styles.cards}>
               {resources[color].devCardsPlayed
