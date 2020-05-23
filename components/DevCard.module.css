@@ -14,6 +14,18 @@
   position: relative;
 }
 
+.card.small {
+  width: 45px;
+  height: 50px;
+  font-size: 75%;
+  border-radius: 3px;
+  border-width: 3px;
+}
+
+.card.small .description {
+  display: none;
+}
+
 .knight {
   border-color: purple;
 }

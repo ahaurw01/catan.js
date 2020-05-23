@@ -1,0 +1,16 @@
+.table {
+  table-layout: fixed;
+}
+
+.cards {
+  display: flex;
+  line-height: normal !important;
+  color: black !important;
+  overflow-x: auto;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

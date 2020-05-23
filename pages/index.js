@@ -12,6 +12,7 @@ import { Component } from 'react'
 import GameStateManager from '../components/GameStateManager'
 import Dice from '../components/Dice'
 import { Tabs, Tab, TabBody } from 'react95/dist/prod'
+import PlayersStuff from '../components/PlayersStuff'
 
 export default class Home extends Component {
   state = {
@@ -106,7 +107,7 @@ export default class Home extends Component {
                     onChange={(value) => this.setState({ activeTab: value })}
                   >
                     <Tab value={0}>Board</Tab>
-                    <Tab value={1}>Opponents</Tab>
+                    <Tab value={1}>Players</Tab>
                   </Tabs>
                   {activeTab === 0 && (
                     <TabBody>
@@ -229,7 +230,15 @@ export default class Home extends Component {
                       </div>
                     </TabBody>
                   )}
-                  {activeTab === 1 && <TabBody>Opponents</TabBody>}
+                  {activeTab === 1 && (
+                    <TabBody>
+                      <PlayersStuff
+                        players={game.players}
+                        counts={game.counts}
+                        resources={game.resources}
+                      />
+                    </TabBody>
+                  )}
                 </>
               }
               actionSlot={

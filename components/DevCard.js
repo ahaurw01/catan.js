@@ -37,8 +37,8 @@ const descriptions = {
   },
 }
 
-const DevCard = ({ type, subType, onPlay, played }) => (
-  <div className={cx(styles.card, styles[type])}>
+const DevCard = ({ type, subType, onPlay, played, small }) => (
+  <div className={cx(styles.card, styles[type], { [styles.small]: small })}>
     <div className={styles.type}>{titles[type](subType)}</div>
     <div className={styles.description}>{descriptions[type](subType)}</div>
     {!played && onPlay && (
@@ -55,12 +55,24 @@ DevCard.propTypes = {
   subType: PropTypes.oneOf(['monopoly', 'year of plenty', 'road building']),
   onPlay: PropTypes.func,
   played: PropTypes.bool,
+  small: PropTypes.bool,
 }
 
 DevCard.defaultProps = {
   subType: null,
   onPlay: null,
   played: false,
+  small: false,
 }
 
 export default DevCard
+
+const scores = {
+  victoryPoint: 3,
+  knight: 2,
+  progress: 1,
+}
+
+export function compare(devCard1, devCard2) {
+  return scores[devCard2.type] - scores[devCard1.type]
+}
