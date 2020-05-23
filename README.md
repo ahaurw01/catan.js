@@ -24,5 +24,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - better building icons
 
 ### BUGS
-
-Playing dev cards doesn't actually play the index you think.

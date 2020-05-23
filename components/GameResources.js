@@ -61,8 +61,8 @@ const GameResources = ({
                   <div className={styles.cardsWithButton}>
                     {devCardsInHand
                       .slice()
-                      .reverse()
                       .map((card, index) => [card, index])
+                      .reverse()
                       .map(([card, index]) => (
                         <DevCard
                           key={Math.random()}
