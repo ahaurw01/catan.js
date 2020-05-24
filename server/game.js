@@ -177,7 +177,9 @@ function wireItUp(io) {
         .head()
 
       gameState.resources[from][goodToSteal] -= 1
+      updateCount(gameState, 'resources', from, -1)
       gameState.resources[to][goodToSteal] += 1
+      updateCount(gameState, 'resources', to, 1)
       gameState.logs.push(`${to} stole from ${from}`)
       updateWithGame(io)
     })
