@@ -22,5 +22,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - green with stripes
   - orange and white checkers
 - better building icons
+- ordering of items to render clickable stuff on top
 
 ### BUGS
