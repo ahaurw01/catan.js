@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
 import Draggable from 'react-draggable'
@@ -11,10 +11,12 @@ import {
   Radio,
 } from 'react95'
 import styles from './PlayerModal.module.css'
-import cx from 'classnames'
 
 const GiveRandomModal = ({ players, isOpen, onRequestClose, onGiveRandom }) => {
   const [targetColor, setTargetColor] = useState(null)
+  // Reset when opened.
+  useEffect(() => setTargetColor(null), [isOpen])
+
   return (
     <ReactModal
       isOpen={isOpen}
@@ -65,7 +67,7 @@ const GiveRandomModal = ({ players, isOpen, onRequestClose, onGiveRandom }) => {
               </Fieldset>
               <div className={styles.buttons}>
                 <Button type="submit" disabled={!targetColor}>
-                  OK
+                  Get Robbed
                 </Button>
                 <Button onClick={onRequestClose}>Cancel</Button>
               </div>

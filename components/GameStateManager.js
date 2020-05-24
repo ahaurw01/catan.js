@@ -115,6 +115,11 @@ class GameStateManager {
     this.socket.emit('play dev card', { color: this.player, index })
   }
 
+  giveRandom = (color) => {
+    if (!this.player) return
+    this.socket.emit('give random', { from: this.player, to: color })
+  }
+
   get hasSettlement() {
     return (
       this.game.vertices.filter(

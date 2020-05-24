@@ -7,6 +7,8 @@ import DevCard from './DevCard'
 import cx from 'classnames'
 import GiveRandomModal from './GiveRandomModal'
 
+const GOOD_NAMES = ['lumber', 'grain', 'brick', 'ore', 'wool']
+
 const GameResources = ({
   player,
   goods,
@@ -21,6 +23,11 @@ const GameResources = ({
   onGiveRandom,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const canGiveRandom =
+    !!player &&
+    !!goods &&
+    Object.keys(players).length > 1 &&
+    GOOD_NAMES.reduce((sum, good) => sum + (goods[good] || 0), 0) > 0
   return (
     <>
       {player && goods && (
@@ -45,24 +52,23 @@ const GameResources = ({
                 className={styles.giveRandom}
                 size="sm"
                 onClick={() => setIsModalOpen(true)}
+                disabled={!canGiveRandom}
               >
                 Give Random...
               </Button>
               <div className={styles.goods}>
-                {['lumber', 'grain', 'brick', 'ore', 'wool'].map(
-                  (good, index, all) => (
-                    <div key={good} className={styles.goodSection}>
-                      <Good
-                        key={good}
-                        type={good}
-                        count={goods[good]}
-                        moreInBank={bankGoods[good] > 0}
-                        onChange={(diff) => onChangeGood({ good, diff })}
-                      />
-                      <Divider vertical className={styles.divider} />
-                    </div>
-                  )
-                )}
+                {GOOD_NAMES.map((good, index, all) => (
+                  <div key={good} className={styles.goodSection}>
+                    <Good
+                      key={good}
+                      type={good}
+                      count={goods[good]}
+                      moreInBank={bankGoods[good] > 0}
+                      onChange={(diff) => onChangeGood({ good, diff })}
+                    />
+                    <Divider vertical className={styles.divider} />
+                  </div>
+                ))}
               </div>
             </Fieldset>
           </div>

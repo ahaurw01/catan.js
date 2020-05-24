@@ -163,6 +163,24 @@ function wireItUp(io) {
       )
       updateWithGame(io)
     })
+
+    socket.on('give random', ({ from, to }) => {
+      const goodToSteal = _(
+        ['brick', 'grain', 'lumber', 'ore', 'wool'].reduce((hand, good) => {
+          return [
+            ...hand,
+            ..._.fill(Array(gameState.resources[from][good]), good),
+          ]
+        }, [])
+      )
+        .shuffle()
+        .head()
+
+      gameState.resources[from][goodToSteal] -= 1
+      gameState.resources[to][goodToSteal] += 1
+      gameState.logs.push(`${to} stole from ${from}`)
+      updateWithGame(io)
+    })
   })
 }
 
