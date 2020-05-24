@@ -1,13 +1,16 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './GameResources.module.css'
 import { Button, Divider, Fieldset } from 'react95'
 import Good from './Good'
 import DevCard from './DevCard'
 import cx from 'classnames'
+import GiveRandomModal from './GiveRandomModal'
 
 const GameResources = ({
   player,
   goods,
+  players,
   bankGoods,
   onChangeGood,
   devCardsInHand,
@@ -15,13 +18,36 @@ const GameResources = ({
   bankDevCards,
   onTakeDevCard,
   onPlayDevCard,
+  onGiveRandom,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <>
       {player && goods && (
         <>
+          <GiveRandomModal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            players={Object.entries(players)
+              .filter(([color]) => color !== player)
+              .reduce(
+                (players, [color, name]) => ({ ...players, [color]: name }),
+                {}
+              )}
+            onGiveRandom={(color) => {
+              setIsModalOpen(false)
+              onGiveRandom(color)
+            }}
+          />
           <div className={styles.fieldsetWrapper}>
             <Fieldset label="Goods">
+              <Button
+                className={styles.giveRandom}
+                size="sm"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Give Random...
+              </Button>
               <div className={styles.goods}>
                 {['lumber', 'grain', 'brick', 'ore', 'wool'].map(
                   (good, index, all) => (
@@ -33,9 +59,7 @@ const GameResources = ({
                         moreInBank={bankGoods[good] > 0}
                         onChange={(diff) => onChangeGood({ good, diff })}
                       />
-                      {index !== all.length - 1 && (
-                        <Divider vertical className={styles.divider} />
-                      )}
+                      <Divider vertical className={styles.divider} />
                     </div>
                   )
                 )}
@@ -97,6 +121,13 @@ const GameResources = ({
 
 GameResources.propTypes = {
   player: PropTypes.string,
+  players: PropTypes.shape({
+    red: PropTypes.string,
+    blue: PropTypes.string,
+    white: PropTypes.string,
+    green: PropTypes.string,
+    orange: PropTypes.string,
+  }),
   goods: PropTypes.shape({
     lumber: PropTypes.number,
     grain: PropTypes.number,

@@ -288,6 +288,7 @@ export default class Home extends Component {
               itemSlot={
                 <GameResources
                   player={player}
+                  players={game.players}
                   goods={myResources}
                   bankGoods={game.bank.resources}
                   onChangeGood={gameStateManager.changeGood}
@@ -296,6 +297,7 @@ export default class Home extends Component {
                   onTakeDevCard={gameStateManager.takeDevCard}
                   onPlayDevCard={gameStateManager.playDevCard}
                   bankDevCards={game.bank.devCards}
+                  onGiveRandom={(color) => gameStateManager.giveRandom(color)}
                 />
               }
             />

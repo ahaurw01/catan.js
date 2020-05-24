@@ -1,5 +1,6 @@
 .goods {
   display: flex;
+  margin-right: 50px;
 }
 
 .goodSection {
@@ -70,4 +71,11 @@
 
 .fieldsetWrapper:last-of-type {
   margin-left: 10px;
+}
+
+.giveRandom {
+  position: absolute !important;
+  transform: rotate(-90deg);
+  top: 58px;
+  right: -34px;
 }
