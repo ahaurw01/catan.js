@@ -38,6 +38,7 @@ const Port = ({ side, ratio, goods }) => {
         height={width}
         stroke="black"
         fill="white"
+        rx={radius / 40}
       />
       <g transform={`translate(${-radius / 6} ${-radius / 3.7})`}>
         <Icon width={radius / 3} height={radius / 3} />
