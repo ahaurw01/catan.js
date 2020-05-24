@@ -10,7 +10,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## TODO
 
 - Cheat sheet card
-- Finish ports
 - Backdoor for getting and setting the game object
 - reset game or make namespaced games
 - patterned pieces instead of solid colors
