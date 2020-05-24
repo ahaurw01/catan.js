@@ -12,7 +12,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Cheat sheet card
 - Finish ports
 - Backdoor for getting and setting the game object
-- reset game
+- reset game or make namespaced games
 - patterned pieces instead of solid colors
   - red with white hearts
   - solid white

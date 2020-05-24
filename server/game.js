@@ -342,8 +342,15 @@ function makeAllSides(points) {
 
 function makePorts() {
   return [
-    { side: [axial(-1, -1), axial(-2, -1)], goods: 'lumber', ratio: 2 },
-    { side: [axial(-1, 3), axial(-1, 2)], goods: 'any', ratio: 3 },
+    { side: [axial(-1, 2), axial(-1, 3)], goods: 'lumber', ratio: 2 },
+    { side: [axial(-2, 2), axial(-3, 3)], goods: 'any', ratio: 3 },
+    { side: [axial(-2, 1), axial(-3, 1)], goods: 'grain', ratio: 2 },
+    { side: [axial(-1, -1), axial(-2, -1)], goods: 'ore', ratio: 2 },
+    { side: [axial(0, -2), axial(0, -3)], goods: 'any', ratio: 3 },
+    { side: [axial(1, -2), axial(2, -3)], goods: 'wool', ratio: 2 },
+    { side: [axial(2, -1), axial(3, -2)], goods: 'any', ratio: 3 },
+    { side: [axial(2, 0), axial(3, 0)], goods: 'any', ratio: 3 },
+    { side: [axial(1, 1), axial(1, 2)], goods: 'brick', ratio: 3 },
   ].map((o) => ({ ...o, hash: hash(o.side) }))
 }
 
