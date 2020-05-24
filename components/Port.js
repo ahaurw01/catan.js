@@ -1,12 +1,21 @@
 import PropTypes from 'prop-types'
-import { radius, sidePropType, axialSideToPortCartesian } from './utils'
+import {
+  radius,
+  sidePropType,
+  axialSideToPortCartesian,
+  anglePerpendicularToSide,
+} from './utils'
 import styles from './Port.module.css'
 
 const Port = ({ side, ratio, goods }) => {
   const { x, y } = axialSideToPortCartesian(side)
   const width = radius / 2
   return (
-    <g transform={`translate(${x}, ${y})`}>
+    <g
+      transform={`translate(${x}, ${y}) rotate(${anglePerpendicularToSide(
+        side
+      )})`}
+    >
       <rect
         x={-width / 2}
         y={-width / 2}

@@ -37,6 +37,19 @@ export const angleOfSide = (side) => {
 }
 
 /**
+ * Get the angle perpendicular to a side starting with the inner portion.
+ *
+ * @param {Side} side Two axial points.
+ */
+export const anglePerpendicularToSide = (side) => {
+  const cartesianPoints = side.map(axialToCartesian)
+  const dx = cartesianPoints[0].x - cartesianPoints[1].x
+  const dy = cartesianPoints[0].y - cartesianPoints[1].y
+  const radiansOfVector = Math.atan(dy / dx)
+  return Math.round((radiansOfVector * 180) / Math.PI)
+}
+
+/**
  * Get the cartesian coordinates for port placement.
  * It goes on the outer edge of the side.
  *
