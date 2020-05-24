@@ -21,6 +21,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - blue with polka dots
   - green with stripes
   - orange and white checkers
+- patterned name tags
+    - in players box
+    - in players tab
+    - in steal modal
 - better building icons
 - ordering of items to render clickable stuff on top
 
