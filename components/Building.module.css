@@ -6,13 +6,3 @@
 .pointer {
   cursor: pointer;
 }
-
-.pulse {
-  animation: pulse linear 1s infinite;
-}
-
-@keyframes pulse {
-  50% {
-    transform: scale(1.3);
-  }
-}
