@@ -13,6 +13,7 @@ import {
 } from 'react95'
 import styles from './PlayerModal.module.css'
 import cx from 'classnames'
+import PlayerSwatch from './PlayerSwatch'
 
 const PlayerModal = ({
   players,
@@ -35,11 +36,8 @@ const PlayerModal = ({
 
   const playerTemplate = ({ label, value }) => (
     <span className={styles.playerOption}>
-      <span
-        className={cx(styles.color, styles.spaceRight)}
-        style={{ background: value }}
-      />
-      <span>
+      <PlayerSwatch size={25} color={value} />
+      <span className={styles.spaceLeft}>
         {label}
         {players[value] && ` (${players[value]})`}
       </span>
