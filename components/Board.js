@@ -21,6 +21,17 @@ const Board = ({ children }) => (
         <rect x="0" y="0" width="20" height="20" fill="white" />
       </pattern>
 
+      <pattern
+        id="green"
+        patternUnits="userSpaceOnUse"
+        width="40"
+        height="40"
+        patternTransform="scale(0.5)"
+      >
+        <rect x="0" y="0" width="40" height="40" fill="green" />
+        <path fill="white" d="M0 40L40 0H20L0 20M40 40V20L20 40" />
+      </pattern>
+
       <pattern id="clear" patternUnits="userSpaceOnUse" width="20" height="20">
         <rect x="0" y="0" width="20" height="20" fill="rgba(255,255,255,0.5)" />
       </pattern>

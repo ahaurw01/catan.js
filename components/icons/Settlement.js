@@ -23,9 +23,8 @@ const Settlement = ({ color, fade }) => (
 )
 
 Settlement.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
+  fade: PropTypes.bool,
 }
 
 export default Settlement
