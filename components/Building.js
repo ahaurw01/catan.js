@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { axialVertexToCartesian, radius, vertexPropType } from './utils'
+import { axialVertexToCartesian, vertexPropType } from './utils'
 import styles from './Building.module.css'
 import Settlement from './icons/Settlement'
 import City from './icons/City'
@@ -17,11 +17,10 @@ const Building = ({
   onUpgrade,
 }) => {
   const { x, y } = axialVertexToCartesian(vertex)
-  const width = type === 'settlement' ? radius / 3 : radius / 2
   const Icon = type === 'settlement' ? Settlement : City
   return (
     <g
-      transform={`translate(${x - width / 2}, ${y - width / 2})`}
+      transform={`translate(${x}, ${y})`}
       className={cx({
         [styles.pointer]: isBuildable || isUpgradeable,
       })}
@@ -32,8 +31,6 @@ const Building = ({
       }}
     >
       <Icon
-        width={width}
-        height={width}
         color={isBuildable ? 'rgba(255,255,255,0.5)' : color}
         fade={isFaded}
       />

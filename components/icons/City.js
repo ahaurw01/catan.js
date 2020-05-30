@@ -1,15 +1,26 @@
 import PropTypes from 'prop-types'
 import { radius } from '../utils'
 
-const City = ({ width, height, color }) => (
-  <svg width={width} height={height} viewBox="0 0 100 100">
+const height = radius / 2
+const points = [
+  `0,${height}`,
+  `0,${height / 2}`,
+  `${height / 4},${height / 2}`,
+  `${height / 4},${height / 4}`,
+  `${height * 0.63},0`,
+  `${height},${height / 4}`,
+  `${height},${height}`,
+].join(' ')
+
+const City = ({ color }) => (
+  <g transform={`translate(${-height / 2}, ${-height / 2})`}>
     <polygon
       strokeWidth={radius / 40}
       stroke="black"
-      fill={color}
-      points="0,100 0,50 25,50 25,25 63,0 100,25 100,100"
+      fill={`url(#${color})`}
+      points={points}
     />
-  </svg>
+  </g>
 )
 
 City.propTypes = {

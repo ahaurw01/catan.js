@@ -1,14 +1,25 @@
 import PropTypes from 'prop-types'
+import { radius } from '../utils'
 
-const Settlement = ({ width, height, color, fade }) => (
-  <svg width={width} height={height} viewBox="0 0 100 100">
+const height = radius / 3
+const points = [
+  `0,${height}`,
+  `0,${height * 0.4}`,
+  `${height / 2},0`,
+  `${height},${height * 0.4}`,
+  `${height},${height}`,
+].join(' ')
+
+const Settlement = ({ color, fade }) => (
+  <g transform={`translate(${-height / 2}, ${-height / 2})`}>
     <polygon
-      fill={color}
+      fill={`url(#${color})`}
       stroke="black"
-      points="0,100 0,40 50,0 100,40 100,100"
+      strokeWidth={radius / 40}
+      points={points}
       style={{ opacity: fade ? 0.5 : 1 }}
     />
-  </svg>
+  </g>
 )
 
 Settlement.propTypes = {
