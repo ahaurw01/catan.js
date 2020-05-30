@@ -6,6 +6,10 @@ class GameStateManager {
     this.socket = io()
     this.socket.on('log', console.log)
     this.socket.on('game', this.updateGame)
+
+    window.overwriteGame = (game) => {
+      this.socket.emit('overwrite game', game)
+    }
   }
 
   close = () => {
@@ -27,7 +31,7 @@ class GameStateManager {
   offUpdateGame = (handler) => this.handlers.delete(handler)
 
   updateGame = (game) => {
-    console.log('game updated:', game)
+    localStorage.setItem('game', JSON.stringify(game))
     if (game) this.game = game
     if (!this.player) {
       this.player = localStorage.getItem('player')

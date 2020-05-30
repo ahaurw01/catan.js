@@ -5,7 +5,7 @@ const MOUNTAINS = 'mountains'
 const FIELDS = 'fields'
 const PASTURE = 'pasture'
 const DESERT = 'desert'
-const gameState = makeGameState()
+let gameState = makeGameState()
 
 function updateWithGame(io) {
   io.emit('game', gameState)
@@ -14,6 +14,13 @@ function updateWithGame(io) {
 function wireItUp(io) {
   io.on('connection', (socket) => {
     updateWithGame(socket)
+
+    // Only to be used manually for testing or crisis management.
+    socket.on('overwrite game', (game) => {
+      gameState = game
+      gameState.logs.push('game overridden')
+      updateWithGame(io)
+    })
 
     socket.on('set player', ({ color, name }) => {
       gameState.players[color] = name
