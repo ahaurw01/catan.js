@@ -22,6 +22,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - in players tab
   - in steal modal
 - ordering of items to render clickable stuff on top
-- undo play dev card
 
 ### BUGS
