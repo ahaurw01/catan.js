@@ -1,0 +1,21 @@
+.help h2 {
+  font-size: 125%;
+}
+
+.help ul {
+  max-width: 325px;
+}
+
+.help li {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.help li span {
+  flex: 1;
+}
+
+.help svg {
+  margin-left: 5px;
+}

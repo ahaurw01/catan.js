@@ -13,6 +13,7 @@ import GameStateManager from '../components/GameStateManager'
 import Dice from '../components/Dice'
 import { Tabs, Tab, TabBody } from 'react95/dist/prod'
 import PlayersStuff from '../components/PlayersStuff'
+import Help from '../components/Help'
 
 export default class Home extends Component {
   state = {
@@ -108,6 +109,7 @@ export default class Home extends Component {
                   >
                     <Tab value={0}>Board</Tab>
                     <Tab value={1}>Players</Tab>
+                    <Tab value={2}>Help</Tab>
                   </Tabs>
                   {activeTab === 0 && (
                     <TabBody>
@@ -239,6 +241,11 @@ export default class Home extends Component {
                         longestRoad={game.longestRoad}
                         largestArmy={game.largestArmy}
                       />
+                    </TabBody>
+                  )}
+                  {activeTab === 2 && (
+                    <TabBody>
+                      <Help />
                     </TabBody>
                   )}
                 </>
