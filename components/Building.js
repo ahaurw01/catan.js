@@ -30,10 +30,7 @@ const Building = ({
         onRemove()
       }}
     >
-      <Icon
-        color={isBuildable ? 'rgba(255,255,255,0.5)' : color}
-        fade={isFaded}
-      />
+      <Icon color={isBuildable ? 'clear' : color} fade={isFaded} />
     </g>
   )
 }

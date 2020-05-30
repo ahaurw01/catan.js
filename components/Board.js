@@ -20,6 +20,10 @@ const Board = ({ children }) => (
       <pattern id="white" patternUnits="userSpaceOnUse" width="20" height="20">
         <rect x="0" y="0" width="20" height="20" fill="white" />
       </pattern>
+
+      <pattern id="clear" patternUnits="userSpaceOnUse" width="20" height="20">
+        <rect x="0" y="0" width="20" height="20" fill="rgba(255,255,255,0.5)" />
+      </pattern>
     </defs>
     {children}
   </svg>

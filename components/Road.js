@@ -23,7 +23,7 @@ const Road = ({ side, color, isBuildable, onBuild, onRemove }) => {
         height={height}
         stroke="black"
         strokeWidth={radius / 40}
-        fill={color ? `url(#${color})` : '#ccc'}
+        fill={`url(#${color})`}
         onClick={onBuild}
         onContextMenu={(e) => {
           e.preventDefault()
@@ -43,7 +43,7 @@ Road.propTypes = {
 }
 
 Road.defaultProps = {
-  color: null,
+  color: 'clear',
   isBuildable: false,
   onBuild: () => {},
   onRemove: () => {},
