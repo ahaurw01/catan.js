@@ -9,7 +9,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO
 
-- Backdoor for getting and setting the game object
 - reset game or make namespaced games
 - patterned pieces instead of solid colors
   - red with white hearts
