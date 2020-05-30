@@ -123,6 +123,14 @@ export default class Home extends Component {
                         }}
                       >
                         <Board>
+                          {game.ports.map(({ side, hash, goods, ratio }) => (
+                            <Port
+                              side={side}
+                              goods={goods}
+                              ratio={ratio}
+                              key={hash}
+                            />
+                          ))}
                           {game.tilePoints.map(({ type, q, r, dieNumber }) => (
                             <Tile
                               key={`${q},${r}`}
@@ -149,6 +157,34 @@ export default class Home extends Component {
                               <Robber q={q} r={r} key={hash} />
                             ) : null
                           )}
+
+                          {game.sides.map(({ side, hash, road }) => {
+                            if (!road && !isBuildingRoad) return null
+                            if (road) {
+                              return (
+                                <Road
+                                  side={side}
+                                  key={hash}
+                                  color={road.color}
+                                  onRemove={() => {
+                                    if (road.color === player)
+                                      gameStateManager.removeRoad(hash)
+                                  }}
+                                />
+                              )
+                            }
+                            return (
+                              <Road
+                                isBuildable
+                                onBuild={() => {
+                                  gameStateManager.buildRoad(hash)
+                                  this.setState({ isBuildingRoad: false })
+                                }}
+                                side={side}
+                                key={hash}
+                              />
+                            )
+                          })}
 
                           {game.vertices.map(({ vertex, hash, building }) => {
                             if (!building && !isBuildingSettlement) return null
@@ -191,43 +227,6 @@ export default class Home extends Component {
                               />
                             )
                           })}
-
-                          {game.sides.map(({ side, hash, road }) => {
-                            if (!road && !isBuildingRoad) return null
-                            if (road) {
-                              return (
-                                <Road
-                                  side={side}
-                                  key={hash}
-                                  color={road.color}
-                                  onRemove={() => {
-                                    if (road.color === player)
-                                      gameStateManager.removeRoad(hash)
-                                  }}
-                                />
-                              )
-                            }
-                            return (
-                              <Road
-                                isBuildable
-                                onBuild={() => {
-                                  gameStateManager.buildRoad(hash)
-                                  this.setState({ isBuildingRoad: false })
-                                }}
-                                side={side}
-                                key={hash}
-                              />
-                            )
-                          })}
-
-                          {game.ports.map(({ side, hash, goods, ratio }) => (
-                            <Port
-                              side={side}
-                              goods={goods}
-                              ratio={ratio}
-                              key={hash}
-                            />
-                          ))}
                         </Board>
                         <Dice
                           roll1={game.roll.one}
