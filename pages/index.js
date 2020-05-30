@@ -159,9 +159,10 @@ export default class Home extends Component {
                                   vertex={vertex}
                                   key={hash}
                                   color={building.color}
-                                  onRemove={() =>
-                                    gameStateManager.removeBuilding(hash)
-                                  }
+                                  onRemove={() => {
+                                    if (building.color === player)
+                                      gameStateManager.removeBuilding(hash)
+                                  }}
                                   isUpgradeable={
                                     player === building.color &&
                                     isUpgradingToCity
@@ -199,9 +200,10 @@ export default class Home extends Component {
                                   side={side}
                                   key={hash}
                                   color={road.color}
-                                  onRemove={() =>
-                                    gameStateManager.removeRoad(hash)
-                                  }
+                                  onRemove={() => {
+                                    if (road.color === player)
+                                      gameStateManager.removeRoad(hash)
+                                  }}
                                 />
                               )
                             }
