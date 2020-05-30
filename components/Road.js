@@ -23,7 +23,7 @@ const Road = ({ side, color, isBuildable, onBuild, onRemove }) => {
         height={height}
         stroke="black"
         strokeWidth={radius / 40}
-        fill={`url(#${color})`}
+        fill={color ? `url(#${color})` : '#ccc'}
         onClick={onBuild}
         onContextMenu={(e) => {
           e.preventDefault()

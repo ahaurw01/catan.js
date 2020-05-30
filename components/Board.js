@@ -16,6 +16,10 @@ const Board = ({ children }) => (
           <circle cx="13" cy="13" r="3" />
         </g>
       </pattern>
+
+      <pattern id="white" patternUnits="userSpaceOnUse" width="20" height="20">
+        <rect x="0" y="0" width="20" height="20" fill="white" />
+      </pattern>
     </defs>
     {children}
   </svg>
