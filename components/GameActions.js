@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 import styles from './GameActions.module.css'
 import { Button, Fieldset } from 'react95'
 import { omit } from 'lodash'
 import PlayerModal from './PlayerModal'
+import PlayerSwatch from './PlayerSwatch'
 
 const GameActions = ({
   chosenColor,
@@ -71,11 +71,8 @@ const GameActions = ({
         {/* Players */}
         {Object.entries(players).map(([color, name]) => (
           <div key={color} className={styles.chosenColor}>
-            <span
-              className={cx(styles.color, styles.spaceRight)}
-              style={{ background: color }}
-            />{' '}
-            {name}
+            <PlayerSwatch size={30} color={color} />
+            &nbsp;{name}
           </div>
         ))}
 
