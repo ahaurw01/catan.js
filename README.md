@@ -9,7 +9,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO
 
-- Cheat sheet card
 - Backdoor for getting and setting the game object
 - reset game or make namespaced games
 - patterned pieces instead of solid colors
@@ -19,10 +18,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - green with stripes
   - orange and white checkers
 - patterned name tags
-    - in players box
-    - in players tab
-    - in steal modal
+  - in players box
+  - in players tab
+  - in steal modal
 - better building icons
 - ordering of items to render clickable stuff on top
+- undo play dev card
 
 ### BUGS
