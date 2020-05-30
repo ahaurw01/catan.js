@@ -37,8 +37,14 @@ const descriptions = {
   },
 }
 
-const DevCard = ({ type, subType, onPlay, played, small }) => (
-  <div className={cx(styles.card, styles[type], { [styles.small]: small })}>
+const DevCard = ({ type, subType, onPlay, played, small, onUndoPlay }) => (
+  <div
+    className={cx(styles.card, styles[type], { [styles.small]: small })}
+    onContextMenu={(e) => {
+      e.preventDefault()
+      if (played) onUndoPlay()
+    }}
+  >
     <div className={styles.type}>{titles[type](subType)}</div>
     <div className={styles.description}>{descriptions[type](subType)}</div>
     {!played && onPlay && (
@@ -54,6 +60,7 @@ DevCard.propTypes = {
   type: PropTypes.oneOf(['knight', 'progress', 'victoryPoint']).isRequired,
   subType: PropTypes.oneOf(['monopoly', 'year of plenty', 'road building']),
   onPlay: PropTypes.func,
+  onUndoPlay: PropTypes.func,
   played: PropTypes.bool,
   small: PropTypes.bool,
 }
@@ -61,6 +68,7 @@ DevCard.propTypes = {
 DevCard.defaultProps = {
   subType: null,
   onPlay: null,
+  onUndoPlay: null,
   played: false,
   small: false,
 }

@@ -20,6 +20,7 @@ const GameResources = ({
   bankDevCards,
   onTakeDevCard,
   onPlayDevCard,
+  onUndoPlayDevCard,
   onGiveRandom,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -108,10 +109,15 @@ const GameResources = ({
                     <div className={styles.cardsWithDivider}>
                       <Divider vertical size="lg" />
                       {devCardsPlayed
-                        .slice()
+                        .map((card, index) => [card, index])
                         .reverse()
-                        .map((card) => (
-                          <DevCard key={Math.random()} {...card} played />
+                        .map(([card, index]) => (
+                          <DevCard
+                            key={Math.random()}
+                            {...card}
+                            played
+                            onUndoPlay={() => onUndoPlayDevCard(index)}
+                          />
                         ))}
                     </div>
                   </div>
@@ -169,6 +175,7 @@ GameResources.propTypes = {
   ),
   onTakeDevCard: PropTypes.func.isRequired,
   onPlayDevCard: PropTypes.func.isRequired,
+  onUndoPlayDevCard: PropTypes.func.isRequired,
 }
 
 GameResources.defaultProps = {

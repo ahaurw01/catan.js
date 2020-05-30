@@ -12,6 +12,7 @@
   background-color: #fff;
   margin: 0 1px;
   position: relative;
+  cursor: default;
 }
 
 .card.small {
