@@ -76,7 +76,11 @@ const GameActions = ({
           </div>
         ))}
 
-        <Button onClick={() => setIsModalOpen(true)}>
+        <Button
+          size="sm"
+          onClick={() => setIsModalOpen(true)}
+          style={{ width: '100%' }}
+        >
           {chosenColor ? 'Change Player' : 'Choose Player'}
         </Button>
       </Fieldset>
@@ -86,6 +90,7 @@ const GameActions = ({
           <Fieldset label="Build">
             <div className={styles.buttons}>
               <Button
+                size="sm"
                 active={isBuildingRoad}
                 onClick={onBuildRoad}
                 disabled={allBoolsBut('isBuildingRoad') || !canBuildMoreRoads}
@@ -94,6 +99,7 @@ const GameActions = ({
               </Button>
 
               <Button
+                size="sm"
                 active={isBuildingSettlement}
                 onClick={onBuildSettlement}
                 disabled={
@@ -106,6 +112,7 @@ const GameActions = ({
 
               {canUpgradeToCity && (
                 <Button
+                  size="sm"
                   active={isUpgradingToCity}
                   onClick={onUpgradeToCity}
                   disabled={
@@ -117,6 +124,7 @@ const GameActions = ({
               )}
 
               <Button
+                size="sm"
                 active={isMovingRobber}
                 onClick={onMoveRobber}
                 disabled={allBoolsBut('isMovingRobber')}
@@ -129,6 +137,7 @@ const GameActions = ({
           <Fieldset label="Accomplishments">
             <div className={styles.buttons}>
               <Button
+                size="sm"
                 active={hasLongestRoad || justClickedLongestRoad}
                 onClick={() => {
                   if (!hasLongestRoad) setJustClickedLongestRoad(true)
@@ -138,6 +147,7 @@ const GameActions = ({
                 Claim Longest Road
               </Button>
               <Button
+                size="sm"
                 active={hasLargestArmy || justClickedLargestArmy}
                 onClick={() => {
                   if (!hasLargestArmy) setJustClickedLargestArmy(true)
