@@ -1,0 +1,9 @@
+.pulse {
+  animation: pulse linear 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: translate(-10px, -10px) scale(1.5);
+  }
+}

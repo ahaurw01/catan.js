@@ -205,10 +205,6 @@ export default class Home extends Component {
                                     player === building.color &&
                                     isUpgradingToCity
                                   }
-                                  isFaded={
-                                    isUpgradingToCity &&
-                                    player !== building.color
-                                  }
                                   onUpgrade={() => {
                                     gameStateManager.upgradeToCity(hash)
                                     this.setState({ isUpgradingToCity: false })

@@ -11,7 +11,6 @@ const Building = ({
   type,
   isBuildable,
   isUpgradeable,
-  isFaded,
   onBuild,
   onRemove,
   onUpgrade,
@@ -30,7 +29,10 @@ const Building = ({
         onRemove()
       }}
     >
-      <Icon color={isBuildable ? 'clear' : color} fade={isFaded} />
+      <Icon
+        color={isBuildable ? 'clear' : color}
+        isUpgradeable={isUpgradeable}
+      />
     </g>
   )
 }
@@ -41,7 +43,6 @@ Building.propTypes = {
   type: PropTypes.oneOf(['settlement', 'city']).isRequired,
   isBuildable: PropTypes.bool,
   isUpgradeable: PropTypes.bool,
-  isFaded: PropTypes.bool,
   onBuild: PropTypes.func,
   onRemove: PropTypes.func,
 }
@@ -49,7 +50,6 @@ Building.propTypes = {
 Building.defaultProps = {
   isBuildable: false,
   isUpgradeable: false,
-  isFaded: false,
   onBuild: () => {},
   onRemove: () => {},
 }
