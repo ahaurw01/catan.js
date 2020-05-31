@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
 import Draggable from 'react-draggable'
+import PlayerSwatch from './PlayerSwatch'
 import {
   Window,
   WindowContent,
@@ -59,7 +60,12 @@ const GiveRandomModal = ({ players, isOpen, onRequestClose, onGiveRandom }) => {
                       name="colors"
                       checked={targetColor === color}
                       value={color}
-                      label={name}
+                      label={
+                        <span className={styles.playerOption}>
+                          <PlayerSwatch color={color} size={25} />{' '}
+                          <span className={styles.spaceLeft}>{name}</span>
+                        </span>
+                      }
                       onChange={() => setTargetColor(color)}
                     />
                   ))}
