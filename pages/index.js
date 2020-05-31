@@ -14,6 +14,7 @@ import Dice from '../components/Dice'
 import { Tabs, Tab, TabBody } from 'react95/dist/prod'
 import PlayersStuff from '../components/PlayersStuff'
 import Help from '../components/Help'
+import SvgDefs from '../components/SvgDefs'
 
 export default class Home extends Component {
   state = {
@@ -98,6 +99,7 @@ export default class Home extends Component {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
+        <SvgDefs />
         <main style={{ maxWidth: '1280px', margin: 'auto' }}>
           {gameStateManager && game && (
             <Layout

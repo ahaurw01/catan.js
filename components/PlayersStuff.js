@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import styles from './PlayersStuff.module.css'
 import DevCard, { compare } from './DevCard'
+import PlayerSwatch from './PlayerSwatch'
 import {
   Table,
   TableHead,
@@ -35,7 +36,11 @@ const PlayersStuff = ({
         <TableRow key={color}>
           <TableDataCell>
             <div className={styles.ellipsis}>
-              {color} - {name}
+              <PlayerSwatch color={color} size={25} />
+              <span>
+                &nbsp;&nbsp;
+                {name}
+              </span>
             </div>
           </TableDataCell>
           <TableDataCell>{counts.resources[color] || 0}</TableDataCell>

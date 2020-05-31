@@ -24,8 +24,6 @@ const City = ({ color }) => (
 )
 
 City.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
 }
 
