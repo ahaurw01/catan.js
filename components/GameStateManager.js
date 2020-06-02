@@ -8,8 +8,17 @@ class GameStateManager {
     this.socket.on('game', this.updateGame)
 
     window.overwriteGame = (game) => {
-      this.socket.emit('overwrite game', game)
+      this.emit('overwrite game', game)
     }
+  }
+
+  emit = (type, msgObj) => {
+    this.socket.emit(type, { id: this.id, ...msgObj })
+  }
+
+  joinGame = (id) => {
+    this.id = id
+    this.emit('join game', { id })
   }
 
   close = () => {
@@ -21,10 +30,10 @@ class GameStateManager {
   setPlayer = ({ color, name }) => {
     localStorage.setItem('player', color)
     if (this.player && this.player !== color) {
-      this.socket.emit('kick player', { color: this.player })
+      this.emit('kick player', { color: this.player })
     }
     this.player = color
-    this.socket.emit('set player', { color, name })
+    this.emit('set player', { color, name })
   }
 
   onUpdateGame = (handler) => this.handlers.add(handler)
@@ -59,74 +68,74 @@ class GameStateManager {
 
   buildRoad = (hash) => {
     if (!this.player) return
-    this.socket.emit('build road', { color: this.player, hash })
+    this.emit('build road', { color: this.player, hash })
   }
 
   removeRoad = (hash) => {
     if (!this.player) return
-    this.socket.emit('remove road', { hash })
+    this.emit('remove road', { hash })
   }
 
   buildSettlement = (hash) => {
     if (!this.player) return
-    this.socket.emit('build settlement', { color: this.player, hash })
+    this.emit('build settlement', { color: this.player, hash })
   }
 
   removeBuilding = (hash) => {
     if (!this.player) return
-    this.socket.emit('remove building', { hash })
+    this.emit('remove building', { hash })
   }
 
   upgradeToCity = (hash) => {
     if (!this.player) return
-    this.socket.emit('upgrade to city', { hash })
+    this.emit('upgrade to city', { hash })
   }
 
   changeGood = ({ diff, good }) => {
     if (!this.player) return
-    this.socket.emit('update good', { color: this.player, good, diff })
+    this.emit('update good', { color: this.player, good, diff })
   }
 
   moveRobber = (hash) => {
     if (!this.player) return
-    this.socket.emit('move robber', { hash })
+    this.emit('move robber', { hash })
   }
 
   roll = () => {
     if (!this.player) return
-    this.socket.emit('roll', { color: this.player })
+    this.emit('roll', { color: this.player })
   }
 
   setLongestRoad = () => {
     if (!this.player) return
     const color = this.hasLongestRoad ? null : this.player
-    this.socket.emit('set longest road', { color })
+    this.emit('set longest road', { color })
   }
 
   setLargestArmy = () => {
     if (!this.player) return
     const color = this.hasLargestArmy ? null : this.player
-    this.socket.emit('set largest army', { color })
+    this.emit('set largest army', { color })
   }
 
   takeDevCard = () => {
     if (!this.player) return
-    this.socket.emit('take dev card', { color: this.player })
+    this.emit('take dev card', { color: this.player })
   }
 
   playDevCard = (index) => {
     if (!this.player) return
-    this.socket.emit('play dev card', { color: this.player, index })
+    this.emit('play dev card', { color: this.player, index })
   }
 
   undoPlayDevCard = (index) => {
     if (!this.player) return
-    this.socket.emit('undo play dev card', { color: this.player, index })
+    this.emit('undo play dev card', { color: this.player, index })
   }
 
   giveRandom = (color) => {
     if (!this.player) return
-    this.socket.emit('give random', { from: this.player, to: color })
+    this.emit('give random', { from: this.player, to: color })
   }
 
   get hasSettlement() {

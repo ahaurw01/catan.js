@@ -1,47 +1,66 @@
 const _ = require('lodash')
+const shortid = require('shortid')
 const HILLS = 'hills'
 const FOREST = 'forest'
 const MOUNTAINS = 'mountains'
 const FIELDS = 'fields'
 const PASTURE = 'pasture'
 const DESERT = 'desert'
+const games = {}
+
+function makeNewGame() {
+  const id = shortid.generate()
+  const gameState = makeGameState()
+  games[id] = gameState
+  return id
+}
+
 let gameState = makeGameState()
 
-function updateWithGame(io) {
-  io.emit('game', gameState)
+function updateWithGame(io, id) {
+  io.to(id).emit('game', games[id])
 }
 
 function wireItUp(io) {
   io.on('connection', (socket) => {
-    updateWithGame(socket)
+    socket.on('join game', ({ id }) => {
+      console.log('id', id)
+      console.log('game', games[id])
+      socket.join(id)
+      socket.emit('game', games[id])
+    })
 
     // Only to be used manually for testing or crisis management.
-    socket.on('overwrite game', (game) => {
-      gameState = game
-      gameState.logs.push('game overridden')
-      updateWithGame(io)
+    socket.on('overwrite game', ({ id, game }) => {
+      games[id] = game
+      games[id].logs.push('game overridden')
+      updateWithGame(io, id)
     })
 
-    socket.on('set player', ({ color, name }) => {
+    socket.on('set player', ({ id, color, name }) => {
+      const gameState = games[id]
       gameState.players[color] = name
       gameState.logs.push(`${color} set to ${name}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('kick player', ({ color }) => {
+    socket.on('kick player', ({ id, color }) => {
+      const gameState = games[id]
       delete gameState.players[color]
       gameState.logs.push(`${color} removed from game`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('build road', ({ color, hash }) => {
+    socket.on('build road', ({ id, color, hash }) => {
+      const gameState = games[id]
       _.find(gameState.sides, { hash }).road = { color }
       updateCount(gameState, 'roads', color, 1)
       gameState.logs.push(`${color} built road at ${hash}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('remove road', ({ hash }) => {
+    socket.on('remove road', ({ id, hash }) => {
+      const gameState = games[id]
       const side = _.find(gameState.sides, { hash })
       const color = _.get(side, 'road.color')
       if (!color) return
@@ -49,20 +68,22 @@ function wireItUp(io) {
       side.road = null
       updateCount(gameState, 'roads', color, -1)
       gameState.logs.push(`${color} removed road from ${hash}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('build settlement', ({ color, hash }) => {
+    socket.on('build settlement', ({ id, color, hash }) => {
+      const gameState = games[id]
       _.find(gameState.vertices, { hash }).building = {
         color,
         type: 'settlement',
       }
       updateCount(gameState, 'settlements', color, 1)
       gameState.logs.push(`${color} built settlement at ${hash}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('remove building', ({ hash }) => {
+    socket.on('remove building', ({ id, hash }) => {
+      const gameState = games[id]
       const vertex = _.find(gameState.vertices, { hash })
       const color = _.get(vertex, 'building.color')
       const type = _.get(vertex, 'building.type')
@@ -75,10 +96,11 @@ function wireItUp(io) {
         updateCount(gameState, 'cities', color, -1)
       }
       gameState.logs.push(`${color} removed ${type} from ${hash}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('upgrade to city', ({ hash }) => {
+    socket.on('upgrade to city', ({ id, hash }) => {
+      const gameState = games[id]
       const { building } = _.find(gameState.vertices, { hash })
       if (!building) return
       building.type = 'city'
@@ -86,28 +108,31 @@ function wireItUp(io) {
       updateCount(gameState, 'cities', color, 1)
       updateCount(gameState, 'settlements', color, -1)
       gameState.logs.push(`settlement upgraded to city at ${hash}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('update good', ({ color, good, diff }) => {
+    socket.on('update good', ({ id, color, good, diff }) => {
+      const gameState = games[id]
       if (diff > 0 && gameState.bank.resources[good] <= 0) return
 
       gameState.resources[color][good] += diff
       gameState.bank.resources[good] -= diff
       updateCount(gameState, 'resources', color, diff)
       gameState.logs.push(`${color} ${diff > 0 ? 'took' : 'spent'} ${good}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('move robber', ({ hash }) => {
+    socket.on('move robber', ({ id, hash }) => {
+      const gameState = games[id]
       gameState.tilePoints.forEach((point) => {
         point.robber = point.hash === hash
       })
       gameState.logs.push(`robber moved to ${hash}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('roll', ({ color }) => {
+    socket.on('roll', ({ id, color }) => {
+      const gameState = games[id]
       gameState.roll = {
         one: _.random(1, 6),
         two: _.random(1, 6),
@@ -116,10 +141,11 @@ function wireItUp(io) {
       gameState.logs.push(
         `${color} rolled ${gameState.roll.one}, ${gameState.roll.two}`
       )
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('set longest road', ({ color }) => {
+    socket.on('set longest road', ({ id, color }) => {
+      const gameState = games[id]
       const prevOwner = gameState.longestRoad
       gameState.longestRoad = color
       gameState.logs.push(
@@ -127,10 +153,11 @@ function wireItUp(io) {
           ? `${color} claimed longest road`
           : `longest road given up by ${prevOwner}`
       )
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('set largest army', ({ color }) => {
+    socket.on('set largest army', ({ id, color }) => {
+      const gameState = games[id]
       const prevOwner = gameState.largestArmy
       gameState.largestArmy = color
       gameState.logs.push(
@@ -138,10 +165,11 @@ function wireItUp(io) {
           ? `${color} claimed largest army`
           : `largest army given up by ${prevOwner}`
       )
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('take dev card', ({ color }) => {
+    socket.on('take dev card', ({ id, color }) => {
+      const gameState = games[id]
       const numDevCardsInBank = gameState.bank.devCards.length
       if (numDevCardsInBank === 0) return
       const index = _.random(0, numDevCardsInBank - 1)
@@ -151,10 +179,11 @@ function wireItUp(io) {
       updateCount(gameState, 'devCardsInHand', color, 1)
 
       gameState.logs.push(`${color} took a dev card`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('play dev card', ({ color, index }) => {
+    socket.on('play dev card', ({ id, color, index }) => {
+      const gameState = games[id]
       const card = gameState.resources[color].devCardsInHand[index]
       if (!card) return
 
@@ -168,10 +197,11 @@ function wireItUp(io) {
           card.subType ? ` ${card.subType}` : ''
         }`
       )
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('undo play dev card', ({ color, index }) => {
+    socket.on('undo play dev card', ({ id, color, index }) => {
+      const gameState = games[id]
       const card = gameState.resources[color].devCardsPlayed[index]
       if (!card) return
 
@@ -185,10 +215,11 @@ function wireItUp(io) {
           card.subType ? ` ${card.subType}` : ''
         }`
       )
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
 
-    socket.on('give random', ({ from, to }) => {
+    socket.on('give random', ({ id, from, to }) => {
+      const gameState = games[id]
       const goodToSteal = _(
         ['brick', 'grain', 'lumber', 'ore', 'wool'].reduce((hand, good) => {
           return [
@@ -205,7 +236,7 @@ function wireItUp(io) {
       gameState.resources[to][goodToSteal] += 1
       updateCount(gameState, 'resources', to, 1)
       gameState.logs.push(`${to} stole from ${from}`)
-      updateWithGame(io)
+      updateWithGame(io, id)
     })
   })
 }
@@ -292,6 +323,8 @@ function makeGameState() {
 
 module.exports = {
   wireItUp,
+  makeNewGame,
+  games,
 }
 
 function axial(q, r) {
