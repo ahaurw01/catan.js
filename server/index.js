@@ -7,22 +7,26 @@ const dev = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler()
 
-const { wireItUp } = require('./game')
+const { wireItUp, makeNewGame, games } = require('./game')
 
 nextApp.prepare().then(() => {
   const http = createServer((req, res) => {
     // Be sure to pass `true` as the second argument to `url.parse`.
     // This tells it to parse the query portion of the URL.
     const parsedUrl = parse(req.url, true)
-    const { pathname, query } = parsedUrl
-
-    if (pathname === '/a') {
-      nextApp.render(req, res, '/b', query)
-    } else if (pathname === '/b') {
-      nextApp.render(req, res, '/a', query)
-    } else {
-      handle(req, res, parsedUrl)
+    if (parsedUrl.pathname === '/api/get-games') {
+      res.end(
+        JSON.stringify({
+          games: Object.entries(games).map(([id, game]) => ({ id })),
+        })
+      )
+      return
+    } else if (parsedUrl.pathname === '/api/new-game') {
+      res.end(JSON.stringify({ id: makeNewGame() }))
+      return
     }
+
+    handle(req, res, parsedUrl)
   }).listen(process.env.PORT || 3000, (err) => {
     if (err) throw err
     console.log('> Ready!')

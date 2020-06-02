@@ -13,6 +13,7 @@ class GameStateManager {
   }
 
   emit = (type, msgObj) => {
+    console.log(this.id, type, msgObj)
     this.socket.emit(type, { id: this.id, ...msgObj })
   }
 

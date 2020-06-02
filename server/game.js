@@ -15,8 +15,6 @@ function makeNewGame() {
   return id
 }
 
-let gameState = makeGameState()
-
 function updateWithGame(io, id) {
   io.to(id).emit('game', games[id])
 }
@@ -24,8 +22,6 @@ function updateWithGame(io, id) {
 function wireItUp(io) {
   io.on('connection', (socket) => {
     socket.on('join game', ({ id }) => {
-      console.log('id', id)
-      console.log('game', games[id])
       socket.join(id)
       socket.emit('game', games[id])
     })

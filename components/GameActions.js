@@ -177,9 +177,9 @@ GameActions.propTypes = {
   onUpgradeToCity: PropTypes.func.isRequired,
   isMovingRobber: PropTypes.bool.isRequired,
   onMoveRobber: PropTypes.func.isRequired,
-  hasLongestRoad: PropTypes.bool.isRequired,
+  hasLongestRoad: PropTypes.bool,
   onClaimLongestRoad: PropTypes.func.isRequired,
-  hasLargestArmy: PropTypes.bool.isRequired,
+  hasLargestArmy: PropTypes.bool,
   onClaimLargestArmy: PropTypes.func.isRequired,
   canBuildMoreRoads: PropTypes.bool.isRequired,
   canBuildMoreSettlements: PropTypes.bool.isRequired,
@@ -188,6 +188,8 @@ GameActions.propTypes = {
 
 GameActions.defaultProps = {
   chosenColor: null,
+  hasLongestRoad: false,
+  hasLargestArmy: false,
 }
 
 export default GameActions
