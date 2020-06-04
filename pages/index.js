@@ -18,6 +18,8 @@ import styles from './index.module.css'
 
 export default function Index() {
   const [games, setGames] = useState([])
+  const [isCreating, setIsCreating] = useState(false)
+
   useEffect(() => {
     fetch('/api/get-games')
       .then((res) => res.json())
@@ -25,6 +27,7 @@ export default function Index() {
   }, [])
 
   const createNewGame = () => {
+    setIsCreating(true)
     fetch('/api/new-game')
       .then((res) => res.json())
       .then(({ id }) => Router.push('/game/[id]', `/game/${id}`))
@@ -46,7 +49,9 @@ export default function Index() {
         <WindowContent className={styles.windowContent}>
           <div className={styles.layout}>
             <div className={styles.newGame}>
-              <Button onClick={createNewGame}>New Game</Button>
+              <Button onClick={createNewGame} disabled={isCreating}>
+                New Game
+              </Button>
             </div>
             <Table className={styles.table}>
               <TableHead>
@@ -68,6 +73,7 @@ export default function Index() {
                     <TableDataCell style={{ textAlign: 'center' }}>
                       <Button
                         onClick={() => Router.push('/game/[id]', `/game/${id}`)}
+                        size="sm"
                       >
                         Join
                       </Button>
