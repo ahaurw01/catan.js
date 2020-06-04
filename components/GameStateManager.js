@@ -46,25 +46,29 @@ class GameStateManager {
     if (!this.player) {
       this.player = localStorage.getItem('player')
     }
-    if (game.logs && game.logs.length) {
+    if (game?.logs?.length) {
       console.log('>>>', last(game.logs))
     }
 
-    Array.from(this.handlers).forEach((handler) =>
-      handler({
-        game: this.game,
-        player: this.player,
-        hasSettlement: this.hasSettlement,
-        myResources: this.myResources,
-        myDevCardsInHand: this.myDevCardsInHand,
-        myDevCardsPlayed: this.myDevCardsPlayed,
-        hasLongestRoad: this.hasLongestRoad,
-        hasLargestArmy: this.hasLargestArmy,
-        canBuildMoreRoads: this.canBuildMoreRoads,
-        canBuildMoreSettlements: this.canBuildMoreSettlements,
-        canUpgradeMoreCities: this.canUpgradeMoreCities,
-      })
-    )
+    Array.from(this.handlers).forEach((handler) => {
+      if (!this.game) {
+        handler({ game: null })
+      } else {
+        handler({
+          game: this.game,
+          player: this.player,
+          hasSettlement: this.hasSettlement,
+          myResources: this.myResources,
+          myDevCardsInHand: this.myDevCardsInHand,
+          myDevCardsPlayed: this.myDevCardsPlayed,
+          hasLongestRoad: this.hasLongestRoad,
+          hasLargestArmy: this.hasLargestArmy,
+          canBuildMoreRoads: this.canBuildMoreRoads,
+          canBuildMoreSettlements: this.canBuildMoreSettlements,
+          canUpgradeMoreCities: this.canUpgradeMoreCities,
+        })
+      }
+    })
   }
 
   buildRoad = (hash) => {

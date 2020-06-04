@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Board from '../../components/Board'
 import Tile from '../../components/Tile'
 import Building from '../../components/Building'
@@ -57,6 +57,9 @@ export default function Game() {
         myDevCardsInHand,
         myDevCardsPlayed,
       }) => {
+        if (!game) {
+          return Router.replace('/404')
+        }
         setPlayer(player)
         setHasSettlement(hasSettlement)
         setMyResources(myResources)
