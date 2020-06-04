@@ -19,22 +19,26 @@ import SvgDefs from '../../components/SvgDefs'
 
 export default function Game() {
   const [gameStateManager, setGameStateManager] = useState(null)
-  const [game, setGame] = useState(null)
-  const [player, setPlayer] = useState(null)
-  const [hasSettlement, setHasSettlement] = useState(false)
   const [isBuildingRoad, setIsBuildingRoad] = useState(false)
   const [isBuildingSettlement, setIsBuildingSettlement] = useState(false)
   const [isUpgradingToCity, setIsUpgradingToCity] = useState(false)
   const [isMovingRobber, setIsMovingRobber] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
-  const [canBuildMoreRoads, setCanBuildMoreRoads] = useState(false)
-  const [canBuildMoreSettlements, setCanBuildMoreSettlements] = useState(false)
-  const [canUpgradeMoreCities, setCanUpgradeMoreCities] = useState(false)
-  const [hasLongestRoad, setHasLongestRoad] = useState(false)
-  const [hasLargestArmy, setHasLargestArmy] = useState(false)
-  const [myResources, setMyResources] = useState(null)
-  const [myDevCardsInHand, setMyDevCardsInHand] = useState(null)
-  const [myDevCardsPlayed, setMyDevCardsPlayed] = useState(null)
+
+  const [gameState, setGameState] = useState({})
+  const {
+    game,
+    player,
+    hasSettlement,
+    myResources,
+    hasLongestRoad,
+    hasLargestArmy,
+    canBuildMoreRoads,
+    canBuildMoreSettlements,
+    canUpgradeMoreCities,
+    myDevCardsInHand,
+    myDevCardsPlayed,
+  } = gameState
 
   const router = useRouter()
   const { id } = router.query
@@ -60,17 +64,20 @@ export default function Game() {
         if (!game) {
           return Router.replace('/404')
         }
-        setPlayer(player)
-        setHasSettlement(hasSettlement)
-        setMyResources(myResources)
-        setHasLongestRoad(hasLongestRoad)
-        setHasLargestArmy(hasLargestArmy)
-        setCanBuildMoreRoads(canBuildMoreRoads)
-        setCanBuildMoreSettlements(canBuildMoreSettlements)
-        setCanUpgradeMoreCities(canUpgradeMoreCities)
-        setMyDevCardsInHand(myDevCardsInHand)
-        setMyDevCardsPlayed(myDevCardsPlayed)
-        setGame(game)
+
+        setGameState({
+          player,
+          hasSettlement,
+          myResources,
+          hasLongestRoad,
+          hasLargestArmy,
+          canBuildMoreRoads,
+          canBuildMoreSettlements,
+          canUpgradeMoreCities,
+          myDevCardsInHand,
+          myDevCardsPlayed,
+          game,
+        })
       }
     )
     gameStateManager.joinGame(id)
@@ -246,7 +253,6 @@ export default function Game() {
                 chosenColor={player}
                 onSetPlayer={({ color, name }) => {
                   gameStateManager.setPlayer({ color, name })
-                  setPlayer(color)
                 }}
                 players={game.players}
                 onBuildRoad={() => {
