@@ -9,7 +9,7 @@ const ResetStyles = createGlobalStyle`
     src: url('/MS-Sans-Serif.ttf');
   }
   * {
-    font-family: MSSansSerif;
+    font-family: MSSansSerif !important;
   }
 `
 

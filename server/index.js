@@ -17,7 +17,11 @@ nextApp.prepare().then(() => {
     if (parsedUrl.pathname === '/api/get-games') {
       res.end(
         JSON.stringify({
-          games: Object.entries(games).map(([id, game]) => ({ id })),
+          games: Object.entries(games).map(([id, game]) => ({
+            id,
+            createdAt: game.createdAt,
+            players: game.players,
+          })),
         })
       )
       return

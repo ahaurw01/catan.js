@@ -57,3 +57,8 @@
 .noPointerEvents {
   pointer-events: none;
 }
+
+.icon {
+  margin-right: 10px;
+  display: inline-block;
+}

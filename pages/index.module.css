@@ -1,0 +1,31 @@
+.mainWindow {
+  width: 100%;
+}
+
+.windowHeader {
+  margin: 0 !important;
+}
+
+.windowContent {
+  padding: 12px !important;
+  flex-grow: 1;
+}
+
+.noPointerEvents {
+  pointer-events: none;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 65px);
+}
+
+.icon {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.newGame {
+  margin-bottom: 10px;
+}

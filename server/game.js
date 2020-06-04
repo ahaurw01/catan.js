@@ -239,6 +239,7 @@ function wireItUp(io) {
 
 function makeGameState() {
   const gameState = {
+    createdAt: new Date(),
     logs: [],
     players: {
       // red: 'settlerboi',
