@@ -29,7 +29,7 @@ class GameStateManager {
   handlers = new Set()
 
   setPlayer = ({ color, name }) => {
-    localStorage.setItem('player', color)
+    localStorage.setItem(`${this.id}:player`, color)
     if (this.player && this.player !== color) {
       this.emit('kick player', { color: this.player })
     }
@@ -41,10 +41,10 @@ class GameStateManager {
   offUpdateGame = (handler) => this.handlers.delete(handler)
 
   updateGame = (game) => {
-    localStorage.setItem('game', JSON.stringify(game))
+    localStorage.setItem(`${this.id}:game`, JSON.stringify(game))
     if (game) this.game = game
     if (!this.player) {
-      this.player = localStorage.getItem('player')
+      this.player = localStorage.getItem(`${this.id}:player`)
     }
     if (game?.logs?.length) {
       console.log('>>>', last(game.logs))
