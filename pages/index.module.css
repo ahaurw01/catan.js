@@ -29,3 +29,8 @@
 .newGame {
   margin-bottom: 10px;
 }
+
+.row,
+.button {
+  cursor: pointer;
+}

@@ -49,7 +49,11 @@ export default function Index() {
         <WindowContent className={styles.windowContent}>
           <div className={styles.layout}>
             <div className={styles.newGame}>
-              <Button onClick={createNewGame} disabled={isCreating}>
+              <Button
+                onClick={createNewGame}
+                disabled={isCreating}
+                className={styles.button}
+              >
                 New Game
               </Button>
             </div>
@@ -58,26 +62,21 @@ export default function Index() {
                 <TableRow head>
                   <TableHeadCell>Players</TableHeadCell>
                   <TableHeadCell>Created</TableHeadCell>
-                  <TableHeadCell></TableHeadCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {games.map(({ id, players, createdAt }) => (
-                  <TableRow key={id}>
+                  <TableRow
+                    key={id}
+                    className={styles.row}
+                    onClick={() => Router.push('/game/[id]', `/game/${id}`)}
+                  >
                     <TableDataCell>
                       {Object.entries(players)
                         .map(([color, name]) => name)
                         .join(', ')}
                     </TableDataCell>
                     <TableDataCell>{moment(createdAt).fromNow()}</TableDataCell>
-                    <TableDataCell style={{ textAlign: 'center' }}>
-                      <Button
-                        onClick={() => Router.push('/game/[id]', `/game/${id}`)}
-                        size="sm"
-                      >
-                        Join
-                      </Button>
-                    </TableDataCell>
                   </TableRow>
                 ))}
               </TableBody>
