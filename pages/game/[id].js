@@ -96,7 +96,7 @@ export default function Game() {
       </Head>
 
       <SvgDefs />
-      <main style={{ maxWidth: '1280px', margin: 'auto' }}>
+      <main>
         {gameStateManager && game && (
           <Layout
             boardSlot={
