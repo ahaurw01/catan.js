@@ -9,24 +9,33 @@ const PASTURE = 'pasture'
 const DESERT = 'desert'
 const games = {}
 const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:22222'
+let queuedUpdates = []
 
 function upsertAllGames() {
+  if (queuedUpdates.length === 0) return
   const client = new MongoClient(mongoUri, { useUnifiedTopology: true })
   client
     .connect()
     .then(() => {
       const db = client.db('settlers')
       return Promise.all(
-        Object.entries(games).map(([id, game]) =>
-          db
-            .collection('games')
-            .findOneAndUpdate({ id }, { $set: game }, { upsert: true })
-        )
+        Object.values(games)
+          .filter(Boolean)
+          .filter(({ id }) => queuedUpdates.includes(id))
+          .map((game) =>
+            db
+              .collection('games')
+              .findOneAndUpdate(
+                { id: game.id },
+                { $set: game },
+                { upsert: true }
+              )
+          )
       )
     })
-
-    .catch(console.error)
+    .catch((err) => console.error('error upserting games', err))
     .then(() => {
+      queuedUpdates = []
       client.close()
     })
 }
@@ -37,7 +46,7 @@ function findGame(id) {
     .connect()
     .then(() => client.db('settlers').collection('games').findOne({ id }))
 
-  gamePromise.catch(console.error)
+  gamePromise.catch((err) => console.error('error finding game', id, err))
   gamePromise.finally(() => client.close())
 
   return gamePromise
@@ -45,17 +54,22 @@ function findGame(id) {
 
 function findAllGames() {
   const client = new MongoClient(mongoUri, { useUnifiedTopology: true })
-  const gamesPromise = client
-    .connect()
-    .then(() =>
-      client
-        .db('settlers')
-        .collection('games')
-        .find({}, { id: 1, createdAt: 1, players: 1 })
-        .toArray()
-    )
+  const gamesPromise = client.connect().then(() =>
+    client
+      .db('settlers')
+      .collection('games')
+      .find(
+        {},
+        {
+          projection: { id: 1, createdAt: 1, players: 1 },
+          sort: [['createdAt', -1]],
+        },
+        {}
+      )
+      .toArray()
+  )
 
-  gamesPromise.catch(console.error)
+  gamesPromise.catch((err) => console.error('error finding games', err))
   gamesPromise.finally(() => client.close())
 
   return gamesPromise
@@ -64,12 +78,16 @@ function findAllGames() {
 function makeNewGame() {
   const id = shortid.generate()
   const gameState = makeGameState()
+  gameState.id = id
   games[id] = gameState
+  queuedUpdates.push(id)
+  upsertAllGames()
   return id
 }
 
 function updateWithGame(io, id) {
   io.to(id).emit('game', games[id])
+  queuedUpdates.push(id)
 }
 
 function wireItUp(io) {
