@@ -63,8 +63,7 @@ function findAllGames() {
         {
           projection: { id: 1, createdAt: 1, players: 1 },
           sort: [['createdAt', -1]],
-        },
-        {}
+        }
       )
       .toArray()
   )
@@ -328,7 +327,7 @@ function makeGameState() {
     },
     roll: {
       one: 6,
-      two: 6,
+      two: 1,
       id: 0,
     },
     longestRoad: null,

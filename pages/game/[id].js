@@ -136,6 +136,7 @@ export default function Game() {
                             q={q}
                             r={r}
                             dieNumber={dieNumber}
+                            rollTotal={game.roll.one + game.roll.two}
                           />
                         ))}
 

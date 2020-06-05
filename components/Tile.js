@@ -24,16 +24,7 @@ const icons = {
   fields: Grain,
 }
 
-const fillForType = {
-  // hills: 'url(#brick)',
-  // mountains: 'url(#ore)',
-  // forest: 'url(#forest)',
-  // desert: 'url(#minsweeper)',
-  // pasture: 'url(#pasture)',
-  // fields: 'url(#desert)',
-}
-
-const Tile = ({ q, r, type, dieNumber }) => {
+const Tile = ({ q, r, type, dieNumber, rollTotal }) => {
   const { x, y } = axialToCartesian({ q, r })
   const points = makeHexagonPoints({ x, y })
     .map((p) => `${p.x},${p.y}`)
@@ -49,12 +40,14 @@ const Tile = ({ q, r, type, dieNumber }) => {
     <g>
       <polygon
         points={points}
-        fill={fillForType[type] || colors[type]}
+        fill={colors[type]}
         strokeWidth="5"
         stroke="#333"
       />
       <g transform={`translate(${x}, ${y})`}>
-        {dieNumber != null && <DieNumber value={dieNumber} />}
+        {dieNumber != null && (
+          <DieNumber value={dieNumber} highlight={dieNumber === rollTotal} />
+        )}
         <g transform={`translate(${-iconWidth / 2}, ${-radius / 1.25})`}>
           <Icon width={iconWidth} height={iconWidth} />
         </g>
@@ -74,11 +67,13 @@ Tile.propTypes = {
     'pasture',
   ]),
   dieNumber: PropTypes.number,
+  rollTotal: PropTypes.number,
 }
 
 Tile.defaultProps = {
   type: null,
   dieNumber: null,
+  rollTotal: -1,
 }
 
 export default Tile
