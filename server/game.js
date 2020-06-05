@@ -1,5 +1,6 @@
 const _ = require('lodash')
 const shortid = require('shortid')
+const { MongoClient } = require('mongodb')
 const HILLS = 'hills'
 const FOREST = 'forest'
 const MOUNTAINS = 'mountains'
@@ -7,6 +8,58 @@ const FIELDS = 'fields'
 const PASTURE = 'pasture'
 const DESERT = 'desert'
 const games = {}
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:22222'
+
+function upsertAllGames() {
+  const client = new MongoClient(mongoUri, { useUnifiedTopology: true })
+  client
+    .connect()
+    .then(() => {
+      const db = client.db('settlers')
+      return Promise.all(
+        Object.entries(games).map(([id, game]) =>
+          db
+            .collection('games')
+            .findOneAndUpdate({ id }, { $set: game }, { upsert: true })
+        )
+      )
+    })
+
+    .catch(console.error)
+    .then(() => {
+      client.close()
+    })
+}
+
+function findGame(id) {
+  const client = new MongoClient(mongoUri, { useUnifiedTopology: true })
+  const gamePromise = client
+    .connect()
+    .then(() => client.db('settlers').collection('games').findOne({ id }))
+
+  gamePromise.catch(console.error)
+  gamePromise.finally(() => client.close())
+
+  return gamePromise
+}
+
+function findAllGames(id) {
+  const client = new MongoClient(mongoUri, { useUnifiedTopology: true })
+  const gamesPromise = client
+    .connect()
+    .then(() =>
+      client
+        .db('settlers')
+        .collection('games')
+        .find({}, { id: 1, createdAt: 1, players: 1 })
+        .toArray()
+    )
+
+  gamesPromise.catch(console.error)
+  gamesPromise.finally(() => client.close())
+
+  return gamesPromise
+}
 
 function makeNewGame() {
   const id = shortid.generate()
@@ -23,7 +76,14 @@ function wireItUp(io) {
   io.on('connection', (socket) => {
     socket.on('join game', ({ id }) => {
       socket.join(id)
-      socket.emit('game', games[id])
+      if (id in games) {
+        socket.emit('game', games[id])
+      } else {
+        findGame(id).then((game) => {
+          games[id] = game
+          socket.emit('game', game)
+        })
+      }
     })
 
     // Only to be used manually for testing or crisis management.
@@ -235,6 +295,8 @@ function wireItUp(io) {
       updateWithGame(io, id)
     })
   })
+
+  setInterval(upsertAllGames, 10000)
 }
 
 function makeGameState() {
@@ -321,7 +383,7 @@ function makeGameState() {
 module.exports = {
   wireItUp,
   makeNewGame,
-  games,
+  findAllGames,
 }
 
 function axial(q, r) {
