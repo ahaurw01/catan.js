@@ -20,6 +20,7 @@ const GameResources = ({
   bankDevCards,
   onTakeDevCard,
   onPlayDevCard,
+  onUndoTakeDevCard,
   onUndoPlayDevCard,
   onGiveRandom,
 }) => {
@@ -99,6 +100,7 @@ const GameResources = ({
                           key={Math.random()}
                           {...card}
                           onPlay={() => onPlayDevCard(index)}
+                          onUndo={() => onUndoTakeDevCard(index)}
                         />
                       ))}
                   </div>
@@ -116,7 +118,7 @@ const GameResources = ({
                             key={Math.random()}
                             {...card}
                             played
-                            onUndoPlay={() => onUndoPlayDevCard(index)}
+                            onUndo={() => onUndoPlayDevCard(index)}
                           />
                         ))}
                     </div>

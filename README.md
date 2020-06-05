@@ -9,7 +9,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO
 
-- Undo take dev card
-- Maximize, close
-
 ### BUGS

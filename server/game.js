@@ -273,6 +273,23 @@ function wireItUp(io) {
       updateWithGame(io, id)
     })
 
+    socket.on('undo take dev card', ({ id, color, index }) => {
+      const gameState = games[id]
+      const card = gameState.resources[color].devCardsInHand[index]
+      if (!card) return
+
+      gameState.resources[color].devCardsInHand.splice(index, 1)
+      gameState.bank.devCards.push(card)
+      updateCount(gameState, 'devCardsInHand', color, -1)
+
+      gameState.logs.push(
+        `${color} gave back a dev card - ${card.type}${
+          card.subType ? ` ${card.subType}` : ''
+        }`
+      )
+      updateWithGame(io, id)
+    })
+
     socket.on('undo play dev card', ({ id, color, index }) => {
       const gameState = games[id]
       const card = gameState.resources[color].devCardsPlayed[index]

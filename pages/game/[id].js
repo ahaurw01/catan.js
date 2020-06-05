@@ -316,6 +316,7 @@ export default function Game() {
                 devCardsPlayed={myDevCardsPlayed}
                 onTakeDevCard={gameStateManager.takeDevCard}
                 onPlayDevCard={gameStateManager.playDevCard}
+                onUndoTakeDevCard={gameStateManager.undoTakeDevCard}
                 onUndoPlayDevCard={gameStateManager.undoPlayDevCard}
                 bankDevCards={game.bank.devCards}
                 onGiveRandom={(color) => gameStateManager.giveRandom(color)}

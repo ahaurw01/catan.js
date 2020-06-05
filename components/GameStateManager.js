@@ -133,6 +133,11 @@ class GameStateManager {
     this.emit('play dev card', { color: this.player, index })
   }
 
+  undoTakeDevCard = (index) => {
+    if (!this.player) return
+    this.emit('undo take dev card', { color: this.player, index })
+  }
+
   undoPlayDevCard = (index) => {
     if (!this.player) return
     this.emit('undo play dev card', { color: this.player, index })
