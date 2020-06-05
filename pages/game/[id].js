@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Router, { useRouter } from 'next/router'
+import screenfull from 'screenfull'
 import Board from '../../components/Board'
 import Tile from '../../components/Tile'
 import Building from '../../components/Building'
@@ -88,6 +89,23 @@ export default function Game() {
     }
   }, [id])
 
+  const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
+  const handleFullscreenChange = () => {
+    setIsFullscreen(screenfull.isFullscreen)
+  }
+  const requestFullscreenChange = () => {
+    if (isFullscreen) screenfull.exit()
+    else screenfull.request()
+  }
+
+  useEffect(() => {
+    if (screenfull.isEnabled) screenfull.on('change', handleFullscreenChange)
+
+    return () => {
+      screenfull.off('change', handleFullscreenChange)
+    }
+  })
+
   return (
     <div className="container">
       <Head>
@@ -99,6 +117,13 @@ export default function Game() {
       <main>
         {gameStateManager && game && (
           <Layout
+            onMinimize={() => {
+              if (isFullscreen) requestFullscreenChange()
+            }}
+            onMaximize={() => {
+              if (!isFullscreen) requestFullscreenChange()
+            }}
+            onClose={() => router.push('/')}
             boardSlot={
               <>
                 <Tabs
