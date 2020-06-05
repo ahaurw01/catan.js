@@ -72,7 +72,7 @@ const GameActions = ({
         {Object.entries(players).map(([color, name]) => (
           <div key={color} className={styles.chosenColor}>
             <PlayerSwatch size={30} color={color} />
-            &nbsp;&nbsp;{name}
+            &nbsp;&nbsp;<span className={styles.chosenColorName}>{name}</span>
           </div>
         ))}
 

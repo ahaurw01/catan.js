@@ -23,6 +23,13 @@
   margin-bottom: 5px;
 }
 
+.chosenColorName {
+  max-width: 220px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .spaceRight {
   margin-right: 5px;
 }
