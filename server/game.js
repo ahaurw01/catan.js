@@ -43,7 +43,7 @@ function findGame(id) {
   return gamePromise
 }
 
-function findAllGames(id) {
+function findAllGames() {
   const client = new MongoClient(mongoUri, { useUnifiedTopology: true })
   const gamesPromise = client
     .connect()
