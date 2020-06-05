@@ -11,6 +11,9 @@ const ResetStyles = createGlobalStyle`
   * {
     font-family: MSSansSerif !important;
   }
+  body {
+    overflow: hidden;
+  }
 `
 
 Modal.setAppElement('#__next')
