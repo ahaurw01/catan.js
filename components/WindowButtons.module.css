@@ -1,0 +1,68 @@
+.windowHeaderButtons {
+  display: flex;
+  align-items: center;
+}
+
+.windowHeaderButtons > button {
+  margin-left: 2px;
+  margin-top: 1px;
+  width: 28px !important;
+}
+
+.windowHeaderButtons > button:last-of-type {
+  margin-right: -6px;
+}
+
+.close::before {
+  content: ' ';
+  position: absolute;
+  top: 10px;
+  left: 3px;
+  width: 17px;
+  height: 0px;
+  border-top: 2px solid black;
+  transform: rotate(45deg);
+}
+
+.close::after {
+  content: ' ';
+  position: absolute;
+  top: 10px;
+  right: 4px;
+  width: 17px;
+  height: 0px;
+  border-top: 2px solid black;
+  transform: rotate(-45deg);
+}
+
+:active > .close::before {
+  transform: translate(1px, 1px) rotate(45deg);
+}
+
+:active > .close::after {
+  transform: translate(1px, 1px) rotate(-45deg);
+}
+
+.maximize {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  left: 4px;
+  bottom: 5px;
+  border: 2px solid black;
+  border-top: 3px solid black;
+}
+
+:active > .maximize,
+:active > .minimize {
+  transform: translate(1px, 1px);
+}
+
+.minimize {
+  position: absolute;
+  right: 5px;
+  left: 4px;
+  bottom: 5px;
+  height: 0;
+  border-top: 3px solid black;
+}

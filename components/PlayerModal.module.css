@@ -23,16 +23,6 @@
   justify-content: space-between;
 }
 
-.close {
-  margin-right: -6px;
-  margin-top: 1px;
-  font-weight: bold;
-}
-
-.x {
-  transform: translate(-1px, -1px);
-}
-
 .radios {
   display: flex;
   flex-direction: column;

@@ -12,8 +12,8 @@ import {
   Radio,
 } from 'react95'
 import styles from './PlayerModal.module.css'
-import cx from 'classnames'
 import PlayerSwatch from './PlayerSwatch'
+import WindowButtons, { CloseButton } from './WindowButtons'
 
 const PlayerModal = ({
   players,
@@ -59,14 +59,9 @@ const PlayerModal = ({
         <Window>
           <WindowHeader className={styles.windowHeader}>
             <span>Choose Player</span>
-            <Button
-              className={styles.close}
-              size="sm"
-              square
-              onClick={onRequestClose}
-            >
-              <span className={styles.x}>x</span>
-            </Button>
+            <WindowButtons>
+              <CloseButton onClick={onRequestClose} />
+            </WindowButtons>
           </WindowHeader>
           <WindowContent>
             <form

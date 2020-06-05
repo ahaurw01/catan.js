@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types'
 import styles from './Layout.module.css'
-import { Button, Window, WindowContent, WindowHeader } from 'react95'
+import { Window, WindowContent, WindowHeader } from 'react95'
+import WindowButtons, {
+  CloseButton,
+  MinimizeButton,
+  MaximizeButton,
+} from './WindowButtons'
 
 const Layout = ({
   boardSlot,
@@ -16,17 +21,11 @@ const Layout = ({
         <span className={styles.icon}>🌄</span>C:\Games\Settlers.exe
       </span>
 
-      <div className={styles.windowHeaderButtons}>
-        <Button size="sm" square onClick={onMinimize}>
-          <div className={styles.minimize} />
-        </Button>
-        <Button size="sm" square onClick={onMaximize}>
-          <div className={styles.maximize} />
-        </Button>
-        <Button size="sm" square onClick={onClose}>
-          <div className={styles.close} />
-        </Button>
-      </div>
+      <WindowButtons>
+        <MinimizeButton onClick={onMinimize} />
+        <MaximizeButton onClick={onMaximize} />
+        <CloseButton onClick={onClose} />
+      </WindowButtons>
     </WindowHeader>
     <WindowContent className={styles.windowContent}>
       <div className={styles.layout}>

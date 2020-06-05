@@ -12,6 +12,7 @@ import {
   Radio,
 } from 'react95'
 import styles from './PlayerModal.module.css'
+import WindowButtons, { CloseButton } from './WindowButtons'
 
 const GiveRandomModal = ({ players, isOpen, onRequestClose, onGiveRandom }) => {
   const [targetColor, setTargetColor] = useState(null)
@@ -33,14 +34,9 @@ const GiveRandomModal = ({ players, isOpen, onRequestClose, onGiveRandom }) => {
         <Window>
           <WindowHeader className={styles.windowHeader}>
             <span>Give Random Good</span>
-            <Button
-              className={styles.close}
-              size="sm"
-              square
-              onClick={onRequestClose}
-            >
-              <span className={styles.x}>x</span>
-            </Button>
+            <WindowButtons>
+              <CloseButton onClick={onRequestClose} />
+            </WindowButtons>
           </WindowHeader>
           <WindowContent>
             <form
